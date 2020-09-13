@@ -1,0 +1,81 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}賃貸空室情報システム メニュー{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'menu/css/style.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}
+        <div class="row">
+            <div class="col col-12 text-right">
+                <p class="user_info">{{ company.company_name }} : {{ user.last_name }} {{ user.first_name }}</p>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block h1_title %}【メニュー】{{ company.company_name | default_if_none:'' }}{% endblock %}
+
+    {% block contents %}
+        <div id="normal-menu" class="menu-group">
+        {% if company.is_default %}
+            <div>※ 会社登録を行ってください。（登録後に再読み込みしてください。）</div>
+        {% else %}
+            <h2>【データ管理】</h2>
+            <a href="{% url 'search_buildings_all' %}" class="btn btn-outline-primary">建物</a>
+            <a href="{% url 'search_buildings_area' %}" class="btn btn-outline-primary">建物エリア検索</a>
+            <a href="{% url 'owner_owner_list' %}" class="btn btn-outline-primary">オーナー</a>
+            <a href="{% url 'trader_trader_list' %}" class="btn btn-outline-primary">業者</a>
+            <a href="{% url 'trader_trader_group_list' %}" class="btn btn-outline-primary">業者グループ</a>
+            <a href="{% url 'documents_index' %}" class="btn btn-outline-primary">書類ファイル</a>
+            <a href="{% url 'info_management_info_list' %}" class="btn btn-outline-primary">管理お知らせ</a>
+        {% endif %}
+        </div>
+        {% if user.is_company_admin %}
+        <div id="system-menu" class="menu-group">
+            <h2>【システム管理】</h2>
+            <a href="{% url 'company_index' %}" class="btn btn-outline-primary" target="_blank">会社</a>
+        {% if not company.is_default %}
+            <a href="{% url 'company_department_list' %}" class="btn btn-outline-primary">部署</a>
+            <a href="{% url 'company_staff_list' %}" class="btn btn-outline-primary">スタッフ</a>
+            <a href="{% url 'users_user_list' %}" class="btn btn-outline-primary">システムユーザ</a>
+            <a href="{% url 'users_vacancy_user_list' %}" class="btn btn-outline-primary">空室情報ユーザ</a>
+        {% endif %}
+        </div>
+        {% if not company.is_default %}
+        <div id="system-menu" class="menu-group">
+            <h2>【マスタ管理】</h2>
+            <a href="{% url 'masters_guarantee_company_list' %}" class="btn btn-outline-primary">保証会社</a>
+            <a href="{% url 'masters_insurance_company_list' %}" class="btn btn-outline-primary">火災保険会社</a>
+            <a href="{% url 'vacancy_item_vacancy_input_bike_parking_list' %}" class="btn btn-outline-primary">駐輪場テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_cancel_notice_list' %}" class="btn btn-outline-primary">解約通知テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_short_cancel_list' %}" class="btn btn-outline-primary">短期解約テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_change_lock_list' %}" class="btn btn-outline-primary">鍵交換テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_cleaning_list' %}" class="btn btn-outline-primary">退去時清掃テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_document_price_list' %}" class="btn btn-outline-primary">書類代テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_electric_list' %}" class="btn btn-outline-primary">電気テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_garage_list' %}" class="btn btn-outline-primary">駐車場テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_gas_list' %}" class="btn btn-outline-primary">ガステキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_guarantee_list' %}" class="btn btn-outline-primary">保証会社テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_guarantor_limit_list' %}" class="btn btn-outline-primary">保証人極度額テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_insurance_list' %}" class="btn btn-outline-primary">火災保険テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_internet_list' %}" class="btn btn-outline-primary">インターネットテキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_payment_list' %}" class="btn btn-outline-primary">賃料支払いテキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_portal_list' %}" class="btn btn-outline-primary">ポータル掲載制限テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_renewal_charge_list' %}" class="btn btn-outline-primary">更新事務手数料テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_input_water_list' %}" class="btn btn-outline-primary">水道テキスト</a>
+            <a href="{% url 'vacancy_item_vacancy_theme_list' %}" class="btn btn-outline-primary">空室情報テーマ</a>
+        {% endif %}
+        </div>
+        {% endif %}
+
+    {% endblock %}
+
+    {% block footer %}
+        <a href="{% url 'logout' %}" class="btn btn-secondary">ログアウト</a>
+    {% endblock %}
+
+    {% block page_bottom %}{% endblock %}

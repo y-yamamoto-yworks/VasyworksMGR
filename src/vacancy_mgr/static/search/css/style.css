@@ -1,0 +1,50 @@
+#contents .total-count {
+    margin: 10px 20px;
+    font-size: large;
+}
+
+#contents .pagination {
+    margin: 10px 20px;
+    font-size: large;
+}
+
+#contents .pagination-item {
+    padding: 0 10px;
+}
+
+#contents .pagination-count {
+    padding-right: 10px;
+}
+
+#contents .pagination-previous {
+    padding: 0 10px;
+}
+
+#contents .pagination-next {
+    padding-left: 10px;
+}
+
+#contents .search-message {
+    padding: 0 20px 10px 20px;
+}
+
+#link-add-item {
+    padding-left: 50px;
+    font-size: 12px;
+}
+
+#data-list-header {
+    padding: 10px 20px 0 20px;
+}
+
+#data-list {
+    padding: 0 20px 10px 20px;
+}
+
+#data-list .row {
+    border: 0px;
+}
+
+#data-list .col {
+    border: solid 1px black;
+}

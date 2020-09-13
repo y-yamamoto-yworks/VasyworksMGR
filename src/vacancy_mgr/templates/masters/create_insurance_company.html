@@ -1,0 +1,51 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}火災保険会社作成{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'masters/css/style.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【火災保険会社作成】{% endblock %}
+
+    {% block contents %}
+        <div id="create-form">
+            <form action="{% url 'masters_create_insurance_company' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p>*&nbsp;{{ field.label }} : {{ error }}</p>
+                        {% endfor %}
+                     {% endfor %}
+                {% endif %}
+                <div class="form-group row">
+                    <div class="col-2 col-form-label"><label class="float-right">火災保険会社名</label></div>
+                    <div class="col-10">{{ form.text }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <input type="submit" value="追加" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                    </div>
+                    <div class="col-4">
+                    {% if back_url %}
+                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                    {% else %}
+                        <input type="button" value="戻る" onclick="history.back();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+                    {% endif %}
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+             </form>
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}{% endblock %}

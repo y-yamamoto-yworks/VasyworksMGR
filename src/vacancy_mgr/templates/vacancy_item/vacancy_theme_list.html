@@ -1,0 +1,50 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}空室情報テーマ一覧{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'vacancy_item/css/style.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【空室情報テーマ一覧】{% endblock %}
+
+    {% block contents %}
+        <div  id="data-list-header">
+            <div class="row">
+                <div id="link-add-item" class="col col-6 text-left">
+                    <a href="{% url 'vacancy_item_create_vacancy_theme' %}">テーマ追加</a>
+                </div>
+            </div>
+        </div>
+        <div id="data-list">
+        {% if vacancy_themes %}
+            <div class="row">
+                <div class="col col-4 text-center">テーマ名</div>
+                <div class="col col-6 text-center">タイトル</div>
+                <div class="col col-1 text-center">公開</div>
+                <div class="col col-1 text-center">停止</div>
+            </div>
+            {% for item in vacancy_themes %}
+            <div class="row">
+                <div class="col col-4"><a href="{% url 'vacancy_item_vacancy_theme' item.idb64 %}" target="_blank">{{ item.name }}</a></div>
+                <div class="col col-6">{{ item.title }}</div>
+                <div class="col col-1 text-center">{% if item.is_publish %}〇{% else %}－{% endif %}</div>
+                <div class="col col-1 text-center">{% if item.is_stopped %}×{% else %}－{% endif %}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="row">
+                <div class="col col-12 text-center">該当する空室情報テーマはありません。</div>
+            </div>
+        {% endif %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}{% endblock %}

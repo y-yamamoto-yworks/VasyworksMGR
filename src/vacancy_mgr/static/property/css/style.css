@@ -1,0 +1,151 @@
+#data-list-header {
+    padding: 10px 20px 0 20px;
+}
+
+#data-list {
+    padding: 0 20px 10px 20px;
+}
+
+#data-list .row {
+    border: 0px;
+}
+
+#data-list .col {
+    border: solid 1px black;
+}
+
+#data-detail .tab {
+    margin: 10px 0;
+}
+
+#data-detail li {
+    list-style: none;
+}
+
+#data-detail label {
+    padding: 15px 5px 0 5px;
+    font-weight: bold;
+    color: #888888;
+}
+
+#data-detail .tab ul {
+    margin: 0;
+    padding: 0;
+}
+
+#data-detail .tabs {
+    overflow: hidden;
+}
+
+#data-detail .tabs li {
+    float: left;
+    padding: 10px 20px;
+    border: 1px solid dimgray;
+    cursor: pointer;
+    transition: .3s;
+}
+
+#data-detail .li:not(:first-child) {
+    border-left: none;
+}
+
+#data-detail .tabs li:hover {
+    cursor: pointer;
+}
+
+#data-detail .tabs li.active {
+    background-color: dimgray;
+    border-color: dimgray;
+    color: white;
+}
+
+#data-detail .tab-pages {
+    overflow: hidden;
+}
+
+#data-detail .tab-pages li {
+    padding: 20px;
+    border: 1px solid dimgray;
+}
+
+#data-detail .category-title {
+    border-bottom: 2px solid lightgray;
+    font-size: large;
+    font-weight: bold;
+    color: #666666;
+}
+
+#data-detail .category-title .btn {
+    margin-bottom: 5px;
+}
+
+#data-detail .category-contents {
+    margin-bottom: 30px;
+}
+
+#data-detail .image-items {
+    padding: 5px;
+}
+
+#data-detail .image-item {
+    padding: 5px;
+}
+#data-detail .sub-list-row {
+    margin: 0 10px;
+    border-bottom: 1px solid lightgray;
+}
+
+#data-form .label-links ul {
+    list-style: none;
+}
+
+#data-form .label-links li {
+    display: inline-block;
+    margin: 5px;
+}
+
+#data-form .category-title {
+    border-bottom: 2px solid lightgray;
+    font-size: large;
+    font-weight: bold;
+    color: #666666;
+}
+
+#data-form .category-contents {
+    margin-bottom: 30px;
+}
+
+#data-form .form-inline {
+    margin-bottom: 5px;
+}
+
+#data-form .form-inline label {
+    margin: 0 5px 0 15px;
+}
+
+#data-form .row-label {
+    margin: 10px 0 0 0;
+}
+
+#data-form .anchor-link {
+    position: relative;
+    top: -100px;
+}
+
+#data-form .annotation {
+    color: #888888;
+    font-size: small;
+}
+
+div.copy-room-targets label {
+    margin: 0 5px 0 20px
+}
+
+/* モーダル */
+.modal-select-hint {
+    padding: 5px 0;
+}
+.modal-select {
+    padding: 5px 0;
+    width: 100%;
+}

@@ -1,0 +1,64 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}建物画像削除 {{ data.picture_type.name }}{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'property/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'property/css/style_ids.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【建物画像削除】{{ data.picture_type.name }}{% endblock %}
+
+    {% block contents %}
+        <div id="delete-form">
+        {% if back_url %}
+            <form action="{% url 'property_delete_building_picture'  data.building.oid data.id %}?back_url={{ escaped_back_url }}" method="post" enctype="multipart/form-data">
+        {% else %}
+            <form action="{% url 'property_delete_building_picture'  data.building.oid data.id %}" method="post" enctype="multipart/form-data">
+        {% endif %}
+            {% csrf_token %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p>*&nbsp;{{ field.label }} : {{ error }}</p>
+                        {% endfor %}
+                     {% endfor %}
+                {% endif %}
+                <div class="form-group row form-inline">
+                    <div class="col-3"></div>
+                    <div class="col-7">
+                        <div>
+                            <img src="/media/public/buildings/{{ data.building.file_oid }}/thumbnails/{{ data.file_name }}" alt="{{ data.picture_type.name }}" class="img-fluid">
+                        </div>
+                        <div>
+                            {{ form.confirm }}&nbsp;{{ data.picture_type.name }} の削除を確認しました。
+                        </div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <input type="submit" value="削除" class="btn d-block mx-auto d-flex align-items-center btn-danger">
+                    </div>
+                    <div class="col-4">
+                    {% if back_url %}
+                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                    {% else %}
+                        <a href="{% url 'property_building' building.oid %}?page=pictures_page" class="btn btn-secondary">戻る</a>
+                    {% endif %}
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+             </form>
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}{% endblock %}

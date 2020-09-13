@@ -1,0 +1,48 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}保証会社一覧{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'masters/css/style.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【保証会社一覧】{% endblock %}
+
+    {% block contents %}
+        <div  id="data-list-header">
+            <div class="row">
+                <div id="link-add-item" class="col col-12 text-left">
+                    <a href="{% url 'masters_create_guarantee_company' %}">保証会社追加</a>
+                </div>
+            </div>
+        </div>
+        <div id="data-list">
+        {% if guarantee_companies %}
+            <div class="row">
+                <div class="col col-8 text-center">保証会社名</div>
+                <div class="col col-3 text-center">優先順</div>
+                <div class="col col-1 text-center">停止</div>
+            </div>
+            {% for item in guarantee_companies %}
+            <div class="row">
+                <div class="col col-8"><a href="{% url 'masters_guarantee_company' item.idb64 %}" target="_blank">{{ item.name }}</a></div>
+                <div class="col col-3 text-center">{{ item.priority }}</div>
+                <div class="col col-1 text-center">{% if item.is_stopped %}×{% else %}－{% endif %}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="row">
+                <div class="col col-12 text-center">該当する保証会社はありません。</div>
+            </div>
+        {% endif %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}{% endblock %}

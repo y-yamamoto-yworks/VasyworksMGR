@@ -1,0 +1,39 @@
+<div id="data-list">
+{% if buildings %}
+    <div class="row">
+        <div class="col col-3 text-center">建物名称</div>
+        <div class="col col-4 text-center">住所</div>
+        <div class="col col-1 text-center">管理</div>
+        <div class="col col-3 text-center">その他</div>
+        <div class="col col-1"></div>
+    </div>
+{% for item in buildings %}
+    <div class="row">
+        <div class="col col-3">
+            <div><a href="{% url 'property_building' item.oid %}" target="_blank">{{ item.building_name }}</a></div>
+        </div>
+        <div class="col col-4">
+            <div class="small">{{ item.address }}</div>
+        </div>
+        <div class="col col-1">
+            <div class="small text-center">{{  item.management_type.name | default_if_none:'-----'  }}</div>
+        </div>
+        <div class="col col-3">
+            {% if item.building_old_name %}<div class="small">旧:&nbsp;{{ item.building_old_name }}</div>{% endif %}
+            <div class="small">
+                {% if item.is_hidden_vacancy %}<span class="nowrap">【空室情報非公開】</span>{% endif %}
+                {% if item.is_vacancy_recommend %}<span class="nowrap">【空室情報おすすめ】</span>{% endif %}
+                {% if item.is_hidden_web %}<span class="nowrap">【WEB非公開】</span>{% endif %}
+            </div>
+        </div>
+        <div class="col col-1">
+            <div class="text-center">
+                <a href="{% url 'property_delete_building' item.oid %}" class="btn btn-sm btn-outline-danger">削除</a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
+{% else %}
+    <p>該当する建物はありません。</p>
+{% endif %}
+</div>

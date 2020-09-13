@@ -1,0 +1,86 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}部屋画像コピー {{ room.building.building_name }} {{ room.room_no | default_if_none:'' }} 号室{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'property/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'property/css/style_ids.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【部屋画像コピー】{{ room.building.building_name }} {{ room.room_no | default_if_none:'' }} 号室{% endblock %}
+
+    {% block contents %}
+        <div id="copy-form">
+        {% if back_url %}
+            <form action="{% url 'property_copy_room_picture' room.oid %}?back_url={{ escaped_back_url }}" method="post" enctype="multipart/form-data">
+        {% else %}
+            <form action="{% url 'property_copy_room_picture'  room.oid %}" method="post" enctype="multipart/form-data">
+        {% endif %}
+            {% csrf_token %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p>*&nbsp;{{ field.label }} : {{ error }}</p>
+                        {% endfor %}
+                     {% endfor %}
+                {% endif %}
+                <div class="form-group row">
+                    <div class="col-2 col-form-label"><label class="float-right">コピー元部屋</label></div>
+                    <div class="col-10 form-inline">{{ form.selected_room }}</div>
+                </div>
+
+                <div v-if="pictures.length > 0" id="picture-list">
+                    <div class="form-group row image-items">
+                        <div class="col col-2 text-center image-item" v-for="picture in pictures">
+                            <div>
+                                <img v-bind:src="'/media/public/buildings/{{ room.building.file_oid }}/thumbnails/' + picture.file_name" v-bind:alt="picture.picture_type.name" class="img-fluid">
+                            </div>
+                            <div>[[ picture.picture_type.name ]]</div>
+                            <div>
+                                <input class="checkbox" type="checkbox" name="selected_pictures"
+                                       v-bind:id="'id_selected_pictures_' + picture.id"
+                                       v-model="checkedPictures"
+                                       v-bind:ref="'selected_room_' + picture.id"
+                                       v-bind:value="picture.id"><label>選択</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <a href="#" v-on:click="selectAllPictures($event)" class="btn btn-sm btn-outline-primary">全選択</a>&nbsp;
+                        <a href="#" v-on:click="clearAllPictures($event)" class="btn btn-sm btn-outline-secondary">クリア</a>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <input type="submit" value="画像コピー" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                    </div>
+                    <div class="col-4">
+                    {% if back_url %}
+                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                    {% else %}
+                        <a href="{% url 'property_room' room.oid %}" class="btn btn-secondary">戻る</a>
+                    {% endif %}
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+             </form>
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}
+        <script type="text/javascript" src="{% static 'property/js/copy_room_picture.js' %}"></script>
+        <script type="text/javascript">
+            var app = copyRoomPictureVue(
+                "{{ api_key }}",
+            );
+        </script>
+    {% endblock %}

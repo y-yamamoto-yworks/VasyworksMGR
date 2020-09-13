@@ -1,0 +1,598 @@
+/* 各項目 */
+#id_building_code {
+    width: 100px;
+}
+
+#id_building_name,
+#id_building_kana,
+#id_building_old_name {
+    width: 85%;
+}
+
+#id_postal_code {
+    width: 140px;
+}
+
+#id_town_address {
+    width: 85%;
+}
+
+#id_house_no {
+    width: 200px;
+}
+
+#id_building_no {
+    width: 80px;
+}
+
+#id_town_name {
+    width: 250px;
+}
+
+#id_elementary_school_distance {
+    width: 80px;
+}
+
+#id_junior_high_school_distance {
+    width: 80px;
+}
+
+#id_station_time1 {
+    width: 80px;
+    text-align: right;
+}
+
+#id_bus_stop1 {
+    width: 150px;
+}
+
+#id_bus_stop_time1 {
+    width: 80px;
+    text-align: right;
+}
+
+#id_station_time2 {
+    width: 80px;
+    text-align: right;
+}
+
+#id_bus_stop2 {
+    width: 150px;
+}
+
+#id_bus_stop_time2 {
+    width: 80px;
+    text-align: right;
+}
+
+#id_station_time3 {
+    width: 80px;
+    text-align: right;
+}
+
+#id_bus_stop3 {
+    width: 150px;
+}
+
+#id_bus_stop_time3 {
+    width: 80px;
+    text-align: right;
+}
+
+#id_register_address {
+    width: 85%;
+}
+
+#id_register_name {
+    width: 500px;
+}
+
+#id_register_building_no {
+    width: 300px;
+}
+
+#id_register_no {
+    width: 200px;
+}
+
+#id_map {
+    width: 600px;
+    height: 400px;
+}
+
+#id_around_note {
+    height: 60px;
+}
+
+#id_building_type_comment {
+    width: 500px;
+}
+
+#id_structure_comment {
+    width: 500px;
+}
+
+#id_building_rooms {
+    width:100px;
+    text-align: right;
+}
+
+#id_building_floors {
+    width: 80px;
+    text-align: right;
+}
+
+#id_building_undergrounds {
+    width: 80px;
+    text-align: right;
+}
+
+#id_build_year {
+    width: 100px;
+    text-align: right;
+}
+
+#id_build_month {
+    width: 80px;
+    text-align: right;
+}
+
+#id_building_undergrounds {
+    width: 80px;
+}
+
+#id_bike_parking_fee_lower,
+#id_bike_parking_fee_upper {
+    width: 150px;
+    text-align: right;
+}
+
+#id_bike_parking_note {
+    height: 60px;
+}
+
+#id_garage_name {
+    width: 90%;
+}
+
+#id_garage_status {
+    width: 120px;
+}
+
+#id_garage_distance {
+    width: 100px;
+    text-align: right;
+}
+
+#id_garage_fee_lower,
+#id_garage_fee_upper,
+#id_garage_charge_lower,
+#id_garage_charge_upper {
+    width: 150px;
+    text-align: right;
+}
+
+#id_garage_note {
+    height: 60px;
+}
+
+#id_priority_level {
+    width: 80px;
+}
+
+#id_owner_note {
+    height: 100px;
+}
+
+#id_management_note {
+    height: 100px;
+}
+
+#id_garbage_note {
+    height: 100px;
+}
+
+#id_tenant_note {
+    height: 100px;
+}
+
+#id_building_management_company {
+    width: 600px;
+}
+
+#id_building_management_address {
+    width: 90%;
+}
+
+#id_building_management_no {
+    width: 300px;
+}
+
+#id_building_management_note {
+    height: 100px;
+}
+
+#id_apartment_manager_comment {
+    width: 90%;
+}
+
+#id_vacancy_portal_note {
+    height: 100px;
+}
+
+#id_vacancy_note {
+    height: 100px;
+}
+
+#id_web_note {
+    height: 100px;
+}
+
+#id_private_note {
+    height: 300px;
+}
+
+#id_facility {
+    width: 300px;
+}
+
+#id_facility_name {
+    width: 90%;
+}
+
+#id_landmark_type {
+    width: 200px;
+}
+
+#id_landmark {
+    width: 90%;
+}
+
+#id_picture_type {
+    width: 200px;
+}
+
+#id_image {
+    width: 90%;
+}
+
+#id_movie_type {
+    width: 200px;
+}
+
+#id_movie {
+    width: 90%;
+}
+
+#id_panorama_type {
+    width: 200px;
+}
+
+#id_panorama {
+    width: 90%;
+}
+
+#id_distance {
+    width: 100px;
+    text-align: right;
+}
+
+#id_priority {
+    width: 100px;
+    text-align: right;
+}
+
+#id_comment {
+    width: 90%;
+}
+
+#id_note {
+    width: 90%;
+}
+
+#id_room_no {
+    width: 80px;
+    text-align: right;
+}
+
+#id_room_floor {
+    width: 80px;
+    text-align: right;
+}
+
+#id_vacancy_status_note {
+    height: 100px;
+}
+
+#id_pending_start_date {
+    width: 180px;
+}
+
+#id_pending_end_date {
+    width: 180px;
+}
+
+#id_pending_note {
+    height: 100px;
+}
+
+#id_live_start_year,
+#id_cancel_scheduled_year,
+#id_reform_year {
+    width: 80px;
+    text-align: right;
+}
+
+#id_live_start_month,
+#id_cancel_scheduled_month,
+#id_reform_month {
+    width: 80px;
+    text-align: right;
+}
+
+#id_live_start_note,
+#id_cancel_scheduled_note,
+#id_reform_note {
+    height: 100px;
+}
+
+#id_reform_comment {
+    width: 600px;
+}
+
+#id_rent,
+#id_rent_upper,
+#id_trader_rent,
+#id_condo_fees,
+#id_water_cost,
+#id_payment_fee{
+    width: 120px;
+    text-align: right;
+}
+
+#id_free_rent_months {
+    width: 80px;
+    text-align: right;
+}
+
+#id_free_rent_limit_year {
+    width: 100px;
+    text-align: right;
+}
+
+#id_free_rent_limit_month {
+    width: 80px;
+    text-align: right;
+}
+
+#id_monthly_cost1,
+#id_monthly_cost2,
+#id_monthly_cost3,
+#id_monthly_cost4,
+#id_monthly_cost5,
+#id_monthly_cost6,
+#id_monthly_cost7,
+#id_monthly_cost8,
+#id_monthly_cost9,
+#id_monthly_cost10{
+    width: 120px;
+    text-align: right;
+}
+
+#id_monthly_cost_note {
+    height: 100px;
+}
+
+#id_deposit_value1,
+#id_deposit_value2,
+#id_deposit_value3 {
+    width: 120px;
+    text-align: right;
+}
+
+#id_deposit_comment1,
+#id_deposit_comment2,
+#id_deposit_comment3 {
+    width: 600px;
+}
+
+#id_key_money_value1,
+#id_key_money_value2,
+#id_key_money_value3 {
+    width: 120px;
+    text-align: right;
+}
+
+#id_key_money_comment1,
+#id_key_money_comment2,
+#id_key_money_comment3 {
+    width: 600px;
+}
+
+#id_insurance_company {
+    width: 300px;
+}
+
+#id_insurance_years {
+    width: 60px;
+    text-align: right;
+}
+
+#id_insurance_fee {
+    width: 120px;
+    text-align: right;
+}
+
+#id_guarantee_company {
+    width: 300px;
+}
+
+#id_guarantee_fee {
+    width: 600px;
+}
+
+#id_document_cost,
+#id_key_change_cost {
+    width: 120px;
+    text-align: right;
+}
+
+#id_document_cost_comment,
+#id_key_change_comment {
+    width: 600px;
+}
+
+#id_initial_cost1,
+#id_initial_cost2,
+#id_initial_cost3,
+#id_initial_cost4,
+#id_initial_cost5,
+#id_initial_cost6,
+#id_initial_cost7,
+#id_initial_cost8,
+#id_initial_cost9,
+#id_initial_cost10 {
+    width: 120px;
+    text-align: right;
+}
+
+#id_initial_cost_note {
+    height: 100px;
+}
+
+#id_contract_years,
+#id_contract_months {
+    width: 60px;
+    text-align: right;
+}
+
+#id_renewal_fee_value,
+#id_renewal_charge,
+#id_recontract_fee {
+    width: 120px;
+    text-align: right;
+}
+
+#id_renewal_note,
+#id_recontract_note {
+    height: 100px;
+}
+
+#id_cleaning_cost {
+    width: 120px;
+    text-align: right;
+}
+
+#id_cancel_notice_limit {
+    width: 80px;
+    text-align: right;
+}
+
+#id_cancel_note,
+#id_short_cancel_note,
+#id_cleaning_note {
+    height: 100px;
+}
+
+#id_special_agreement {
+    height: 200px;
+}
+
+#id_vacancy_start_date {
+    width: 180px;
+}
+
+#id_vacancy_end_date {
+    width: 180px;
+}
+
+#id_room_area, #id_balcony_area {
+    width: 100px;
+    text-align: right;
+}
+
+#id_western_style_room1,
+#id_western_style_room2,
+#id_western_style_room3,
+#id_western_style_room4,
+#id_western_style_room5,
+#id_western_style_room6,
+#id_western_style_room7,
+#id_western_style_room8,
+#id_western_style_room9,
+#id_western_style_room10,
+#id_japanese_style_room1,
+#id_japanese_style_room2,
+#id_japanese_style_room3,
+#id_japanese_style_room4,
+#id_japanese_style_room5,
+#id_japanese_style_room6,
+#id_japanese_style_room7,
+#id_japanese_style_room8,
+#id_japanese_style_room9,
+#id_japanese_style_room10,
+#id_kitchen1, #id_kitchen2, #id_kitchen3,
+#id_store_room1, #id_store_room2, #id_store_room3,
+#id_loft1, #id_loft2,
+#id_sun_room1, #id_sun_room2 {
+    width: 100px;
+    text-align: right;
+}
+
+#id_layout_note {
+    height: 100px;
+}
+
+#id_electric_comment,
+#id_gas_comment,
+#id_bath_comment,
+#id_toilet_comment,
+#id_kitchen_range_comment,
+#id_internet_comment,
+#id_washer_comment,
+#id_pet_comment {
+    width: 300px;
+}
+
+#id_constraint_note {
+    height: 100px;
+}
+#id_ad_value,
+#id_trader_ad_value {
+    width: 120px;
+    text-align: right;
+}
+
+#id_trader_publish_note,
+#id_trader_portal_note,
+#id_key_place_note,
+#id_private_note,
+#id_management_note {
+    height: 100px;
+}
+
+#id_equipment_category {
+    width: 200px;
+}
+
+#id_equipments {
+    width: 300px;
+    height: 300px;
+}
+
+#id_garage_fee,
+#id_garage_charge,
+#id_garage_deposit,
+#id_certification_fee {
+    width: 120px;
+    text-align: right;
+}
+
+#id_width, #id_length, #id_height {
+    width: 100px;
+    text-align: right;
+}
+
+#id_selected_room {
+    width: 300px;
+}

@@ -1,0 +1,63 @@
+"""
+System Name: Vasyworks
+Project Name: vacancy_mgr
+Encoding: UTF-8
+Copyright (C) 2020 Yasuhiro Yamamoto
+"""
+from django import forms
+from django.utils.translation import gettext_lazy as _
+from owner.models import Owner
+
+
+class OwnerForm(forms.ModelForm):
+    """
+    オーナーフォーム
+    """
+    class Meta:
+        model = Owner
+        fields = [
+            'owner_name',
+            'owner_kana',
+            'is_corporation',
+            'corporation_owner_name',
+            'postal_code',
+            'address',
+            'tel1',
+            'tel2',
+            'fax',
+            'mail',
+            'staff',
+            'note',
+            'is_stopped',
+            'is_deleted',
+        ]
+        labels = {
+            'owner_name': _('オーナー名'),
+            'owner_kana': _('オーナー名カナ'),
+            'is_corporation': _('法人'),
+            'corporation_owner_name': _('法人オーナー名'),
+            'postal_code': _('郵便番号'),
+            'address': _('住所'),
+            'tel1': _('電話番号1'),
+            'tel2': _('電話番号2'),
+            'fax': _('FAX番号'),
+            'mail': _('E-MAIL'),
+            'staff': _('担当スタッフ'),
+            'note': _('備考'),
+            'is_stopped': _('停止'),
+            'is_deleted': _('削除'),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.fields['staff'].widget = forms.HiddenInput()
+        self.fields['staff'].widget.attrs['v-model'] = 'staff'
+
+        for key in self.fields.keys():
+            field = self.fields[key]
+            field.widget.attrs['ref'] = key
+            if isinstance(field.widget, forms.CheckboxInput):
+                field.widget.attrs['class'] = 'form-check-input'
+            else:
+                field.widget.attrs['class'] = 'form-control'

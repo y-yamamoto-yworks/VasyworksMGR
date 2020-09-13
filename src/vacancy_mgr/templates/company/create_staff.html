@@ -1,0 +1,65 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}スタッフ作成{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'company/css/style.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【スタッフ作成】{% endblock %}
+
+    {% block contents %}
+        <div id="create-form">
+        {% if department %}
+            <form action="{% url 'company_create_staff' department.idb64 %}" method="post" enctype="multipart/form-data">
+        {% else %}
+            <form action="{% url 'company_create_staff' %}" method="post" enctype="multipart/form-data">
+        {% endif %}
+            {% csrf_token %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p>*&nbsp;{{ field.label }} : {{ error }}</p>
+                        {% endfor %}
+                     {% endfor %}
+                {% endif %}
+            {% if department %}
+                <div class="form-group row">
+                    <div class="col-2 col-form-label"><label class="float-right">部署名</label></div>
+                    <div class="col-10">{{ department.department_name }}</div>
+                </div>
+            {% endif %}
+                <div class="form-group row">
+                    <div class="col-2 col-form-label"><label class="float-right">姓</label></div>
+                    <div class="col-10">{{ form.last_name }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2 col-form-label"><label class="float-right">名</label></div>
+                    <div class="col-10">{{ form.first_name }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <input type="submit" value="追加" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                    </div>
+                    <div class="col-4">
+                    {% if back_url %}
+                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                    {% else %}
+                        <input type="button" value="戻る" onclick="history.back();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+                    {% endif %}
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+             </form>
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}{% endblock %}

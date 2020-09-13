@@ -1,0 +1,37 @@
+#link-add-user {
+    padding-left: 30px;
+    font-size: 12px;
+}
+
+#link-change-list {
+    padding-right: 30px;
+    font-size: 12px;
+}
+
+#user-list-header {
+    padding: 10px 20px 0 20px;
+}
+
+#user-list {
+    padding: 0px 20px;
+}
+
+#user-list .row {
+    border: 0px;
+}
+
+#user-list .col {
+    border: solid 1px black;
+}
+
+#user-form {
+    margin: 0 auto;
+    width: 60%;
+}
+
+@media screen and (max-width: 780px){
+    #user-form {
+        text-align: center;
+        width: 90%;
+    }
+}

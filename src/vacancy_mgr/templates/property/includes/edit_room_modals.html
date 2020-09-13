@@ -1,0 +1,131 @@
+{% load static %}
+{% load humanize %}
+
+<modal name="select-condo-owner" :draggable="true" :resizable="true" :width="400" :height="300">
+    <div class="modal-header">
+        <h2>分譲オーナー選択</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row modal-select-hint">
+            <div class="col col-8">
+                <input type="text" class="form-control" v-model="selectCondoOwnerHint">
+            </div>
+            <div class="col col-3">
+                <button v-on:click="narrowDownCondoOwners($event)" class="btn btn-info">部分一致</button>
+            </div>
+            <div class="col col-1"></div>
+        </div>
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="selectedCondoOwner">
+                    <option v-for="owner in selectCondoOwners" v-bind:value="owner.id">[[ owner.owner_name ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseCondoOwnerModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseCondoOwnerModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="select-condo-trader" :draggable="true" :resizable="true" :width="400" :height="300">
+    <div class="modal-header">
+        <h2>分譲賃貸管理業者選択</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row modal-select-hint">
+            <div class="col col-8">
+                <input type="text" class="form-control" v-model="selectCondoTraderHint">
+            </div>
+            <div class="col col-3">
+                <button v-on:click="narrowDownCondoTraders($event)" class="btn btn-info">部分一致</button>
+            </div>
+            <div class="col col-1"></div>
+        </div>
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="selectedCondoTrader">
+                    <option v-for="trader in selectCondoTraders" v-bind:value="trader.id">[[ trader.trader_name ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseCondoTraderModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseCondoTraderModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-guarantee-company" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>保証会社入力</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputGuaranteeCompany">
+                    <option v-for="item in inputGuaranteeCompanies">[[ item.name ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputGuaranteeCompanyModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputGuaranteeCompanyModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-insurance-company" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>火災保険会社入力</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputInsuranceCompany">
+                    <option v-for="item in inputInsuranceCompanies">[[ item.name ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputInsuranceCompanyModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputInsuranceCompanyModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>

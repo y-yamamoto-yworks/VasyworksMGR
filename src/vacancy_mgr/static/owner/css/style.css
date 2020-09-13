@@ -1,0 +1,34 @@
+#link-add-item {
+    padding-left: 50px;
+    font-size: 12px;
+}
+
+#link-change-list {
+    padding-right: 50px;
+    font-size: 12px;
+}
+
+#data-list-header {
+    padding: 10px 20px 0 20px;
+}
+
+#data-list {
+    padding: 0 20px 10px 20px;
+}
+
+#data-list .row {
+    border: 0px;
+}
+
+#data-list .col {
+    border: solid 1px black;
+}
+
+/* モーダル */
+.modal-select-hint {
+    padding: 5px 0;
+}
+.modal-select {
+    padding: 5px 0;
+    width: 100%;
+}

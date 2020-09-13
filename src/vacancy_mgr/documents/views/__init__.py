@@ -1,0 +1,4 @@
+from .delete_document_file_view import DeleteDocumentFileView
+from .document_file_list_view import DocumentFileListView
+from .edit_document_file_view import EditDocumentFileView
+from .upload_document_file_view import UploadDocumentFileView

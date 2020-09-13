@@ -1,0 +1,484 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}建物編集 {{ building.building_name }}{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'property/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'property/css/style_ids.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【建物編集】 {{ building.building_name }}{% endblock %}
+
+    {% block contents %}
+        <div id="data-form">
+            <div class="label-links">
+                <ul>
+                    <li><a href="#address-anchor" class="btn btn-outline-primary">所在地</a></li>
+                    <li><a href="#station-anchor" class="btn btn-outline-primary">最寄り駅</a></li>
+                    <li><a href="#building-anchor" class="btn btn-outline-primary">建物情報</a></li>
+                    <li><a href="#register-anchor" class="btn btn-outline-primary">登記情報</a></li>
+                    <li><a href="#owner-anchor" class="btn btn-outline-primary">オーナー</a></li>
+                    <li><a href="#trader-anchor" class="btn btn-outline-primary">賃貸管理業者</a></li>
+                    <li><a href="#bike-parking-anchor" class="btn btn-outline-primary">駐輪場</a></li>
+                    <li><a href="#garage-anchor" class="btn btn-outline-primary">駐車場</a></li>
+                    <li><a href="#management-anchor" class="btn btn-outline-primary">管理情報</a></li>
+                    <li><a href="#department-anchor" class="btn btn-outline-primary">担当部署</a></li>
+                    <li><a href="#staff-anchor" class="btn btn-outline-primary">管理担当者</a></li>
+                    <li><a href="#building-management-company-anchor" class="btn btn-outline-primary">建物管理会社</a></li>
+                    <li><a href="#vacancy-anchor" class="btn btn-outline-primary">空室情報</a></li>
+                    <li><a href="#web-anchor" class="btn btn-outline-primary">WEB掲載情報</a></li>
+                </ul>
+            </div>
+        {% if back_url %}
+            <form action="{% url 'property_edit_building'  building.oid %}?back_url={{ escaped_back_url }}" method="post" enctype="multipart/form-data">
+        {% else %}
+            <form action="{% url 'property_edit_building'  building.oid %}" method="post" enctype="multipart/form-data">
+        {% endif %}
+                {% csrf_token %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p>*&nbsp;{{ field.label }} : {{ error }}</p>
+                        {% endfor %}
+                     {% endfor %}
+                {% endif %}
+
+                <div class="form-group row category-title">
+                    <div class="col col-12">【識別情報】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12 form-inline">
+                        <label>建物ID:</label>{{ building.id }}
+                        <label>自社コード:</label>{{ form.building_code }}
+                    </div>
+                    <div class="col col-12 form-inline">
+                        <label>建物名:</label>{{ form.building_name }}
+                    </div>
+                    <div class="col col-12 form-inline">
+                        <label>建物カナ:</label>{{ form.building_kana }}
+                    </div>
+                    <div class="col col-12 form-inline">
+                        <label>旧建物名:</label>{{ form.building_old_name }}
+                    </div>
+                </div>
+                {% include 'property/includes/edit_building_commands.html' %}
+
+                <span id="address-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【所在地】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12">
+                        <div class="form-inline">
+                            <label>〒</label>{{ form.postal_code }}&nbsp;
+                            <input type="button" value="検索" v-on:click="searchAddress($event)" class="btn d-block d-flex align-items-center btn-info">
+                            <label>都道府県:</label>{{ form.pref }}
+                            <label>市区町村:</label>{{ form.city }}
+                        </div>
+                        <div class="form-inline">
+                             <label>住所町域:</label>{{ form.town_address }}
+                        </div>
+                        <div class="form-inline">
+                             <label>番地:</label>{{ form.house_no }}
+                             <label>棟:</label>{{ form.building_no }}
+                             <label>ポータル町名:</label>{{ form.town_name }}
+                        </div>
+                        <div class="form-inline">
+                            <label>エリア:</label>{{ form.area }}
+                            <label>小学校区:</label>{{ form.elementary_school }}&nbsp;
+                            {{ form.elementary_school_distance }}&nbsp;m
+                            <label>中学校区:</label>{{ form.junior_high_school }}&nbsp;
+                            {{ form.junior_high_school_distance }}&nbsp;m
+                        </div>
+                    </div>
+                    <div class="col col-12 row-label form-inline"><label>周辺備考:</label></div>
+                    <div class="col col-12">{{ form.around_note }}</div>
+                </div>
+
+                <span id="station-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【最寄り駅】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12">
+                        <div class="form-inline">
+                            <label>1:</label>{{ form.railway1 }} &nbsp; {{ form.station1 }} &nbsp; 駅まで &nbsp; {{ form.arrival_type1 }} &nbsp; {{ form.station_time1 }} &nbsp; 分
+                            （<label>バス停</label>{{ form.bus_stop1 }} &nbsp; まで徒歩 &nbsp; {{ form.bus_stop_time1 }} &nbsp; 分）
+                        </div>
+                        <div class="form-inline">
+                            <label>2:</label>{{ form.railway2 }} &nbsp; {{ form.station2 }} &nbsp; 駅まで &nbsp; {{ form.arrival_type2 }} &nbsp; {{ form.station_time2 }} &nbsp; 分
+                            （<label>バス停</label>{{ form.bus_stop2 }} &nbsp; まで徒歩 &nbsp; {{ form.bus_stop_time2 }} &nbsp; 分）
+                        </div>
+                        <div class="form-inline">
+                            <label>3:</label>{{ form.railway3 }} &nbsp; {{ form.station3 }} &nbsp; 駅まで &nbsp; {{ form.arrival_type3 }} &nbsp; {{ form.station_time3 }} &nbsp; 分
+                            （<label>バス停</label>{{ form.bus_stop3 }} &nbsp; まで徒歩 &nbsp; {{ form.bus_stop_time3 }} &nbsp; 分）
+                        </div>
+                    </div>
+                </div>
+                {% include 'property/includes/edit_building_commands.html' %}
+
+                <span id="building-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【建物情報】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12">
+                        <div class="form-inline">
+                            <label>種別:</label>{{ form.building_type }}
+                            <label>コメント:</label>{{ form.building_type_comment }}
+                        </div>
+                        <div class="form-inline">
+                            <label>構造:</label>{{ form.structure }}
+                            <label>コメント:</label>{{ form.structure_comment }}
+                        </div>
+                        <div class="form-inline">
+                            <label>地上階数:</label>{{ form.building_floors }}&nbsp;階
+                            <label>地下階数:</label>{{ form.building_undergrounds }}&nbsp;階
+                            <label>総戸数:</label>{{ form.building_rooms}}&nbsp;戸
+                        </div>
+                        <div class="form-inline">
+                            <label>築年月:</label>{{ form.build_year }}&nbsp;年&nbsp;{{ form.build_month }}&nbsp;月
+                        </div>
+                    </div>
+                    <div class="col col-12 row-label form-inline"><label>ゴミ関連備考:</label></div>
+                    <div class="col col-12">{{ form.garbage_note }}</div>
+                    <div class="col col-12 row-label form-inline"><label>テナント関連備考:</label></div>
+                    <div class="col col-12">{{ form.tenant_note }}</div>
+                    <div class="col col-12 row-label form-inline"><label>非公開備考:</label></div>
+                    <div class="col col-12">{{ form.private_note }}</div>
+                </div>
+                {% include 'property/includes/edit_building_commands.html' %}
+
+                <span id="register-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【登記情報】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12">
+                        <div class="form-inline">
+                            <label>登記所在地:</label>{{ form.register_address }}
+                        </div>
+                        <div class="form-inline">
+                            <label>登記名義人:</label>{{ form.register_name }}
+                        </div>
+                        <div class="form-inline">
+                            <label>家屋番号:　</label>{{ form.register_building_no }}
+                            <label>不動産番号:</label>{{ form.register_no }}
+                        </div>
+                    </div>
+                </div>
+
+                <span id="owner-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【オーナー】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12">
+                        <div class="form-inline">
+                            [[ ownerName ]]{{ form.owner }}&nbsp;
+                            <input type="button" value="選択" v-on:click="openOwnerModal($event)" class="btn d-block d-flex align-items-center btn-info">&nbsp;
+                        </div>
+                    </div>
+                    <div class="col col-12 row-label form-inline"><label>備考:</label></div>
+                    <div class="col col-12">{{ form.owner_note }}</div>
+                </div>
+
+                <span id="trader-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【賃貸管理業者】（他業者）</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12">
+                        <div class="form-inline">
+                            [[ traderName ]]{{ form.trader }}&nbsp;
+                            <input type="button" value="選択" v-on:click="openTraderModal($event)" class="btn d-block d-flex align-items-center btn-info">
+                        </div>
+                    </div>
+                </div>
+                {% include 'property/includes/edit_building_commands.html' %}
+
+                <span id="bike-parking-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【駐輪場】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12">
+                        <div class="form-inline">
+                            <label>種別:</label>{{ form.bike_parking_type }}
+                            <label>屋根付き:</label>{{ form.with_bike_parking_roof }}
+                            <label>月額:</label>{{ form.bike_parking_fee_lower }}&nbsp;円&nbsp;〜&nbsp;{{ form.bike_parking_fee_upper }}&nbsp;円
+                            <label>税区分:</label>{{ form.bike_parking_fee_tax_type }}
+                        </div>
+                    </div>
+                    <div class="col col-12 row-label form-inline"><label>備考:</label></div>
+                    <div class="col col-12">{{ form.bike_parking_note }}</div>
+                </div>
+
+                <span id="garage-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【駐車場】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12">
+                        <div class="form-inline">
+                            <label>種別:</label>{{ form.garage_type }}
+                            <label>状況:</label>{{ form.garage_status }}
+                            <label>距離:</label>{{ form.garage_distance }}&nbsp;m
+                        </div>
+                        <div class="form-inline">
+                            <label>月額:</label>{{ form.garage_fee_lower }}&nbsp;円&nbsp;〜&nbsp;{{ form.garage_fee_upper }}&nbsp;円
+                            <label>税区分:</label>{{ form.garage_fee_tax_type }}
+                        </div>
+                        <div class="form-inline">
+                            <label>手数料:</label>{{ form.garage_charge_lower }}&nbsp;円&nbsp;〜&nbsp;{{ form.garage_charge_upper }}&nbsp;円
+                            <label>税区分:</label>{{ form.garage_charge_tax_type }}
+                        </div>
+                    </div>
+                    <div class="col col-12 row-label form-inline"><label>備考:</label></div>
+                    <div class="col col-12">{{ form.garage_note }}</div>
+                </div>
+                {% include 'property/includes/edit_building_commands.html' %}
+
+                <span id="management-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【管理情報】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12 form-inline">
+                        <label>種別:</label>{{ form.management_type }}
+                        <label>優先レベル:</label>{{ form.priority_level }}
+                        <label>オートロックNo:</label>{{ form.auto_lock_no }}
+                    </div>
+                    <div class="col col-12 row-label form-inline"><label>管理備考:（非公開）</label></div>
+                    <div class="col col-12">{{ form.management_note }}</div>
+                </div>
+
+                <span id="department-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【担当部署】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12 form-inline">
+                        <label>管理:</label>[[ departmentName ]]{{ form.department }}&nbsp;
+                        <input type="button" value="選択" v-on:click="openDepartmentModal($event)" class="btn d-block d-flex align-items-center btn-info">&nbsp;
+                        <label>仲介:</label>[[ agencyDepartmentName ]]{{ form.agency_department }}&nbsp;
+                        <input type="button" value="選択" v-on:click="openAgencyDepartmentModal($event)" class="btn d-block d-flex align-items-center btn-info">&nbsp;
+                    </div>
+                </div>
+
+                <span id="staff-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【管理担当者】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12 form-inline">
+                        <label>1:</label>[[ staffName1 ]]{{ form.staff1 }}&nbsp;
+                        <input type="button" value="選択" v-on:click="openStaff1Modal($event)" class="btn d-block d-flex align-items-center btn-info">&nbsp;
+                        <label>2:</label>[[ staffName2 ]]{{ form.staff2 }}&nbsp;
+                        <input type="button" value="選択" v-on:click="openStaff2Modal($event)" class="btn d-block d-flex align-items-center btn-info">&nbsp;
+                    </div>
+                </div>
+                {% include 'property/includes/edit_building_commands.html' %}
+
+                <span id="building-management-company-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【建物管理会社】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12 form-inline">
+                        <label>会社名: </label>{{ form.building_management_company }}
+                    </div>
+                    <div class="col col-12 form-inline">
+                        <label>住所: </label>{{ form.building_management_address }}
+                    </div>
+                    <div class="col col-12 form-inline">
+                        <label>電話番号: </label>{{ form.building_management_tel }}
+                        <label>登録番号: </label>{{ form.building_management_no }}
+                        <label>管理規約: </label>{{ form.agreement_existence }}
+                    </div>
+                    <div class="col col-12 form-inline">
+                        <label>管理人: </label>{{ form.apartment_manager_comment }}
+                    </div>
+                    <div class="col col-12 row-label form-inline"><label>備考:</label></div>
+                    <div class="col col-12">{{ form.building_management_note }}</div>
+                </div>
+                {% include 'property/includes/edit_building_commands.html' %}
+
+                <span id="vacancy-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【空室情報】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12 form-inline">
+                        <label>空室情報非公開:</label>{{ form.is_hidden_vacancy }}
+                        <label>おすすめ:</label>{{ form.is_vacancy_recommend }}
+                    </div>
+                    <div class="col col-12 row-label form-inline"><label>賃料コメント:</label></div>
+                    <div class="col col-12">{{ form.vacancy_rent_comment }}</div>
+                    <div class="col col-12 row-label form-inline"><label>{{ condo_fees_name}}コメント:</label></div>
+                    <div class="col col-12">{{ form.vacancy_condo_fees_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>水道費コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputWaterModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_water_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>電気コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputElectricModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_electric_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>ガスコメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputGasModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_gas_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>インターネットコメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputInternetModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_internet_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>解約通知コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputCancelNoticeModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_cancel_notice_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>短期解約コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputShortCancelModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_short_cancel_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>賃料支払いコメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputPaymentModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_payment_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>保証会社コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputGuaranteeModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_guarantee_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>火災保険コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputInsuranceModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_insurance_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>保証人極度額コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputGuarantorLimitModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_guarantor_limit_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>入居書類代コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputDocumentPriceModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_document_price_comment }}</div>
+                    <div class="col col-12 row-label form-inline"><label>更新料コメント:</label></div>
+                    <div class="col col-12">{{ form.vacancy_renewal_fee_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>更新事務手数料コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputRenewalChargeModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_renewal_charge_comment }}</div>
+                    <div class="col col-12 row-label form-inline"><label>オートロックコメント:</label></div>
+                    <div class="col col-12">{{ form.vacancy_auto_lock_comment }}</div>
+                    <div class="col col-12 row-label form-inline"><label>防犯コメント:</label></div>
+                    <div class="col col-12">{{ form.vacancy_security_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>駐車場コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputGarageModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_garage_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>駐輪場コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputBikeParkingModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_bike_parking_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>退去時清掃コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputCleaningModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_cleaning_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>鍵交換コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputChangeLockModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_change_lock_comment }}</div>
+                    <div class="col col-12 row-label form-inline">
+                        <label>ポータル掲載制限コメント:</label>
+                        <input type="button" value="定型入力" v-on:click="openInputPortalModal($event)" class="btn btn-sm d-block d-flex align-items-center btn-info">
+                    </div>
+                    <div class="col col-12">{{ form.vacancy_portal_note }}</div>
+                    <div class="col col-12 row-label form-inline"><label>空室情報キャッチコピー:</label></div>
+                    <div class="col col-12">{{ form.vacancy_catch_copy }}</div>
+                    <div class="col col-12 row-label form-inline"><label>空室情報アピール:</label></div>
+                    <div class="col col-12">{{ form.vacancy_appeal }}</div>
+                    <div class="col col-12 row-label form-inline"><label>空室情報備考:</label></div>
+                    <div class="col col-12">{{ form.vacancy_note }}</div>
+                </div>
+                {% include 'property/includes/edit_building_commands.html' %}
+
+                <span id="web-anchor" class="anchor-link"></span>
+                <div class="form-group row category-title">
+                    <div class="col col-12">【WEB掲載情報】</div>
+                </div>
+                <div class="form-group row category-contents">
+                    <div class="col col-12 form-inline">
+                        <label>WEB非公開:</label>{{ form.is_hidden_web }}
+                    </div>
+                    <div class="col col-12 row-label form-inline"><label>キャッチコピー:</label></div>
+                    <div class="col col-12">{{ form.web_catch_copy }}</div>
+                    <div class="col col-12 row-label form-inline"><label>アピール:</label></div>
+                    <div class="col col-12">{{ form.web_appeal }}</div>
+                    <div class="col col-12 row-label form-inline"><label>備考:</label></div>
+                    <div class="col col-12">{{ form.web_note }}</div>
+                </div>
+                {% include 'property/includes/edit_building_commands.html' %}
+
+            </form>
+
+            {% include 'property/includes/edit_building_modals.html' %}
+
+        </div>
+
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}
+        <script type="text/javascript" src="{% static 'property/js/edit_building.js' %}"></script>
+        <script type="text/javascript">
+            var app = createEditBuildingVue(
+                "{{ api_key }}",
+                {{ building.pref.id }},
+                {{ building.city.id }},
+                "{{ building.town_address | default_if_none:'' }}",
+                "{{ building.town_name | default_if_none:'' }}",
+                {{ building.area.id }},
+                {{ building.elementary_school.id }},
+                {{ building.junior_high_school.id }},
+                {{ building.station1.railway.id }},
+                {{ building.station1.id }},
+                {{ building.station2.railway.id }},
+                {{ building.station2.id }},
+                {{ building.station3.railway.id }},
+                {{ building.station3.id }},
+                {{ building.department.id }},
+                "{{ building.department.department_name | default_if_none:'' }}",
+                {{ building.agency_department.id }},
+                "{{ building.agency_department.department_name | default_if_none:'' }}",
+                {{ building.staff1.id }},
+                "{{ building.staff1.staff_name | default_if_none:'' }}",
+                {{ building.staff2.id }},
+                "{{ building.staff2.staff_name | default_if_none:'' }}",
+                {{ building.owner.id }},
+                "{{ building.owner.owner_name | default_if_none:'' }}",
+                {{ building.trader.id }},
+                "{{ building.trader.trader_name | default_if_none:'' }}",
+            );
+        </script>
+    {% endblock %}

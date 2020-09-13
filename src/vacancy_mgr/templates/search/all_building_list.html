@@ -1,0 +1,63 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}建物一覧 全建物{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'search/css/style.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【建物一覧】全建物{% endblock %}
+
+    {% block contents %}
+        <div id="search-conditions-form">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <div class="col col-2 col-form-label"><label class="float-right">建物名称</label></div>
+                    <div class="col-8">{{ form.building_name }}</div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <input type="submit" value="検索" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                    </div>
+                    <div class="col-4">
+                        <input type="submit" value="クリア" v-on:click="clearConditions($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </form>
+        </div>
+
+        {% include 'search/includes/all_building_pagination.html' %}
+
+        <div  id="data-list-header">
+            <div class="row">
+                <div id="link-add-item" class="col col-6 text-left">
+                    <a href="{% url 'property_create_building' %}?back_url={% url 'search_buildings_all' %}">建物追加</a>
+                </div>
+                <div class="col col-6"></div>
+            </div>
+        </div>
+
+        {% include 'search/includes/building_list.html' %}
+        {% include 'search/includes/all_building_pagination.html' %}
+
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}
+        <script type="text/javascript" src="{% static 'search/js/search_name.js' %}"></script>
+        <script type="text/javascript">
+            var searchApp = createSearchNameVue(
+                "{{ default_building_name | default_if_none:'' }}"
+            );
+        </script>
+    {% endblock %}

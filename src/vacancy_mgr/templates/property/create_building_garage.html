@@ -1,0 +1,60 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}駐車場追加{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'property/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'property/css/style_ids.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【駐車場追加】{% endblock %}
+
+    {% block contents %}
+        <div id="create-form">
+        {% if back_url %}
+            <form action="{% url 'property_create_building_garage' building.oid %}?back_url={{ escaped_back_url }}" method="post" enctype="multipart/form-data">
+        {% else %}
+            <form action="{% url 'property_create_building_garage'  building.oid %}" method="post" enctype="multipart/form-data">
+        {% endif %}
+            {% csrf_token %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p>*&nbsp;{{ field.label }} : {{ error }}</p>
+                        {% endfor %}
+                     {% endfor %}
+                {% endif %}
+                <div class="form-group row">
+                    <div class="col-2 col-form-label"><label class="float-right">駐車場名</label></div>
+                    <div class="col-10">{{ form.garage_name }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2 col-form-label"><label class="float-right">空き状況</label></div>
+                    <div class="col-10">{{ form.garage_status }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <input type="submit" value="追加" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                    </div>
+                    <div class="col-4">
+                    {% if back_url %}
+                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                    {% else %}
+                        <a href="{% url 'property_building' building.oid %}?page=garage_page#garage-list-anchor" class="btn btn-secondary">戻る</a>
+                    {% endif %}
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+             </form>
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}{% endblock %}

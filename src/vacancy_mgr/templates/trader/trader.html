@@ -1,0 +1,123 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}賃貸不動産業者情報 {{trader.trader_name}}{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'trader/css/style.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【賃貸不動産業者情報】 {{ trader.trader_name }}{% endblock %}
+
+    {% block contents %}
+        <div id="data-form">
+        {% if back_url %}
+            <form action="{% url 'trader_detail' trader.idb64 %}?back_url={{ escaped_back_url }}" method="post" enctype="multipart/form-data">
+        {% else %}
+            <form action="{% url 'trader_detail' trader.idb64 %}" method="post" enctype="multipart/form-data">
+        {% endif %}
+                {% csrf_token %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p>*&nbsp;{{ field.label }} : {{ error }}</p>
+                        {% endfor %}
+                     {% endfor %}
+                {% endif %}
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">賃貸不動産業者ID</label></div>
+                    <div class="col col-9 col-md-10 col-form-label">{{ trader.id }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">業者名</label></div>
+                    <div class="col col-9 col-md-10">{{ form.trader_name }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">カナ</label></div>
+                    <div class="col col-9 col-md-10">{{ form.trader_kana }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">業者グループ</label></div>
+                    <div class="col col-9 col-md-10">{{ form.trader_group }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">郵便番号</label></div>
+                    <div class="col col-3 col-md-4">{{ form.postal_code }}</div>
+                    <div class="col col-6"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">住所</label></div>
+                    <div class="col col-9 col-md-10">{{ form.address }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">電話番号1</label></div>
+                    <div class="col col-3 col-md-4">{{ form.tel1 }}</div>
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">電話番号2</label></div>
+                    <div class="col col-3 col-md-4">{{ form.tel2 }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">FAX番号</label></div>
+                    <div class="col col-9 col-md-10">{{ form.fax }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">E-MAIL</label></div>
+                    <div class="col col-9 col-md-10">{{ form.mail }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">取引</label></div>
+                    <div class="col col-3 col-md-2 col-form-label text-center">{{ form.no_trading }}<label class="form-check-label">取引不可</label></div>
+                     <div class="col col-6 col-md-8"></div>
+               </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">物件掲載</label></div>
+                    <div class="col col-4 col-md-3 col-form-label text-center">{{ form.no_portal }}<label class="form-check-label">ポータルへの掲載不可</label></div>
+                    <div class="col col-5 col-md-7"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">備考</label></div>
+                    <div class="col col-9 col-md-10">{{ form.note }}</div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">停止 / 削除</label></div>
+                    <div class="col col-3 col-md-2 col-form-label text-center">{{ form.is_stopped }}<label class="form-check-label">{{form.is_stopped.label}}</label></div>
+                    <div class="col col-3 col-md-2 col-form-label text-center">{{ form.is_deleted }}<label class="form-check-label">{{form.is_deleted.label}}</label></div>
+                    <div class="col col-3 col-md-6"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">登録情報</label></div>
+                    <div class="col col-9 col-md-10 col-form-label">
+                        <div>
+                            <label>登録日時:</label>{{ trader.created_at }}
+                            <label>登録ユーザ:</label>{{ trader.created_user }}
+                        </div>
+                        <div>
+                            <label>更新日時:</label>{{ trader.updated_at }}
+                            <label>更新ユーザ:</label>{{ trader.updated_user }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <input type="submit" value="保存" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                    </div>
+                    <div class="col-4">
+                    {% if back_url %}
+                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                    {% else %}
+                        <input type="button" value="閉じる" onclick="window.close();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+                    {% endif %}
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </form>
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}{% endblock %}

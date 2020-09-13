@@ -1,0 +1,788 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}部屋情報 {{ room.building.building_name }} {{ room.room_no }} 号室{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'lib/lightbox2/css/lightbox.min.css' %}">
+        <link rel="stylesheet" href="{% static 'property/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'property/css/style_ids.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【部屋情報】{{ room.building.building_name }} {{ room.room_no }} 号室{% endblock %}
+
+    {% block contents %}
+        <div class="row">
+            <div class="col-3 text-center">
+            {% if back_url %}
+                <a href="{% url 'property_edit_room' room.oid %}?back_url={{ escaped_back_url }}" class="btn btn-primary">編集</a>
+            {% else %}
+                <a href="{% url 'property_edit_room' room.oid %}" class="btn btn-primary">編集</a>
+            {% endif %}
+            </div>
+            <div class="col-6"></div>
+            <div class="col-3 text-center">
+            {% if back_url %}
+                <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+            {% else %}
+                <input type="button" value="閉じる" onclick="window.close();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+            {% endif %}
+            </div>
+        </div>
+        <div id="data-detail">
+            <div class="tab">
+                <ul class="tabs">
+                    <li ref="main_page_tab" v-on:click="changeTabPage('main_page', $event)" class="active">基本情報</li>
+                    <li ref="monthly_cost_page_tab" v-on:click="changeTabPage('monthly_cost_page', $event)" class="active">月額費用</li>
+                    <li ref="initial_cost_page_tab" v-on:click="changeTabPage('initial_cost_page', $event)" class="active">初期費用</li>
+                    <li ref="contract_page_tab" v-on:click="changeTabPage('contract_page', $event)" class="active">契約情報</li>
+                    <li ref="room_page_tab" v-on:click="changeTabPage('room_page', $event)" class="active">部屋情報</li>
+                    <li ref="pm_page_tab" v-on:click="changeTabPage('pm_page', $event)">管理情報</li>
+                    <li ref="pictures_page_tab" v-on:click="changeTabPage('pictures_page', $event)">部屋画像</li>
+                    <li ref="vacancy_page_tab" v-on:click="changeTabPage('vacancy_page', $event)">空室情報</li>
+                    <li ref="web_page_tab" v-on:click="changeTabPage('web_page', $event)">WEB情報</li>
+                    <li ref="etc_page_tab" v-on:click="changeTabPage('etc_page', $event)">その他</li>
+                </ul>
+                <ul class="tab-pages">
+                    <li v-if="activeTabPage === 'main_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【識別情報】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>住所:</label>〒{{ room.building.postal_code | default_if_none:''}}
+                                {{ room.building.address | default_if_none:'' }}
+                            </div>
+                            <div class="col col-12">
+                                <label>建物名:</label>{{ room.building.building_name | default_if_none:'' }}
+                                <label>部屋番号:</label>{{ room.room_no | default_if_none:'' }} 号室
+                                <label>部屋階数:</label>{{ room.room_floor }} 階
+                            </div>
+                            <div class="col col-12">
+                                <label>賃貸種別:</label>{{ room.rental_type.name | default_if_none:'' }}
+                                <label>閲覧レベル:</label>{{ room.room_auth_level.name | default_if_none:'' }}
+                            </div>
+                            <div class="col col-12">
+                                <label>サブリース:</label>{% if room.is_sublease %}〇{% else %}ー{% endif %}
+                                <label>専任:</label>{% if room.is_entrusted %}〇{% else %}ー{% endif %}
+                                <label>分譲管理:</label>{% if room.is_condo_management %}〇{% else %}ー{% endif %}
+                            </div>
+                            {% if room.condo_owner.id != 0 %}
+                            <div class="col col-12">
+                                <label>分譲オーナー:</label>{{ room.condo_owner.owner_name | default_if_none:'' }}
+                                <a href="{% url 'owner_detail' room.condo_owner.idb64 %}" class="btn btn-sm btn-info" target="_blank">詳細</a>
+                                <div>
+                                    <label>電話番号1:</label>{{ room.condo_owner.tel1 | default_if_none:'' }}
+                                    <label>電話番号2:</label>{{ room.condo_owner.tel2 | default_if_none:'' }}
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if room.condo_trader.id != 0 %}
+                            <div class="col col-12">
+                                <label>分譲賃貸管理会社:</label>{{ room.condo_trader.trader_name | default_if_none:'' }}
+                                <a href="{% url 'trader_detail' room.condo_trader.idb64 %}" class="btn btn-sm btn-info" target="_blank">詳細</a>
+                                <div>
+                                    <label>電話番号1:</label>{{ room.condo_trader.tel1 | default_if_none:'' }}
+                                    <label>電話番号2:</label>{{ room.condo_trader.tel2 | default_if_none:'' }}
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row category-title">
+                            <div class="col col-12">【部屋状況】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>部屋状況:</label>{{ room.room_status.name | default_if_none:'' }}
+                                <label>空室状況:</label>{{ room.vacancy_status.name | default_if_none:'' }}
+                            </div>
+                            {% if room.vacancy_status_note %}
+                            <div class="col col-12">
+                                <div><label>空室状況備考:</label></div>
+                                <div>{{ room.vacancy_status_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            <div class="col col-12">
+                                <label>保留業者:</label>{{ room.pending_trader_name | default_if_none:'ーーー' }}
+                                <label>保留開始日:</label>{{ room.pending_start_date | default_if_none:'ーーー' }}
+                                <label>保留終了日:</label>{{ room.pending_end_date | default_if_none:'ーーー' }}
+                            </div>
+                            {% if room.pending_note %}
+                            <div class="col col-12">
+                                <div><label>保留備考:</label></div>
+                                <div>{{ room.pending_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            <div class="col col-12">
+                                {% if room.live_start_year > 0 and room.live_start_month > 0 %}
+                                <label>入居可能日:</label>{{ room.live_start_year }}年{{ room.live_start_month }}月{{ room.live_start_day.name | default_if_none:'' }}
+                                {% else %}
+                                <label>入居可能日:</label>ーーー
+                                {% endif %}
+                            </div>
+                            {% if room.live_start_note %}
+                            <div class="col col-12">
+                                <div><label>入居可能日備考:</label></div>
+                                <div>{{ room.live_start_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            <div class="col col-12">
+                                {% if room.live_start_year > 0 and room.live_start_month > 0 %}
+                                <label>解約予定日:</label>{{ room.cancel_scheduled_year }}年{{ room.cancel_scheduled_month }}月{{ room.cancel_scheduled_day.name | default_if_none:'' }}
+                                {% else %}
+                                <label>解約予定日:</label>ーーー
+                                {% endif %}
+                            </div>
+                            {% if room.cancel_scheduled_note %}
+                            <div class="col col-12">
+                                <div><label>解約予定日備考:</label></div>
+                                <div>{{ room.cancel_scheduled_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if room.reform_comment %}
+                            <div class="col col-12">
+                                <label>リフォーム内容:</label>{{ room.reform_comment | default_if_none:'' }}
+                            </div>
+                            <div class="col col-12">
+                                {% if room.reform_year > 0 and room.reform_month > 0 %}
+                                <label>リフォーム実施時期:</label>{{ room.reform_year }}年{{ room.reform_month }}月
+                                {% else %}
+                                <label>リフォーム実施時期:</label>ーーー
+                                {% endif %}
+                            </div>
+                            {% endif %}
+                            {% if room.reform_note %}
+                            <div class="col col-12">
+                                <div><label>リフォーム備考:</label></div>
+                                <div>{{ room.reform_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'monthly_cost_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【賃料】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <span class="nowrap"><label>賃料:</label>{{ room.rent_text | default_if_none:'' }}</span>
+                                {% if room.trader_rent_text %}
+                                    <span class="nowrap"><label>仲介他業者への提示賃料:</label>{{ room.trader_rent_text | default_if_none:'' }}</span>
+                                {% endif %}
+                                {% if room.rent_hidden %}<span class="nowrap"><label>賃料非表示:</label>×非表示</span>{% endif %}
+                            </div>
+                            <div class="col col-12">
+                                <label>{{ condo_fees_name}}:</label>{{ room.condo_fees_text | default_if_none:'' }}
+                            </div>
+                            <div class="col col-12">
+                                <span class="nowrap"><label>水道費:</label>{{ room.water_cost_text | default_if_none:'' }}</span>
+                                <span class="nowrap"><label>検針種別:</label>{{ room.water_check_type.name | default_if_none:'' }}</span>
+                            </div>
+                            <div class="col col-12">
+                                <span class="nowrap"><label>支払い方法:</label>{{ room.payment_type.name | default_if_none:'' }}</span>
+                                <span class="nowrap"><label>支払手数料:</label>{{ room.payment_fee_text | default_if_none:'' }}</span>
+                            </div>
+                            <div class="col col-12">
+                                <label>フリーレント:</label>{{ room.free_rent_text | default_if_none:'' }}
+                            </div>
+                        </div>
+
+                        <div class="row category-title">
+                            <div class="col col-12">【その他】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div><label>その他月額費用:</label></div>
+                                {% if room.monthly_cost_text1 %}<span class="nowrap">{{ room.monthly_cost_text1 }}</span>{% endif %}
+                                {% if room.monthly_cost_text2 %}<span class="nowrap">{{ room.monthly_cost_text2 }}</span>{% endif %}
+                                {% if room.monthly_cost_text3 %}<span class="nowrap">{{ room.monthly_cost_text3 }}</span>{% endif %}
+                                {% if room.monthly_cost_text4 %}<span class="nowrap">{{ room.monthly_cost_text4 }}</span>{% endif %}
+                                {% if room.monthly_cost_text5 %}<span class="nowrap">{{ room.monthly_cost_text5 }}</span>{% endif %}
+                                {% if room.monthly_cost_text6 %}<span class="nowrap">{{ room.monthly_cost_text6 }}</span>{% endif %}
+                                {% if room.monthly_cost_text7 %}<span class="nowrap">{{ room.monthly_cost_text7 }}</span>{% endif %}
+                                {% if room.monthly_cost_text8 %}<span class="nowrap">{{ room.monthly_cost_text8 }}</span>{% endif %}
+                                {% if room.monthly_cost_text9 %}<span class="nowrap">{{ room.monthly_cost_text9 }}</span>{% endif %}
+                                {% if room.monthly_cost_text10 %}<span class="nowrap">{{ room.monthly_cost_text10 }}</span>{% endif %}
+                            </div>
+                            {% if room.monthly_cost_note %}
+                            <div class="col col-12">
+                                <div><label>月額費用備考:</label></div>
+                                <div>{{ room.monthly_cost_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'initial_cost_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【保証金・一時金】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <span class="nowrap"><label>保証金1:</label>{{ room.deposit_text1 | default_if_none:'ーーー' }}</span>
+                                <span class="nowrap"><label>コメント1:</label>{{ room.deposit_comment1 | default_if_none:'' | linebreaksbr }}</span>
+                            </div>
+                            <div class="col col-12">
+                                <span class="nowrap"><label>保証金2:</label>{{ room.deposit_text2 | default_if_none:'ーーー' }}</span>
+                                <span class="nowrap"><label>コメント2:</label>{{ room.deposit_comment2 | default_if_none:'' | linebreaksbr }}</span>
+                            </div>
+                            <div class="col col-12">
+                                <span class="nowrap"><label>一時金1:</label>{{ room.key_money_text1 | default_if_none:'ーーー' }}</span>
+                                <span class="nowrap"><label>コメント1:</label>{{ room.key_money_comment1 | default_if_none:'' | linebreaksbr }}</span>
+                            </div>
+                            <div class="col col-12">
+                                <span class="nowrap"><label>一時金2:</label>{{ room.key_money_text2 | default_if_none:'ーーー' }}</span>
+                                <span class="nowrap"><label>コメント2:</label>{{ room.key_money_comment2 | default_if_none:'' | linebreaksbr }}</span>
+                            </div>
+                        </div>
+                        <div class="row category-title">
+                            <div class="col col-12">【その他】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>火災保険:</label>{{ room.insurance_text | default_if_none:'' }}
+                            </div>
+                            <div class="col col-12">
+                                <span class="nowrap"><label>家賃保証:</label>{{ room.guarantee_type.name | default_if_none:'' }}</span>
+                                <span class="nowrap"><label>保証会社:</label>{{ room.guarantee_company | default_if_none:'ーーー' }}</span>
+                                <span class="nowrap"><label>保証料:</label>{{ room.guarantee_fee | default_if_none:'ーーー' }}</span>
+                            </div>
+                            <div class="col col-12">
+                                <span class="nowrap"><label>書類代:</label>{{ room.document_cost_text | default_if_none:'ーーー' }}</span>
+                                <span class="nowrap"><label>コメント:</label>{{ room.document_cost_comment | default_if_none:'' | linebreaksbr }}</span>
+                            </div>
+                            <div class="col col-12">
+                                <span class="nowrap"><label>鍵交換代:</label>{{ room.key_change_cost_text | default_if_none:'ーーー' }}</span>
+                                <span class="nowrap"><label>コメント:</label>{{ room.key_change_cost_comment | default_if_none:'' | linebreaksbr }}</span>
+                            </div>
+                            <div class="col col-12">
+                                <div><label>その他初期費用:</label></div>
+                                <div>
+                                    {% if room.initial_cost_text1 %}<span class="nowrap">{{ room.initial_cost_text1 }}</span>{% endif %}
+                                    {% if room.initial_cost_text2 %}<span class="nowrap">{{ room.initial_cost_text2 }}</span>{% endif %}
+                                    {% if room.initial_cost_text3 %}<span class="nowrap">{{ room.initial_cost_text3 }}</span>{% endif %}
+                                    {% if room.initial_cost_text4 %}<span class="nowrap">{{ room.initial_cost_text4 }}</span>{% endif %}
+                                    {% if room.initial_cost_text5 %}<span class="nowrap">{{ room.initial_cost_text5 }}</span>{% endif %}
+                                    {% if room.initial_cost_text6 %}<span class="nowrap">{{ room.initial_cost_text6 }}</span>{% endif %}
+                                    {% if room.initial_cost_text7 %}<span class="nowrap">{{ room.initial_cost_text7 }}</span>{% endif %}
+                                    {% if room.initial_cost_text8 %}<span class="nowrap">{{ room.initial_cost_text8 }}</span>{% endif %}
+                                    {% if room.initial_cost_text9 %}<span class="nowrap">{{ room.initial_cost_text9 }}</span>{% endif %}
+                                    {% if room.initial_cost_text10 %}<span class="nowrap">{{ room.initial_cost_text10 }}</span>{% endif %}
+                                </div>
+                            </div>
+                            {% if room.initial_cost_note %}
+                            <div class="col col-12">
+                                <div><label>初期費用備考:</label></div>
+                                <div>{{ room.initial_cost_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                    </li>
+
+                    <li v-if="activeTabPage === 'contract_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【契約情報】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <label>契約期間:</label>{{ room.contract_span_text | default_if_none:'ーーー' }}
+                                </div>
+                            </div>
+                            <div class="col col-12">
+                                <div>
+                                    <span class="nowrap"><label>更新料:</label>{{ room.renewal_fee_text | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>更新事務手数料:</label>{{ room.renewal_charge_text | default_if_none:'ーーー' }}</span>
+                                </div>
+                            </div>
+                            {% if room.renewal_note %}
+                            <div class="col col-12">
+                                <div><label>更新備考:</label></div>
+                                <div>{{ room.renewal_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            <div class="col col-12">
+                                <label>再契約料:</label>{{ room.recontract_fee_text | default_if_none:'ーーー' }}
+                            </div>
+                            {% if room.recontract_note %}
+                            <div class="col col-12">
+                                <div><label>再契約備考:</label></div>
+                                <div>{{ room.recontract_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="row category-title">
+                            <div class="col col-12">【解約情報】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>解約通知期限:</label>{{ room.cancel_notice_limit_text | default_if_none:'ーーー' }}
+                            </div>
+                            {% if room.cancel_note %}
+                            <div class="col col-12">
+                                <div><label>解約備考:</label></div>
+                                <div>{{ room.cancel_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if room.short_cancel_note %}
+                            <div class="col col-12">
+                                <div><label>短期解約備考:</label></div>
+                                <div>{{ room.short_cancel_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            <div class="col col-12">
+                                <label>退去時清掃費用:</label>{{ room.cleaning_text | default_if_none:'ーーー' }}
+                            </div>
+                            {% if room.cleaning_note %}
+                            <div class="col col-12">
+                                <div><label>退去時清掃備考:</label></div>
+                                <div>{{ room.cleaning_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if room.special_agreement %}
+                        <div class="row category-title">
+                            <div class="col col-12">【特約事項】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div><label>特約:</label></div>
+                                <div>{{ room.special_agreement | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </li>
+
+                    <li v-if="activeTabPage === 'room_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【間取り】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>間取種別:</label>{{ room.layout_type.name | default_if_none:'ーーー' }}
+                                <label>専有面積:</label>{{ room.room_area_text }} m<sup>2</sup>
+                            </div>
+                            <div class="col col-12">
+                                <label>間取り詳細:</label>{{ room.layout_detail_text | default_if_none:'ーーー' }}
+                            </div>
+                            <div class="col col-12">
+                                <span class="nowrap"><label>バルコニー種別:</label>{{ room.balcony_type.name | default_if_none:'ーーー' }}</span>
+                                <span class="nowrap"><label>開口向き:</label>{{ room.direction.name | default_if_none:'ーーー' }}</span>
+                                <span class="nowrap"><label>バルコニー面積:</label>{{ room.balcony_area_text }} m<sup>2</sup></span>
+                            </div>
+                        </div>
+                        <div class="row category-title">
+                            <div class="col col-12">【主要設備】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>電気:</label>{{ room.electric_type.name | default_if_none:'ーーー' }}{% if room.electric_comment %} （{{ room.electric_comment | linebreaksbr }}）{% endif %}
+                            </div>
+                            <div class="col col-12">
+                                <label>ガス:</label>{{ room.gas_type.name | default_if_none:'ーーー' }}{% if room.gas_comment %} （{{ room.gas_comment | linebreaksbr }}）{% endif %}
+                            </div>
+                            <div class="col col-12">
+                                <label>浴室:</label>{{ room.bath_type.name | default_if_none:'ーーー' }}{% if room.bath_comment %} （{{ room.bath_comment | linebreaksbr }}）{% endif %}
+                            </div>
+                            <div class="col col-12">
+                                <label>トイレ:</label>{{ room.toilet_type.name | default_if_none:'ーーー' }}{% if room.toilet_comment %} （{{ room.toilet_comment | linebreaksbr }}）{% endif %}
+                            </div>
+                            <div class="col col-12">
+                                <label>キッチン:</label>{{ room.kitchen_range_type.name | default_if_none:'ーーー' }}{% if room.kitchen_range_comment %} （{{ room.kitchen_range_comment | linebreaksbr }}）{% endif %}
+                            </div>
+                            <div class="col col-12">
+                                <label>インターネット:</label>{{ room.internet_type.name | default_if_none:'ーーー' }}{% if room.internet_comment %} （{{ room.internet_comment | linebreaksbr }}）{% endif %}
+                            </div>
+                            <div class="col col-12">
+                                <label>洗濯機:</label>{{ room.washer_type.name | default_if_none:'ーーー' }}{% if room.washer_comment %} （{{ room.washer_comment | linebreaksbr }}）{% endif %}
+                            </div>
+                        </div>
+                        <div class="row category-title">
+                            <div class="col col-12">【制約条件】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <label>ペット:</label>{{ room.pet_type.name | default_if_none:'ーーー' }}{% if room.pet_comment %} （{{ room.pet_comment | linebreaksbr }}）{% endif %}
+                                </div>
+                                <div>
+                                    <span class="nowrap"><label>楽器:</label>{{ room.instrument_type.name | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>事務所利用:</label>{{ room.office_use_type.name | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>学生:</label>{{ room.student_type.name | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>新入生予約:</label>{{ room.new_student_type.name | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>同居:</label>{{ room.live_together_type.name | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>子供:</label>{{ room.children_type.name | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>ルームシェア:</label>{{ room.share_type.name | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>外国人:</label>{{ room.non_japanese_type.name | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>法人契約:</label>{{ room.corp_contract_type.name | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>福祉契約:</label>{{ room.welfare_type.name | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>女性限定:</label>{{ room.only_woman_type.name | default_if_none:'ーーー' }}</span>
+                                    <span class="nowrap"><label>男性限定:</label>{{ room.only_man_type.name | default_if_none:'ーーー' }}</span>
+                                </div>
+                            </div>
+                            {% if room.constraint_note %}
+                            <div class="col col-12">
+                                <div><label>制約条件備考:</label></div>
+                                <div>{{ room.constraint_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <span id="equipment-anchor" class="anchor-link"></span>
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【その他設備】
+                                <a href="{% url 'property_create_room_equipment' room.oid %}?back_url={% url 'property_room' room.oid %}%3Fpage=room_page%23equipment-anchor" class="btn btn-sm btn-info">追加</a>
+                                &nbsp;<a href="{% url 'property_copy_room_equipment' room.oid %}?back_url={% url 'property_room' room.oid%}%3Fpage=room_page%23equipment-anchor" class="btn btn-sm btn-outline-secondary">設備コピー</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row sub-list-row">
+                                    <div class="col col-2 col-lg-2 text-center"><label>カテゴリ</label></div>
+                                    <div class="col col-4 col-lg-3 text-center"><label>設備名</label></div>
+                                    <div class="col col-4 col-lg-3 text-center"><label>備考</label></div>
+                                    <div class="col col-2 col-lg-4"></div>
+                                </div>
+                                {% for item in equipments %}
+                                <div class="row sub-list-row">
+                                    <div class="col col-2 col-lg-2 col-form-label text-center">{{ item.equipment.category.name | default_if_none:'' }}</div>
+                                    <div class="col col-4 col-lg-3 col-form-label text-center">{{ item.equipment.name | default_if_none:'' }}{% if item.is_remained %}(残置物){% endif %}</div>
+                                    <div class="col col-4 col-lg-3 col-form-label text-center">{{ item.note | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-4">
+                                        <a href="{% url 'property_edit_room_equipment' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=room_page%23equipment-anchor" class="btn btn-sm btn-outline-primary">編集</a>
+                                        <a href="{% url 'property_delete_room_equipment' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=room_page%23equipment-anchor" class="btn btn-sm btn-outline-danger">削除</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'pm_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【広告料】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>広告料:</label>{{ room.ad_text }}
+                                {% if room.trader_ad_text %}<label>仲介他業者への提示広告料:</label>{{ room.trader_ad_text }}{% endif %}
+                            </div>
+                        </div>
+                        <div class="row category-title">
+                            <div class="col col-12">【貸主仲介手数料】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>貸主仲介手数料:</label>{{ room.owner_fee_type.name | default_if_none:'ーーー' }}
+                            </div>
+                        </div>
+                        <div class="row category-title">
+                            <div class="col col-12">【広告掲載】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>仲介他業者の広告掲載:</label>{{ room.trader_publish_type.name | default_if_none:'ーーー' }}
+                            </div>
+                            {% if room.trader_publish_note %}
+                            <div class="col col-12">
+                                <div><label>仲介他業者の広告掲載備考:</label></div>
+                                <div>{{ room.trader_portal_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="row category-title">
+                            <div class="col col-12">【ポータル掲載】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>仲介他業者のポータル掲載:</label>{{ room.trader_portal_type.name | default_if_none:'ーーー' }}
+                            </div>
+                            {% if room.trader_portal_note %}
+                            <div class="col col-12">
+                                <div><label>仲介他業者のポータル掲載備考:</label></div>
+                                <div>{{ room.trader_portal_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="row category-title">
+                            <div class="col col-12">【鍵情報】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>鍵番号:</label>{{ room.key_no | default_if_none:'ーーー' }}
+                            </div>
+                            {% if room.key_place_note %}
+                            <div class="col col-12">
+                                <div><label>鍵所在備考:</label></div>
+                                <div>{{ room.key_place_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="row category-title">
+                            <div class="col col-12">【その他】</div>
+                        </div>
+                        <div class="row category-contents">
+                            {% if room.private_note %}
+                            <div class="col col-12">
+                                <div><label>非公開部屋備考:</label></div>
+                                <div>{{ room.private_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if room.management_note %}
+                            <div class="col col-12">
+                                <div><label>管理備考:</label></div>
+                                <div>{{ room.management_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'pictures_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【部屋画像】
+                                <a href="{% url 'property_upload_room_picture' room.oid %}?back_url={% url 'property_room' room.oid%}%3Fpage=pictures_page" class="btn btn-sm btn-info">追加</a>
+                                &nbsp;<a href="{% url 'property_copy_room_picture' room.oid %}?back_url={% url 'property_room' room.oid%}%3Fpage=pictures_page" class="btn btn-sm btn-outline-secondary">画像コピー</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row image-items">
+                                {% for item in pictures %}
+                                    <div class="col col-2 text-center image-item">
+                                        <div>
+                                            <a href="/media/public/buildings/{{ room.building.file_oid }}/pictures/{{ item.file_name }}" data-lightbox="pictures">
+                                                <img src="/media/public/buildings/{{ room.building.file_oid }}/thumbnails/{{ item.file_name }}" alt="{{ item.picture_type.name }}" class="img-fluid">
+                                            </a>
+                                        </div>
+                                        <div>{{ item.picture_type.name }}</div>
+                                        {% if item.comment %}<div>{{ item.comment }}</div>{% endif %}
+                                        <div>
+                                            <a href="{% url 'property_edit_room_picture' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page" class="btn btn-sm btn-outline-primary">編集</a>
+                                            <a href="{% url 'property_delete_room_picture' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page" class="btn btn-sm btn-outline-danger">削除</a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <span id="panorama-anchor" class="anchor-link"></span>
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【部屋パノラマ】
+                                <a href="{% url 'property_upload_room_panorama' room.oid %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page%23panorama-anchor" class="btn btn-sm btn-info">追加</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row sub-list-row">
+                                    <div class="col col-3 col-lg-2 text-center">種別</div>
+                                    <div class="col col-5 col-lg-4 text-center">コメント</div>
+                                    <div class="col col-2 col-lg-1 text-center">優先順</div>
+                                    <div class="col col-2 col-lg-5"></div>
+                                </div>
+                                {% for item in panoramas %}
+                                <div class="row sub-list-row">
+                                    <div class="col col-3 col-lg-2 col-form-label text-center">{{ item.panorama_type.name }}</div>
+                                    <div class="col col-5 col-lg-4 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-5">
+                                        <a href="{% url 'property_edit_room_panorama' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page%23panorama-anchor" class="btn btn-sm btn-outline-primary">編集</a>
+                                        <a href="{% url 'property_delete_room_panorama' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page%23panorama-anchor" class="btn btn-sm btn-outline-danger">削除</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <span id="movie-anchor" class="anchor-link"></span>
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【部屋動画】
+                                <a href="{% url 'property_upload_room_movie' room.oid %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page%23movie-anchor" class="btn btn-sm btn-info">追加</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row sub-list-row">
+                                    <div class="col col-3 col-lg-2 text-center">種別</div>
+                                    <div class="col col-5 col-lg-4 text-center">コメント</div>
+                                    <div class="col col-2 col-lg-1 text-center">優先順</div>
+                                    <div class="col col-2 col-lg-5"></div>
+                                </div>
+                                {% for item in movies %}
+                                <div class="row sub-list-row">
+                                    <div class="col col-5 col-lg-2 col-form-label text-center">{{ item.movie_type.name }}</div>
+                                    <div class="col col-5 col-lg-4 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-5">
+                                        <a href="{% url 'property_edit_room_movie' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page%23movie-anchor" class="btn btn-sm btn-outline-primary">編集</a>
+                                        <a href="{% url 'property_delete_room_movie' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page%23movie-anchor" class="btn btn-sm btn-outline-danger">削除</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'vacancy_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【空室掲載】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                    <label>空室情報:</label>{% if room.is_publish_vacancy %}〇公開{% else %}×非公開{% endif %}
+                            </div>
+                            <div class="col col-12">
+                                    <label>公開開始日:</label>{{ room.vacancy_start_date | default_if_none:'ーーー' }}
+                                    <label>公開終了日:</label>{{ room.vacancy_end_date | default_if_none:'ーーー' }}
+                            </div>
+                            {% if room.vacancy_catch_copy %}
+                            <div class="col col-12">
+                                <div><label>キャッチコピー:</label></div>
+                                <div>{{ room.vacancy_catch_copy | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if room.vacancy_appeal %}
+                            <div class="col col-12">
+                                <div><label>アピール:</label></div>
+                                <div>{{ room.vacancy_appeal | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if room.vacancy_note %}
+                            <div class="col col-12">
+                                <div><label>空室情報備考:</label></div>
+                                <div>{{ room.vacancy_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <span id="vacancy-theme-anchor" class="anchor-link"></span>
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【空室テーマ掲載】
+                                <a href="{% url 'property_create_room_vacancy_theme' room.oid %}?back_url={% url 'property_room' room.oid %}%3Fpage=vacancy_page#vacancy-theme-anchor" class="btn btn-sm btn-info">追加</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row">
+                                    <div class="col col-10 col-lg-4 text-center"><label>掲載空室テーマ</label></div>
+                                    <div class="col col-2 col-lg-8"></div>
+                                </div>
+                                <div class="row">
+                                {% for item in vacancy_themes %}
+                                    <div class="col col-10 col-lg-4 col-form-label text-center">{{ item.vacancy_theme.name | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-8">
+                                        <a href="{% url 'property_delete_room_vacancy_theme' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=vacancy_page#vacancy-theme-anchor" class="btn btn-sm btn-outline-danger">削除</a>
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'web_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【WEB掲載】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>WEB:</label>{% if room.is_publish_web %}〇公開{% else %}×非公開{% endif %}
+                            </div>
+                            {% if room.web_catch_copy %}
+                            <div class="col col-12">
+                                <div><label>キャッチコピー:</label></div>
+                                <div>{{ room.web_catch_copy | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if room.web_appeal %}
+                            <div class="col col-12">
+                                <div><label>アピール:</label></div>
+                                <div>{{ room.web_appeal | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if room.web_note %}
+                            <div class="col col-12">
+                                <div><label>WEB備考:</label></div>
+                                <div>{{ room.web_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'etc_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【システム情報】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <label>部屋ID:</label>{{ room.id }}
+                                </div>
+                                <div>
+                                    <label>OID:</label>{{ room.oid }}
+                                </div>
+                                <div>
+                                    <label>登録日時:</label>{{ room.created_at }}
+                                    <label>登録ユーザ:</label>{{ room.created_user }}
+                                </div>
+                                <div>
+                                    <label>更新日時:</label>{{ room.updated_at }}
+                                    <label>更新ユーザ:</label>{{ room.updated_user }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row category-title">
+                            <div class="col col-12">【部屋状況変更履歴】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row">
+                                    <div class="col col-3 text-center">変更日</div>
+                                    <div class="col col-3 text-center">部屋状況</div>
+                                    <div class="col col-3 text-center">変更前</div>
+                                    <div class="col col-3 text-center">変更担当者</div>
+                                </div>
+                                <div class="row">
+                                {% for item in status_logs %}
+                                    <div class="col col-3 col-form-label text-center">{{ item.created_at | date:'Y/m/d' }}</div>
+                                    <div class="col col-3 col-form-label text-center">{{ item.room_status.name | default_if_none:'' }}</div>
+                                    <div class="col col-3 col-form-label text-center">{{ item.last_room_status.name | default_if_none:'' }}</div>
+                                    <div class="col col-3 col-form-label text-center">{{ item.created_user.full_name | default_if_none:'' }}</div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}
+        <script src="{% static 'lib/lightbox2/js/lightbox.min.js' %}"></script>
+        <script>
+            lightbox.option({
+                'wrapAround': true,
+                'disableScrolling': true,
+                'alwaysShowNavOnTouchDevices': true,
+            });
+        </script>
+        <script type="text/javascript" src="{% static 'property/js/room.js' %}"></script>
+        <script type="text/javascript">
+            var app = createRoomVue(
+                "{{ active_page }}",
+            );
+        </script>
+    {% endblock %}

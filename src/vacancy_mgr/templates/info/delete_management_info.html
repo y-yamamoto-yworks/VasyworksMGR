@@ -1,0 +1,68 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}管理お知らせ削除{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'documents/css/style.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【管理お知らせ削除】{% endblock %}
+
+    {% block contents %}
+        <div id="delete-form">
+        {% if back_url %}
+            <form action="{% url 'info_delete_management_info' data.idb64 %}?back_url={{ escaped_back_url }}" method="post" enctype="multipart/form-data">
+        {% else %}
+            <form action="{% url 'info_delete_management_info' data.idb64 %}" method="post" enctype="multipart/form-data">
+        {% endif %}
+            {% csrf_token %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p>*&nbsp;{{ field.label }} : {{ error }}</p>
+                        {% endfor %}
+                     {% endfor %}
+                {% endif %}
+                <div class="form-group row form-inline">
+                    <div class="col-3"></div>
+                    <div class="col-7">
+                        <div>
+                            <p>公開日: {{ data.start_date }}</p>
+                            <p>終了日: {{ data.end_date }}</p>
+                            <div>
+                                <div>【お知らせ内容】</div>
+                                <p>{{ data.information | default_if_none:'' | linebreaksbr }}</p>
+                            </div>
+                        </div>
+                        <div>
+                            {{ form.confirm }}&nbsp;上記のお知らせの削除を確認しました。
+                        </div>
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <input type="submit" value="削除" class="btn d-block mx-auto d-flex align-items-center btn-danger">
+                    </div>
+                    <div class="col-4">
+                    {% if back_url %}
+                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                    {% else %}
+                        <a href="{% url 'info_management_info_list' %}" class="btn btn-secondary">戻る</a>
+                    {% endif %}
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+             </form>
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}{% endblock %}

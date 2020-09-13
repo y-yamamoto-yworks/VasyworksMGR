@@ -1,0 +1,681 @@
+{% load static %}
+{% load humanize %}
+
+<modal name="select-owner" :draggable="true" :resizable="true" :width="400" :height="300">
+    <div class="modal-header">
+        <h2>オーナー選択</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row modal-select-hint">
+            <div class="col col-8">
+                <input type="text" class="form-control" v-model="selectOwnerHint">
+            </div>
+            <div class="col col-3">
+                <button v-on:click="narrowDownOwners($event)" class="btn btn-info">部分一致</button>
+            </div>
+            <div class="col col-1"></div>
+        </div>
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="selectedOwner">
+                    <option v-for="owner in selectOwners" v-bind:value="owner.id">[[ owner.owner_name ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseOwnerModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseOwnerModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="select-trader" :draggable="true" :resizable="true" :width="400" :height="300">
+    <div class="modal-header">
+        <h2>賃貸管理業者選択</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row modal-select-hint">
+            <div class="col col-8">
+                <input type="text" class="form-control" v-model="selectTraderHint">
+            </div>
+            <div class="col col-3">
+                <button v-on:click="narrowDownTraders($event)" class="btn btn-info">部分一致</button>
+            </div>
+            <div class="col col-1"></div>
+        </div>
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="selectedTrader">
+                    <option v-for="trader in selectTraders" v-bind:value="trader.id">[[ trader.trader_name ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseTraderModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseTraderModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="select-department" :draggable="true" :resizable="true" :width="400" :height="300">
+    <div class="modal-header">
+        <h2>管理部署選択</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="selectedDepartment">
+                    <option v-for="department in selectDepartments" v-bind:value="department.id">[[ department.department_name ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseDepartmentModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseDepartmentModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="select-agency-department" :draggable="true" :resizable="true" :width="400" :height="300">
+    <div class="modal-header">
+        <h2>仲介部署選択</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="selectedAgencyDepartment">
+                    <option v-for="department in selectAgencyDepartments" v-bind:value="department.id">[[ department.department_name ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseAgencyDepartmentModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseAgencyDepartmentModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="select-staff1" :draggable="true" :resizable="true" :width="400" :height="300">
+    <div class="modal-header">
+        <h2>スタッフ1選択</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row modal-select-hint">
+            <div class="col col-8">
+                <input type="text" class="form-control" v-model="selectStaffHint1">
+            </div>
+            <div class="col col-3">
+                <button v-on:click="narrowDownStaffs1($event)" class="btn btn-info">部分一致</button>
+            </div>
+            <div class="col col-1"></div>
+        </div>
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="selectedStaff1">
+                    <option v-for="staff in selectStaffs1" v-bind:value="staff.id">[[ staff.staff_name ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseStaff1Modal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseStaff1Modal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="select-staff2" :draggable="true" :resizable="true" :width="400" :height="300">
+    <div class="modal-header">
+        <h2>スタッフ2選択</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row modal-select-hint">
+            <div class="col col-8">
+                <input type="text" class="form-control" v-model="selectStaffHint2">
+            </div>
+            <div class="col col-3">
+                <button v-on:click="narrowDownStaffs2($event)" class="btn btn-info">部分一致</button>
+            </div>
+            <div class="col col-1"></div>
+        </div>
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="selectedStaff2">
+                    <option v-for="staff in selectStaffs2" v-bind:value="staff.id">[[ staff.staff_name ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseStaff2Modal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseStaff2Modal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-water" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：水道費</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputWater">
+                    <option v-for="item in inputWaters">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputWaterModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputWaterModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-electric" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：電気</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputElectric">
+                    <option v-for="item in inputElectrics">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputElectricModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputElectricModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-gas" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：ガス</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputGas">
+                    <option v-for="item in inputGases">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputGasModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputGasModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-internet" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：インターネット</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputInternet">
+                    <option v-for="item in inputInternets">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputInternetModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputInternetModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-cancel-notice" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：解約通知</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputCancelNotice">
+                    <option v-for="item in inputCancelNotices">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputCancelNoticeModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputCancelNoticeModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-short-cancel" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：短期解約</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputShortCancel">
+                    <option v-for="item in inputShortCancels">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputShortCancelModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputShortCancelModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-payment" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：賃料支払い</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputPayment">
+                    <option v-for="item in inputPayments">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputPaymentModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputPaymentModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-guarantee" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：保証会社</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputGuarantee">
+                    <option v-for="item in inputGuarantees">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputGuaranteeModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputGuaranteeModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-insurance" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：火災保険</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputInsurance">
+                    <option v-for="item in inputInsurances">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputInsuranceModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputInsuranceModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-guarantor-limit" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：保証人極度額</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputGuarantorLimit">
+                    <option v-for="item in inputGuarantorLimits">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputGuarantorLimitModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputGuarantorLimitModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-document-price" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：入居書類代</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputDocumentPrice">
+                    <option v-for="item in inputDocumentPrices">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputDocumentPriceModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputDocumentPriceModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-renewal-charge" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：更新事務手数料</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputRenewalCharge">
+                    <option v-for="item in inputRenewalCharges">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputRenewalChargeModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputRenewalChargeModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-garage" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：駐車場</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputGarage">
+                    <option v-for="item in inputGarages">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputGarageModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputGarageModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-bike-parking" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：駐輪場</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputBikeParking">
+                    <option v-for="item in inputBikeParkings">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputBikeParkingModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputBikeParkingModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-cleaning" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：退去時清掃</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputCleaning">
+                    <option v-for="item in inputCleanings">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputCleaningModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputCleaningModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-change-lock" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：鍵交換</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputChangeLock">
+                    <option v-for="item in inputChangeLocks">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputChangeLockModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputChangeLockModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>
+
+<modal name="input-portal" :draggable="true" :resizable="true" :width="400" :height="250">
+    <div class="modal-header">
+        <h2>定型入力：ポータル掲載制限</h2>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col col-12">
+                <select class="modal-select form-control" v-model="inputPortal">
+                    <option v-for="item in inputPortals">[[ item.input_contents ]]</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="row">
+            <div class="col col-2"></div>
+            <div class="col col-4">
+                <button v-on:click="okCloseInputPortalModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
+            </div>
+            <div class="col col-4">
+                <button v-on:click="cancelCloseInputPortalModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
+            </div>
+            <div class="col col-2"></div>
+        </div>
+    </div>
+</modal>

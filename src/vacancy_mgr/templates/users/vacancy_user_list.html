@@ -1,0 +1,81 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}{% if all_users %}全{% endif %}空室情報閲覧ユーザ一覧{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'users/css/style.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【{% if all_users %}全{% endif %}空室情報閲覧ユーザ一覧】{% endblock %}
+
+    {% block contents %}
+    {% if all_users %}
+        <form action="{% url 'users_all_vacancy_user_list' %}" method="post" enctype="multipart/form-data">
+    {% else %}
+        <form action="{% url 'users_vacancy_user_list' %}" method="post" enctype="multipart/form-data">
+    {% endif %}
+            {% csrf_token %}
+            <div class="form-group row">
+                <div class="col col-2 col-form-label"><label class="float-right">{{ form.display_name.label }}</label></div>
+                <div class="col-8">{{ form.display_name }}</div>
+                <div class="col-2"></div>
+            </div>
+            <div class="form-group row">
+                <div class="col-2"></div>
+                <div class="col-4">
+                    <input type="submit" value="検索" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                </div>
+                <div class="col-4">
+                    <input type="submit" name="clear_conditions" value="クリア" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+                </div>
+                <div class="col-2"></div>
+            </div>
+        </form>
+        <div  id="user-list-header">
+            <div class="row">
+                <div id="link-add-user" class="col col-6 text-left">
+                    <a href="{% url 'users_create_vacancy_user' %}">空室情報閲覧ユーザ追加</a>
+                </div>
+                <div id="link-change-list" class="col col-6 text-right">
+                {% if all_users %}
+                    <a href="{% url 'users_vacancy_user_list' %}">空室情報閲覧ユーザ一覧</a>
+                {% else %}
+                    <a href="{% url 'users_all_vacancy_user_list' %}">全空室情報閲覧ユーザ一覧</a>
+                {% endif %}
+                </div>
+            </div>
+        </div>
+        <div id="user-list">
+        {% if users %}
+            <div class="row">
+                <div class="col col-3 text-center">ユーザ名</div>
+                <div class="col col-5 text-center">表示名</div>
+                <div class="col col-2 text-center">レベル</div>
+                <div class="col col-1 text-center">有効</div>
+                <div class="col col-1 text-center">自社</div>
+            </div>
+            {% for item in users %}
+            <div class="row">
+                <div class="col col-3"><a href="{% url 'users_vacancy_user' item.idb64 %}" target="_blank">{{ item.username }}</a></div>
+                <div class="col col-5">{{ item.full_name }}</div>
+                <div class="col col-2 text-center">{{ item.level.name }}</div>
+                <div class="col col-1 text-center">{% if item.is_active %}〇{% else %}×{% endif %}</div>
+                <div class="col col-1 text-center">{% if item.is_company %}〇{% else %}×{% endif %}</div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="row">
+                <div class="col col-12 text-center">該当する業者ユーザはありません。</div>
+            </div>
+        {% endif %}
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}{% endblock %}

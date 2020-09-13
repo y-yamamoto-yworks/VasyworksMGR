@@ -1,0 +1,820 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}建物情報 {{ building.building_name }}{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'lib/lightbox2/css/lightbox.min.css' %}">
+        <link rel="stylesheet" href="{% static 'property/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'property/css/style_ids.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}
+        【建物情報】 {{ building.building_name }}（{{ building.building_kana }}）
+        {% if building.building_old_name %}旧:&nbsp;{{ building.building_old_name }}{% endif %}
+    {% endblock %}
+
+    {% block contents %}
+        <div class="row">
+            <div class="col-3 text-center">
+            {% if back_url %}
+                <a href="{% url 'property_edit_building' building.oid %}?back_url={{ escaped_back_url }}" class="btn btn-primary">編集</a>
+            {% else %}
+                <a href="{% url 'property_edit_building' building.oid %}" class="btn btn-primary">編集</a>
+            {% endif %}
+            </div>
+            <div class="col-6"></div>
+            <div class="col-3 text-center">
+            {% if back_url %}
+                <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+            {% else %}
+                <input type="button" value="閉じる" onclick="window.close();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+            {% endif %}
+            </div>
+        </div>
+
+        <div id="data-detail">
+            <div class="tab">
+                <ul class="tabs">
+                    <li ref="main_page_tab" v-on:click="changeTabPage('main_page', $event)" class="active">基本情報</li>
+                    <li ref="map_page_tab" v-on:click="changeTabPage('map_page', $event)">地図</li>
+                    <li ref="around_page_tab" v-on:click="changeTabPage('around_page', $event)">周辺情報</li>
+                    <li ref="garage_page_tab" v-on:click="changeTabPage('garage_page', $event)">駐輪駐車</li>
+                    <li ref="pm_page_tab" v-on:click="changeTabPage('pm_page', $event)">管理情報</li>
+                    <li ref="pictures_page_tab" v-on:click="changeTabPage('pictures_page', $event)">建物画像</li>
+                    <li ref="rooms_page_tab" v-on:click="changeTabPage('rooms_page', $event)">部屋一覧</li>
+                    <li ref="vacancy_page_tab" v-on:click="changeTabPage('vacancy_page', $event)">空室情報</li>
+                    <li ref="web_page_tab" v-on:click="changeTabPage('web_page', $event)">WEB情報</li>
+                    <li ref="etc_page_tab" v-on:click="changeTabPage('etc_page', $event)">その他</li>
+                </ul>
+                <ul class="tab-pages">
+                    <li v-if="activeTabPage === 'main_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【所在地】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <label>住所:</label>〒{{ building.postal_code | default_if_none:''}}
+                                    {{ building.address | default_if_none:'' }}
+                                </div>
+                                {% if building.town_name %}
+                                <div>
+                                    <label>ポータル町名:</label>{{ building.town_name | default_if_none:'' }}
+                                </div>
+                                {% endif %}
+                                <div>
+                                    <span class="nowrap"><label>エリア:</label>{{ building.area | default_if_none:'' }}</span>
+                                    <span class="nowrap"><label>小学校区:</label>{{ building.elementary_school | default_if_none:'' }} {{ building.elementary_school_distance }} m</span>
+                                    <span class="nowrap"><label>中学校区:</label>{{ building.junior_high_school | default_if_none:'' }} {{ building.junior_high_school_distance }} m</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row category-title">
+                            <div class="col col-12">【最寄り駅】</div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-12 category-contents">
+                                <div>
+                                    <label>1:</label>{{ building.nearest_station1 | default_if_none:'' }}
+                                </div>
+                                <div>
+                                    <label>2:</label>{{ building.nearest_station2 | default_if_none:'' }}
+                                </div>
+                                <div>
+                                    <label>3:</label>{{ building.nearest_station3 | default_if_none:'' }}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row category-title">
+                            <div class="col col-12">【建物情報】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <label>種別:</label>{{ building.building_type.name | default_if_none:'' }}
+                                    <label>コメント:</label>{{ building.building_type_comment | default_if_none:'無し' }}
+                                </div>
+                                <div>
+                                    <label>構造:</label>{{ building.structure.name | default_if_none:'' }}
+                                    <label>コメント:</label>{{ building.structure_comment | default_if_none:'無し' }}
+                                </div>
+                                <div>
+                                    <span class="nowrap"><label>地上階数:</label>{{ building.building_floors }} 階</span>
+                                    <span class="nowrap"><label>地下階数:</label>{{ building.building_undergrounds }} 階</span>
+                                    <span class="nowrap"><label>総戸数:</label>{{ building.building_rooms }} 戸</span>
+                                </div>
+                                <div>
+                                    <label>築年月:</label>{{ building.build_year }}年{{ building.build_month }}月
+                                </div>
+                            </div>
+                            {% if building.garbage_note %}
+                            <div class="col col-12">
+                                <div><label>ゴミ関連備考:</label></div>
+                                <div>{{ building.garbage_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.tenant_note %}
+                            <div class="col col-12">
+                                <div><label>テナント関連備考:</label></div>
+                                <div>{{ building.tenant_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.private_note %}
+                            <div class="col col-12">
+                                <div><label>非公開備考:</label></div>
+                                <div>{{ building.private_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row category-title">
+                            <div class="col col-12">【登記情報】</div>
+                        </div>
+                        <div class="row">
+                            <div class="col col-12 category-contents">
+                                <span class="nowrap"><label>登記所在地:</label>{{ building.register_address | default_if_none:'' }}</span>
+                                <span class="nowrap"><label>登記名義人:</label>{{ building.register_name | default_if_none:'' }}</span>
+                                <span class="nowrap"><label>家屋番号:</label>{{ building.register_building_no | default_if_none:'' }}</span>
+                                <span class="nowrap"><label>不動産番号:</label>{{ building.register_no  | default_if_none:''}}</span>
+                            </div>
+                        </div>
+
+                        <div class="row category-title">
+                            <div class="col col-12">【オーナー】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                            {% if building.owner and building.owner.id != 0 %}
+                                <div>
+                                    <label>オーナー名:</label>{{ building.owner.owner_name | default_if_none:'' }}
+                                    <a href="{% url 'owner_detail' building.owner.idb64 %}" class="btn btn-sm btn-info" target="_blank">詳細</a>
+                                </div>
+                                <div>
+                                    <span class="nowrap"><label>電話番号1:</label>{{ building.owner.tel1 | default_if_none:'' }}</span>
+                                    <span class="nowrap"><label>電話番号2:</label>{{ building.owner.tel2 | default_if_none:'' }}</span>
+                                </div>
+                            {% endif %}
+                            {% if building.owner_note %}
+                                <div><label>備考:</label></div>
+                                <div>{{ building.owner_note | default_if_none:'' | linebreaksbr }}</div>
+                            {% endif %}
+                        </div>
+                        </div>
+
+                        {% if building.trader and building.trader.id != 0 %}
+                        <div class="row category-title">
+                            <div class="col col-12">【賃貸管理業者】（他業者）</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <label>管理業者:</label>{{ building.trader.trader_name | default_if_none:'' }}
+                                    <a href="{% url 'trader_detail' building.trader.idb64 %}" class="btn btn-sm btn-info" target="_blank">詳細</a>
+                                </div>
+                                <div>
+                                    <label>電話番号1:</label>{{ building.trader.tel1 | default_if_none:'' }}
+                                    <label>電話番号2:</label>{{ building.trader.tel2 | default_if_none:'' }}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </li>
+
+                    <li v-if="activeTabPage === 'map_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【緯度経度】
+                                <a href="{% url 'property_edit_building_latlng' building.oid %}?back_url={% url 'property_building' building.oid %}%3Fpage=map_page" class="btn btn-sm btn-info">変更</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <label>緯度:</label>{{ building.lat }}
+                                    <label>経度:</label>{{ building.lng }}
+                                </div>
+                            </div>
+                            <div id="id_map">
+                            {% if building.lat > 0 and building.lng > 0 %}
+                                <l-map :zoom="zoom" :center="center">
+                                    <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+                                    <l-marker :lat-lng="marker"></l-marker>
+                                </l-map>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'around_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【大学・施設等】
+                                <a href="{% url 'property_create_building_landmark' building.oid %}?back_url={% url 'property_building' building.oid %}%3Fpage=around_page" class="btn btn-sm btn-info">追加</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row sub-list-row">
+                                    <div class="col col-2 col-lg-1 text-center"><label>種別</label></div>
+                                    <div class="col col-4 col-lg-3 text-center"><label>ランドマーク名</label></div>
+                                    <div class="col col-2 col-lg-1 text-center"><label>距離</label></div>
+                                    <div class="col col-2 col-lg-1 text-center"><label>優先順</label></div>
+                                    <div class="col col-2 col-lg-6"></div>
+                                </div>
+                                {% for item in landmarks %}
+                                <div class="row sub-list-row">
+                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.landmark.landmark_type.name }}</div>
+                                    <div class="col col-4 col-lg-3 col-form-label text-center">{{ item.landmark.name }}</div>
+                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.distance }} m</div>
+                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-6">
+                                        <a href="{% url 'property_edit_building_landmark' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=around_page" class="btn btn-sm btn-outline-primary">編集</a>
+                                        <a href="{% url 'property_delete_building_landmark' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=around_page" class="btn btn-sm btn-outline-danger">削除</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <span id="facility-anchor" class="anchor-link"></span>
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【周辺施設】
+                                <a href="{% url 'property_create_building_facility' building.oid %}?back_url={% url 'property_building' building.oid %}%3Fpage=around_page%23facility-anchor" class="btn btn-sm btn-info">追加</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row sub-list-row">
+                                    <div class="col col-2 col-lg-1 text-center"><label>種別</label></div>
+                                    <div class="col col-4 col-lg-3 text-center"><label>施設名</label></div>
+                                    <div class="col col-2 col-lg-1 text-center"><label>距離</label></div>
+                                    <div class="col col-2 col-lg-1 text-center"><label>優先順</label></div>
+                                    <div class="col col-2 col-lg-6"></div>
+                                </div>
+                                {% for item in facilities %}
+                                <div class="row sub-list-row">
+                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.facility.name }}</div>
+                                    <div class="col col-4 col-lg-3 col-form-label text-center">{{ item.facility_name | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.distance }} m</div>
+                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-6">
+                                        <a href="{% url 'property_edit_building_facility' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=around_page%23facility-anchor" class="btn btn-sm btn-outline-primary">編集</a>
+                                        <a href="{% url 'property_delete_building_facility' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=around_page%23facility-anchor" class="btn btn-sm btn-outline-danger">削除</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% if building.around_note %}
+                            <div class="col col-12">
+                                <div><label>備考:</label></div>
+                                <div>{{ building.around_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'garage_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【駐輪場】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <label>種別:</label>{{ building.bike_parking_type | default_if_none:'' }}
+                                    <label>屋根付き:</label>{% if building.with_bike_parking_roof %}○{% else %}−{% endif %}
+                                </div>
+                                <div>
+                                    <label>月額:</label>{{ building.bike_parking_fee_lower | intcomma }}円
+                                    {% if building.bike_parking_fee_upper > building.bike_parking_fee_lower %}
+                                        〜{{ building.bike_parking_fee_upper | intcomma }}円
+                                    {% endif %}
+                                    {% if building.bike_parking_fee_tax_type.text %}（{{ building.bike_parking_fee_tax_type.text }}）{% endif %}
+                                </div>
+                            </div>
+                            {% if building.bike_parking_note %}
+                            <div class="col col-12">
+                                <div><label>備考:</label></div>
+                                <div>{{ building.bike_parking_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row category-title">
+                            <div class="col col-12">【駐車場】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <label>種別:</label>{{ building.garage_type.name | default_if_none:'' }}
+                                    <label>状況:</label>{{ building.garage_status.name | default_if_none:'' }}
+                                    {% if building.garage_distance > 0 %}
+                                    <label>距離:</label>{{ building.garage_distance }} m
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <span class="nowrap">
+                                        <label>月額:</label>{{ building.garage_fee_lower | intcomma }}円
+                                        {% if building.garage_fee_upper > building.garage_fee_lower %}
+                                            〜{{ building.garage_fee_upper | intcomma }}円
+                                        {% endif %}
+                                        {% if building.garage_fee_tax_type.text %}（{{ building.garage_fee_tax_type.text }}）{% endif %}
+                                    </span>
+                                    <span class="nowrap">
+                                        <label>手数料:</label>{{ building.garage_charge_lower | intcomma }}円
+                                        {% if building.garage_charge_upper > building.garage_charge_lower %}
+                                            〜{{ building.garage_charge_upper | intcomma }}円
+                                        {% endif %}
+                                        {% if building.garage_charge_tax_type.text %}（{{ building.garage_charge_tax_type.text }}）{% endif %}
+                                    </span>
+                                </div>
+                            </div>
+                            {% if building.garage_note %}
+                            <div class="col col-12">
+                                    <div><label>備考:</label></div>
+                                    <div>{{ building.garage_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <span id="garage-list-anchor" class="anchor-link"></span>
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【駐車場一覧】
+                                <a href="{% url 'property_create_building_garage' building.oid %}?back_url={% url 'property_building' building.oid %}%3Fpage=garage_page%23garage-list-anchor" class="btn btn-sm btn-info">追加</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row sub-list-row">
+                                    <div class="col col-2 text-center"><label>駐車場名</label></div>
+                                    <div class="col col-1 text-center"><label>空き状況</label></div>
+                                    <div class="col col-1 text-center"><label>優先順</label></div>
+                                    <div class="col col-3 text-center"><label>費用</label></div>
+                                    <div class="col col-3 text-center"><label>コメント</label></div>
+                                    <div class="col col-2"></div>
+                                </div>
+                                {% for item in garages %}
+                                <div class="row sub-list-row">
+                                    <div class="col col-2 col-form-label text-center">{{ item.garage_name | default_if_none:'' }}</div>
+                                    <div class="col col-1 col-form-label text-center">{{ item.garage_status.name }}</div>
+                                    <div class="col col-1 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-3 col-form-label text-center">
+                                        <div>{{ item.garage_fee_text | default_if_none:'' }}</div>
+                                        <div>{{ item.garage_charge_text | default_if_none:'' }}</div>
+                                        <div>{{ item.certification_fee_text | default_if_none:'' }}</div>
+                                    </div>
+                                    <div class="col col-3 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2">
+                                        <a href="{% url 'property_edit_building_garage' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=garage_page%23garage-list-anchor" class="btn btn-sm btn-outline-primary">編集</a>
+                                        <a href="{% url 'property_delete_building_garage' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=garage_page%23garage-list-anchor" class="btn btn-sm btn-outline-danger">削除</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'pm_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【管理形態】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div>
+                                <label>種別:</label>{{ building.management_type.name | default_if_none:'' }}
+                                <label>優先レベル:</label>{{ building.priority_level }}
+                            </div>
+                            {% if building.management_note %}
+                            <div class="col col-12">
+                                <div><label>管理備考:</label></div>
+                                <div>{{ building.management_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="row category-title">
+                            <div class="col col-12">【担当部署】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <span class="nowrap"><label>管理:</label>{{ building.department.department_name | default_if_none:'' }}</span>
+                                    <span class="nowrap"><label>仲介:</label>{{ building.agency_department.department_name | default_if_none:'' }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row category-title">
+                            <div class="col col-12">【管理担当者】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <span class="nowrap"><label>1:</label>{{ building.staff1.staff_name | default_if_none:'' }}</span>
+                                    <span class="nowrap"><label>2:</label>{{ building.staff2.staff_name | default_if_none:'' }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <span id="file-anchor" class="anchor-link"></span>
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【建物ファイル】
+                                <a href="{% url 'property_upload_building_file' building.oid %}?back_url={% url 'property_building' building.oid %}%3Fpage=pm_page%23file-anchor" class="btn btn-sm btn-info">追加</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row sub-list-row">
+                                    <div class="col col-3 col-lg-2 text-center"><label>タイトル</label></div>
+                                    <div class="col col-5 col-lg-4 text-center"><label>コメント</label></div>
+                                    <div class="col col-2 col-lg-1 text-center"><label>優先順</label></div>
+                                    <div class="col col-2 col-lg-5"></div>
+                                </div>
+                                {% for item in files %}
+                                <div class="row sub-list-row">
+                                    <div class="col col-3 col-lg-2 col-form-label text-center">{{ item.file_title | default_if_none:'' }}</div>
+                                    <div class="col col-5 col-lg-4 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-5">
+                                        <a href="{% url 'property_edit_building_file' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pm_page%23file-anchor" class="btn btn-sm btn-outline-primary">編集</a>
+                                        <a href="{% url 'property_delete_building_file' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pm_page%23file-anchor" class="btn btn-sm btn-outline-danger">削除</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'pictures_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【建物画像】
+                                <a href="{% url 'property_upload_building_picture' building.oid %}?back_url={% url 'property_building' building.oid%}%3Fpage=pictures_page" class="btn btn-sm btn-info">追加</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row image-items">
+                                {% for item in pictures %}
+                                    <div class="col col-2 text-center image-item">
+                                        <div>
+                                            <a href="/media/public/buildings/{{ building.file_oid }}/pictures/{{ item.file_name }}" data-lightbox="pictures">
+                                                <img src="/media/public/buildings/{{ building.file_oid }}/thumbnails/{{ item.file_name }}" alt="{{ item.picture_type.name }}" class="img-fluid">
+                                            </a>
+                                        </div>
+                                        <div><label>{{ item.picture_type.name }}</label></div>
+                                        {% if item.comment %}<div>{{ item.comment }}</div>{% endif %}
+                                        <div>
+                                            <a href="{% url 'property_edit_building_picture' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page" class="btn btn-sm btn-outline-primary">編集</a>
+                                            <a href="{% url 'property_delete_building_picture' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page" class="btn btn-sm btn-outline-danger">削除</a>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <span id="panorama-anchor" class="anchor-link"></span>
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【建物パノラマ】
+                                <a href="{% url 'property_upload_building_panorama' building.oid %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page%23panorama-anchor" class="btn btn-sm btn-info">追加</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row sub-list-row">
+                                    <div class="col col-3 col-lg-2 text-center"><label>種別</label></div>
+                                    <div class="col col-5 col-lg-4 text-center"><label>コメント</label></div>
+                                    <div class="col col-2 col-lg-1 text-center"><label>優先順</label></div>
+                                    <div class="col col-2 col-lg-5"></div>
+                                </div>
+                                {% for item in panoramas %}
+                                <div class="row sub-list-row">
+                                    <div class="col col-3 col-lg-2 col-form-label text-center">{{ item.panorama_type.name }}</div>
+                                    <div class="col col-5 col-lg-4 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-5">
+                                        <a href="{% url 'property_edit_building_panorama' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page%23panorama-anchor" class="btn btn-sm btn-outline-primary">編集</a>
+                                        <a href="{% url 'property_delete_building_panorama' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page%23panorama-anchor" class="btn btn-sm btn-outline-danger">削除</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+
+                        <span id="movie-anchor" class="anchor-link"></span>
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【建物動画】
+                                <a href="{% url 'property_upload_building_movie' building.oid %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page%23movie-anchor" class="btn btn-sm btn-info">追加</a>
+                            </div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row sub-list-row">
+                                    <div class="col col-3 col-lg-2 text-center"><label>種別</label></div>
+                                    <div class="col col-5 col-lg-4 text-center"><label>コメント</label></div>
+                                    <div class="col col-2 col-lg-1 text-center"><label>優先順</label></div>
+                                    <div class="col col-2 col-lg-5"></div>
+                                </div>
+                                {% for item in movies %}
+                                <div class="row sub-list-row">
+                                    <div class="col col-3 col-lg-2 col-form-label text-center">{{ item.movie_type.name }}</div>
+                                    <div class="col col-5 col-lg-4 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-5">
+                                        <a href="{% url 'property_edit_building_movie' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page%23movie-anchor" class="btn btn-sm btn-outline-primary">編集</a>
+                                        <a href="{% url 'property_delete_building_movie' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page%23movie-anchor" class="btn btn-sm btn-outline-danger">削除</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'rooms_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">
+                                【部屋一覧】
+                                <a href="{% url 'property_create_room' building.oid %}?back_url={% url 'property_building' building.oid%}%3Fpage=rooms_page" class="btn btn-sm btn-info">追加</a>
+                            </div>
+                        </div>
+                        <div id="room_list" class="row category-contents">
+                            <div class="col col-12">
+                                <div class="row sub-list-row">
+                                    <div class="col col-2 col-lg-1 text-center"><label>部屋番号</label></div>
+                                    <div class="col col-4 col-lg-3 text-center"><label>部屋状況</label></div>
+                                    <div class="col col-3 col-lg-2 text-center"><label>賃料</label></div>
+                                    <div class="col col-2 col-lg-1 text-center"><label>間取り</label></div>
+                                    <div class="col col-1 col-lg-5"></div>
+                                </div>
+                                {% for item in rooms %}
+                                <div class="row sub-list-row">
+                                    <div class="col col-2 col-lg-1 text-center"><a href="{% url 'property_room' item.oid %}" target="_blank">{{ item.room_no }}</a></div>
+                                    <div class="col col-4 col-lg-3 text-center">{{ item.room_status.name | default_if_none:'' }}{% if item.room_status.for_rent %}<span class="nowrap">（状況: {{ item.vacancy_status.name | default_if_none:'' }}）</span>{% endif %}</div>
+                                    <div class="col col-3 col-lg-2 text-center">{{ item.rent_text | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 text-center">{{ item.layout_type.name | default_if_none:'' }}</div>
+                                    <div class="col col-1 col-lg-5">
+                                         <a href="{% url 'property_delete_room' item.oid %}?back_url={% url 'property_building' building.oid %}%3Fpage=rooms_page" class="btn btn-sm btn-outline-danger">削除</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'vacancy_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【空室掲載】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>空室情報:</label>{% if building.is_hidden_vacancy %}×非公開{% else %}〇公開{% endif %}
+                                <label>おすすめ:</label>{% if building.is_vacancy_recommend %}〇対象{% else %}ーーー{% endif %}
+                            </div>
+                            {% if building.vacancy_rent_comment %}
+                            <div class="col col-12">
+                                <div><label>賃料コメント:</label></div>
+                                <div>{{ building.vacancy_rent_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_condo_fees_comment %}
+                            <div class="col col-12">
+                                <div><label>{{ condo_fees_name}}コメント:</label></div>
+                                <div>{{ building.vacancy_condo_fees_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_water_comment %}
+                            <div class="col col-12">
+                                <div><label>水道費コメント:</label></div>
+                                <div>{{ building.vacancy_water_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_electric_comment %}
+                            <div class="col col-12">
+                                <div><label>電気コメント:</label></div>
+                                <div>{{ building.vacancy_electric_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_gas_comment %}
+                            <div class="col col-12">
+                                <div><label>ガスコメント:</label></div>
+                                <div>{{ building.vacancy_gas_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_internet_comment %}
+                            <div class="col col-12">
+                                <div><label>インターネットコメント:</label></div>
+                                <div>{{ building.vacancy_internet_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_cancel_notice_comment %}
+                            <div class="col col-12">
+                                <div><label>解約通知コメント:</label></div>
+                                <div>{{ building.vacancy_cancel_notice_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_short_cancel_comment %}
+                            <div class="col col-12">
+                                <div><label>短期解約コメント:</label></div>
+                                <div>{{ building.vacancy_short_cancel_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_payment_comment %}
+                            <div class="col col-12">
+                                <div><label>賃料支払いコメント:</label></div>
+                                <div>{{ building.vacancy_payment_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_guarantee_comment %}
+                            <div class="col col-12">
+                                <div><label>保証会社コメント:</label></div>
+                                <div>{{ building.vacancy_guarantee_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_insurance_comment %}
+                            <div class="col col-12">
+                                <div><label>火災保険コメント:</label></div>
+                                <div>{{ building.vacancy_insurance_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_guarantor_limit_comment %}
+                            <div class="col col-12">
+                                <div><label>保証人極度額コメント:</label></div>
+                                <div>{{ building.vacancy_guarantor_limit_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_document_price_comment %}
+                            <div class="col col-12">
+                                <div><label>入居書類代コメント:</label></div>
+                                <div>{{ building.vacancy_document_price_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_renewal_fee_comment %}
+                            <div class="col col-12">
+                                <div><label>更新料コメント:</label></div>
+                                <div>{{ building.vacancy_renewal_fee_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_renewal_charge_comment %}
+                            <div class="col col-12">
+                                <div><label>更新事務手数料コメント:</label></div>
+                                <div>{{ building.vacancy_renewal_charge_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_auto_lock_comment %}
+                            <div class="col col-12">
+                                <div><label>オートロックコメント:</label></div>
+                                <div>{{ building.vacancy_auto_lock_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_security_comment %}
+                            <div class="col col-12">
+                                <div><label>防犯コメント:</label></div>
+                                <div>{{ building.vacancy_security_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_garage_comment %}
+                            <div class="col col-12">
+                                <div><label>駐車場コメント:</label></div>
+                                <div>{{ building.vacancy_garage_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_bike_parking_comment %}
+                            <div class="col col-12">
+                                <div><label>駐輪場コメント:</label></div>
+                                <div>{{ building.vacancy_bike_parking_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_cleaning_comment %}
+                            <div class="col col-12">
+                                <div><label>退去時清掃コメント:</label></div>
+                                <div>{{ building.vacancy_cleaning_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_cleaning_comment %}
+                            <div class="col col-12">
+                                <div><label>鍵交換コメント:</label></div>
+                                <div>{{ building.vacancy_cleaning_comment | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_portal_note %}
+                            <div class="col col-12">
+                                <div><label>ポータル掲載コメント:</label></div>
+                                <div>{{ building.vacancy_portal_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_catch_copy %}
+                            <div class="col col-12">
+                                <div><label>キャッチコピー:</label></div>
+                                <div>{{ building.vacancy_catch_copy | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_appeal %}
+                            <div class="col col-12">
+                                <div><label>アピール:</label></div>
+                                <div>{{ building.vacancy_appeal | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.vacancy_note %}
+                            <div class="col col-12">
+                                <div><label>空室情報備考:</label></div>
+                                <div>{{ building.vacancy_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'web_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">【WEB掲載】</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <label>WEB:</label>{% if building.is_hidden_web %}×非公開{% else %}〇公開{% endif %}
+                            </div>
+                            {% if building.web_catch_copy %}
+                            <div class="col col-12">
+                                <div><label>キャッチコピー:</label></div>
+                                <div>{{ building.web_catch_copy | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.web_appeal %}
+                            <div class="col col-12">
+                                <div><label>アピール:</label></div>
+                                <div>{{ building.web_appeal | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                            {% if building.web_note %}
+                            <div class="col col-12">
+                                <div><label>WEB備考:</label></div>
+                                <div>{{ building.web_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </li>
+
+                    <li v-if="activeTabPage === 'etc_page'">
+                        <div class="row category-title">
+                            <div class="col col-12">システム情報</div>
+                        </div>
+                        <div class="row category-contents">
+                            <div class="col col-12">
+                                <div>
+                                    <label>建物ID:</label>{{ building.id }}
+                                    <label>自社ID:</label>{{ building.building_code | default_if_none:'' }}
+                                </div>
+                                <div>
+                                    <label>OID:</label>{{ building.oid }}
+                                </div>
+                                <div>
+                                    <label>ファイルID:</label>{{ building.file_oid }}
+                                </div>
+                                <div>
+                                    <label>登録日時:</label>{{ building.created_at }}
+                                    <label>登録ユーザ:</label>{{ building.created_user }}
+                                </div>
+                                <div>
+                                    <label>更新日時:</label>{{ building.updated_at }}
+                                    <label>更新ユーザ:</label>{{ building.updated_user }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}
+        <script src="{% static 'lib/lightbox2/js/lightbox.min.js' %}"></script>
+        <script>
+            lightbox.option({
+                'wrapAround': true,
+                'disableScrolling': true,
+                'alwaysShowNavOnTouchDevices': true,
+            });
+        </script>
+        <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
+        <script src="{% static 'lib/leaflet/leaflet.js' %}"></script>
+        <script src="{% static 'lib/vue2-leaflet/vue2-leaflet.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'property/js/building.js' %}"></script>
+        <script type="text/javascript">
+            var app = createBuildingVue(
+                "{{ active_page }}",
+                {{ building.lat }},
+                {{ building.lng }},
+            );
+        </script>
+    {% endblock %}

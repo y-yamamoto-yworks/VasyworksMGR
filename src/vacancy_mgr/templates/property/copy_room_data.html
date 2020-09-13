@@ -1,0 +1,84 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}部屋データコピー {{ room.building.building_name }} {{ room.room_no | default_if_none:'' }} 号室{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'property/css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'property/css/style_ids.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【部屋データコピー】{{ room.building.building_name }} {{ room.room_no | default_if_none:'' }} 号室{% endblock %}
+
+    {% block contents %}
+        <div class="notice-message"><p>※ 他の部屋のデータをコピーします。コピーの実行後、元には戻せません。</p></div>
+        <div id="copy-form">
+            <form action="{% url 'property_copy_room'  room.oid %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <p>*&nbsp;{{ field.label }} : {{ error }}</p>
+                        {% endfor %}
+                     {% endfor %}
+                {% endif %}
+                <div class="form-group row">
+                    <div class="col-2 col-form-label"><label class="float-right">コピー元部屋</label></div>
+                    <div class="col-10">{{ form.selected_room }}</div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-2 col-md-2 col-form-label"><label class="float-right">コピー対象</label></div>
+                    <div class="col-9 col-md-6 copy-room-targets">
+                        <div class="form-inline">
+                            <label>基本情報</label>{{ form.base }}
+                            <label>間取り</label>{{ form.layout }}
+                            <label>設備・入居条件</label>{{ form.features }}
+                        </div>
+                        <div class="form-inline">
+                            <label>空室掲載</label>{{ form.vacancy }}
+                            <label>WEB掲載</label>{{ form.web }}
+                        </div>
+                        <div class="form-inline">
+                            <label>月額費用</label>{{ form.monthly_cost }}
+                            <label>初期費用</label>{{ form.initial_cost }}
+                            <label>更新・再契約費用</label>{{ form.renewal_cost }}
+                        </div>
+                        <div class="text-center">
+                            <a href="#" v-on:click="selectAllTarget($event)" class="btn btn-sm btn-outline-primary">全選択</a>&nbsp;
+                            <a href="#" v-on:click="clearAllTarget($event)" class="btn btn-sm btn-outline-secondary">クリア</a>
+                        </div>
+                    </div>
+                    <div class="col-1 col-md-4"></div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <input type="submit" value="データコピー" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                    </div>
+                    <div class="col-4">
+                    {% if back_url %}
+                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                    {% else %}
+                        <a href="{% url 'property_edit_room' room.oid %}" class="btn btn-secondary">戻る</a>
+                    {% endif %}
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+             </form>
+        </div>
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}
+        <script type="text/javascript" src="{% static 'property/js/copy_room_data.js' %}"></script>
+        <script type="text/javascript">
+            var app = copyRoomDataVue();
+        </script>
+    {% endblock %}

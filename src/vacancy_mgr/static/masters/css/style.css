@@ -1,0 +1,26 @@
+#link-add-item {
+    padding-left: 50px;
+    font-size: 12px;
+}
+
+#data-list-header {
+    padding: 10px 20px 0 20px;
+}
+
+#data-list {
+    padding: 0 20px 10px 20px;
+}
+
+#data-list .row {
+    border: 0px;
+}
+
+#data-list .col {
+    border: solid 1px black;
+}
+
+/* 各項目 */
+#id_priority {
+    width: 100px;
+    text-align: right;
+}

@@ -1,0 +1,143 @@
+{% load static %}
+{% load humanize %}
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="robots" content="none" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <title>{% block head_title %}{% endblock %}</title>
+    <link rel="shortcut icon" href="{% static 'vacancy_mgr/images/favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/vue-js-modal/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'vacancy_mgr/css/style.css' %}">
+    <script type="text/javascript" src="{% static 'lib/jquery/jquery-3.4.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/popper/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/vue/vue.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/axios/axios.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/vue-js-modal/index.js' %}"></script>
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div id="page-top">
+        {% block page_top %}{% endblock %}
+    </div>
+    <div id="container">
+        <div id="navigation-bar">
+            <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarMenu">
+                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/menu/">メニュー</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">データ管理</a>
+                        <div class="dropdown-menu" aria-labelledby="navMaster">
+                            <a class="dropdown-item" href="{% url 'search_buildings_all' %}">建物</a>
+                            <a class="dropdown-item" href="{% url 'search_buildings_area' %}">建物エリア検索</a>
+                            <a class="dropdown-item" href="{% url 'owner_owner_list' %}">オーナー</a>
+                            <a class="dropdown-item" href="{% url 'trader_trader_list' %}">業者</a>
+                            <a class="dropdown-item" href="{% url 'trader_trader_group_list' %}">業者グループ</a>
+                            <a class="dropdown-item" href="{% url 'documents_index' %}">書類ファイル</a>
+                            <a class="dropdown-item" href="{% url 'info_management_info_list' %}">管理お知らせ</a>
+                        </div>
+                    </li>
+                    {% if user.is_company_admin %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">システム管理</a>
+                        <div class="dropdown-menu" aria-labelledby="navMaster">
+                            <a class="dropdown-item" href="{% url 'company_index' %}" target="_blank">会社</a>
+                            <a class="dropdown-item" href="{% url 'company_department_list' %}">部署</a>
+                            <a class="dropdown-item" href="{% url 'company_staff_list' %}">スタッフ</a>
+                            <a class="dropdown-item" href="{% url 'users_user_list' %}">システムユーザ</a>
+                            <a class="dropdown-item" href="{% url 'users_vacancy_user_list' %}">空室情報ユーザ</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">マスタ管理</a>
+                        <div class="dropdown-menu" aria-labelledby="navMaster">
+                            <a class="dropdown-item" href="{% url 'masters_guarantee_company_list' %}">保証会社</a>
+                            <a class="dropdown-item" href="{% url 'masters_insurance_company_list' %}">火災保険会社</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_bike_parking_list' %}">駐輪場テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_cancel_notice_list' %}">解約通知テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_short_cancel_list' %}">短期解約テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_change_lock_list' %}">鍵交換テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_cleaning_list' %}">退去時清掃テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_document_price_list' %}">書類代テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_electric_list' %}">電気テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_garage_list' %}">駐車場テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_gas_list' %}">ガステキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_guarantee_list' %}">保証会社テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_guarantor_limit_list' %}">保証人極度額テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_insurance_list' %}">火災保険テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_internet_list' %}">インターネットテキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_payment_list' %}">賃料支払いテキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_portal_list' %}">ポータル掲載制限テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_renewal_charge_list' %}">更新事務手数料テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_water_list' %}">水道テキスト</a>
+                            <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_theme_list' %}">空室情報テーマ</a>
+                        </div>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">ログアウト</a>
+                    </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+
+        <div id="header">
+            {% block header %}{% endblock %}
+        </div>
+
+        <div class="row">
+            <div class="col col-12 text-center">
+                <h1 class="h1_title">{% block h1_title %}{% endblock %}</h1>
+            </div>
+        </div>
+
+        {% if messages %}
+        <div id="messages">
+            <ul>
+            {% for message in messages %}
+                <li {% if message.tags %}class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <div id="contents">
+            {% block contents %}{% endblock %}
+        </div>
+
+        <div id="footer">
+            {% block footer %}{% endblock %}
+        </div>
+    </div>
+    <footer class="no-printing">
+        <img src="{% static 'vacancy_mgr/images/logo.png' %}" alt="logo">
+        <p>Vasyworks</p>
+    </footer>
+
+    {% if move_buttons %}
+        <div id="move-top">
+            <a href="#page-top"><img src="{% static '/vacancy_mgr/images/arrow_top.png' %}" alt="move top"></a>
+        </div>
+        <div id="move-bottom">
+            <a href="#page-bottom"><img src="{% static '/vacancy_mgr/images/arrow_bottom.png' %}" alt="move bottom"></a>
+        </div>
+    {% endif %}
+
+    <div id="page-bottom">
+        {% block page_bottom %}{% endblock %}
+    </div>
+</body>
+</html>

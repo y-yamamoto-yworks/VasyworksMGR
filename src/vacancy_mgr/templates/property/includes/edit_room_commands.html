@@ -1,0 +1,17 @@
+{% load static %}
+{% load humanize %}
+
+<div class="form-group row">
+    <div class="col-2"></div>
+    <div class="col-4">
+        <input type="submit" value="保存" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+    </div>
+    <div class="col-4">
+    {% if back_url %}
+        <a href="{% url 'property_room' room.oid %}?back_url={{ escaped_back_url }}" class="btn btn-secondary">閲覧ページへ戻る</a>
+    {% else %}
+        <a href="{% url 'property_room' room.oid %}" class="btn btn-secondary">閲覧ページへ戻る</a>
+    {% endif %}
+    </div>
+    <div class="col-2"></div>
+</div>
