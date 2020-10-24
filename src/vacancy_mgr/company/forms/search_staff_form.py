@@ -12,10 +12,14 @@ class SearchStaffForm(forms.Form):
     """
     スタッフ検索フォーム
     """
-    last_name = forms.CharField(label=_('姓'), max_length=50, required=False)
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.fields['last_name'] = forms.CharField(
+            label=_('姓'),
+            max_length=50,
+            required=False,
+        )
+        self.fields['last_name'].widget.attrs['v-model'] = 'last_name'
 
         for key in self.fields.keys():
             field = self.fields[key]

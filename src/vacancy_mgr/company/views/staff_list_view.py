@@ -67,6 +67,7 @@ class StaffListView(FormView):
                 context['staffs'] = self.staffs.filter(
                     last_name__icontains=self.filter_name,
                 ).all()
+                context['last_name'] = self.filter_name
             else:
                 context['staffs'] = self.staffs
         else:
@@ -75,6 +76,7 @@ class StaffListView(FormView):
                     is_deleted=False,
                     last_name__icontains=self.filter_name,
                 ).all()
+                context['last_name'] = self.filter_name
             else:
                 context['staffs'] = self.staffs.filter(
                     is_deleted=False,

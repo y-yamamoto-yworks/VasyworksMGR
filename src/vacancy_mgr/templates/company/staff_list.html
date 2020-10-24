@@ -14,28 +14,31 @@
     {% block h1_title %}【{% if all_staffs %}全{% endif %}スタッフ一覧】{% endblock %}
 
     {% block contents %}
-    {% if all_staffs %}
-        <form action="{% url 'company_all_staff_list' %}" method="post" enctype="multipart/form-data">
-    {% else %}
-        <form action="{% url 'company_staff_list' %}" method="post" enctype="multipart/form-data">
-    {% endif %}
-            {% csrf_token %}
-            <div class="form-group row">
-                <div class="col col-2 col-form-label"><label class="float-right">{{ form.last_name.label }}</label></div>
-                <div class="col-8">{{ form.last_name }}</div>
-                <div class="col-2"></div>
-            </div>
-            <div class="form-group row">
-                <div class="col-2"></div>
-                <div class="col-4">
-                    <input type="submit" value="検索" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+        <div id="search-conditions-form">
+        {% if all_staffs %}
+            <form action="{% url 'company_all_staff_list' %}" method="post" enctype="multipart/form-data">
+        {% else %}
+            <form action="{% url 'company_staff_list' %}" method="post" enctype="multipart/form-data">
+        {% endif %}
+                {% csrf_token %}
+                <div class="form-group row">
+                    <div class="col col-2 col-form-label"><label class="float-right">{{ form.last_name.label }}</label></div>
+                    <div class="col-8">{{ form.last_name }}</div>
+                    <div class="col-2"></div>
                 </div>
-                <div class="col-4">
-                    <input type="submit" name="clear_conditions" value="クリア" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+                <div class="form-group row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <input type="submit" value="検索" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                    </div>
+                    <div class="col-4">
+                        <input type="submit" name="clear_conditions" value="クリア" v-on:click="clearConditions($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+                    </div>
+                    <div class="col-2"></div>
                 </div>
-                <div class="col-2"></div>
-            </div>
-        </form>
+            </form>
+        </div>
+
         <div  id="data-list-header">
             <div class="row">
                 <div id="link-add-item" class="col col-6 text-left">
@@ -77,4 +80,11 @@
 
     {% block footer %}{% endblock %}
 
-    {% block page_bottom %}{% endblock %}
+    {% block page_bottom %}
+        <script type="text/javascript" src="{% static 'company/js/search_staff.js' %}"></script>
+        <script type="text/javascript">
+            var searchApp = createSearchStaffVue(
+                "{{ last_name | default_if_none:'' }}"
+            );
+        </script>
+    {% endblock %}
