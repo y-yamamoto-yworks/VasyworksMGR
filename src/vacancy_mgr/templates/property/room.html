@@ -54,13 +54,13 @@
                         </div>
                         <div class="row category-contents">
                             <div class="col col-12">
-                                <label>住所:</label>〒{{ room.building.postal_code | default_if_none:''}}
-                                {{ room.building.address | default_if_none:'' }}
-                            </div>
-                            <div class="col col-12">
-                                <label>建物名:</label>{{ room.building.building_name | default_if_none:'' }}
+                                <label>建物名:</label>{% if room.building.building_name %}<a href="{% url 'property_building' room.building.oid %}">{{ room.building.building_name }}</a>{% endif %}
                                 <label>部屋番号:</label>{{ room.room_no | default_if_none:'' }} 号室
                                 <label>部屋階数:</label>{{ room.room_floor }} 階
+                            </div>
+                            <div class="col col-12">
+                                <label>住所:</label>〒{{ room.building.postal_code | default_if_none:''}}
+                                {{ room.building.address | default_if_none:'' }}
                             </div>
                             <div class="col col-12">
                                 <label>賃貸種別:</label>{{ room.rental_type.name | default_if_none:'' }}
