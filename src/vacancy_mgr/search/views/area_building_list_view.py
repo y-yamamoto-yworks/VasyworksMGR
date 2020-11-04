@@ -42,6 +42,7 @@ class AreaBuildingListView(FormView):
     form_class = SearchBuildingAreaForm
     template_name = 'search/area_building_list.html'
     user = None
+    is_searched = False
     pref = None
     city = None
     area = None
@@ -58,9 +59,9 @@ class AreaBuildingListView(FormView):
         context = super().get_context_data(**kwargs)
         context['user'] = self.user
         context['api_key'] = ApiHelper.get_key()
+        context['is_searched'] = self.is_searched
 
         if self.city != '0' or self.area != '0':
-            context['is_searched'] = True
 
             conditions = Q(is_deleted=False)
 
@@ -83,17 +84,11 @@ class AreaBuildingListView(FormView):
         if settings.DEFAULT_PREF_ID:
             context['default_pref_id'] = settings.DEFAULT_PREF_ID
 
-        if self.pref:
-            context['pref'] = self.pref
-        if self.city:
-            context['city'] = self.city
-        if self.area:
-            context['area'] = self.area
-
         return context
 
     def form_valid(self, form):
         if self.request.method in ('POST', 'PUT'):
+            self.is_searched = True
             if form.data.get('pref'):
                 self.pref = form.data['pref']
             if form.data.get('city'):

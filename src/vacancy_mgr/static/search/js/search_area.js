@@ -39,10 +39,7 @@ function createSearchAreaVue(
             changeCity: function(event) {
                 // 市区町村変更時の処理
                 this.area = 0;
-
                 this.reloadAreas();
-                this.reloadElementarySchools();
-                this.reloadJuniorHighSchools();
             },
             reloadSelectOptions: function(elm, items, value) {
                 // サーバサイドで自動生成される選択リスト向け
