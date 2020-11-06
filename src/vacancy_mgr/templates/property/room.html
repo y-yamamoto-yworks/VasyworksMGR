@@ -178,7 +178,7 @@
                                 {% if room.rent_hidden %}<span class="nowrap"><label>賃料非表示:</label>×非表示</span>{% endif %}
                             </div>
                             <div class="col col-12">
-                                <label>{{ condo_fees_name}}:</label>{{ room.condo_fees_text | default_if_none:'' }}
+                                <label>{{ condo_fees_name }}:</label>{{ room.condo_fees_text | default_if_none:'' }}
                             </div>
                             <div class="col col-12">
                                 <span class="nowrap"><label>水道費:</label>{{ room.water_cost_text | default_if_none:'' }}</span>
