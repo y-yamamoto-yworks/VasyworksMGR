@@ -1420,6 +1420,22 @@ class Room(models.Model):
         return ans
 
     @property
+    def condo_management_text(self):
+        ans = None
+
+        if self.building.management_type.is_condo_management:
+            if self.is_sublease:
+                ans = '分譲借上'
+            elif self.is_entrusted:
+                ans = '分譲専任'
+            elif self.is_condo_management:
+                ans = '分譲管理'
+            else:
+                ans = '分譲管理外'
+
+        return ans
+
+    @property
     def room_area_text(self):
         return float_normalize(xfloat(self.room_area))
 
