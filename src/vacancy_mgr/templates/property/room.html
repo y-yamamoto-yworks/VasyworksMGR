@@ -67,8 +67,8 @@
                                 <label>閲覧レベル:</label>{{ room.room_auth_level.name | default_if_none:'' }}
                             </div>
                             <div class="col col-12">
-                                <label>分譲借上:</label>{% if room.is_sublease %}〇{% else %}ー{% endif %}
-                                <label>分譲専任:</label>{% if room.is_entrusted %}〇{% else %}ー{% endif %}
+                                <label>部屋一室借上:</label>{% if room.is_sublease %}〇{% else %}ー{% endif %}
+                                <label>部屋一室専任:</label>{% if room.is_entrusted %}〇{% else %}ー{% endif %}
                                 <label>分譲管理:</label>{% if room.is_condo_management %}〇{% else %}ー{% endif %}
                             </div>
                             {% if room.condo_owner.id != 0 %}

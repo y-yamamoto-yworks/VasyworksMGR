@@ -1425,9 +1425,9 @@ class Room(models.Model):
 
         if self.building.management_type.is_condo_management:
             if self.is_sublease:
-                ans = '分譲借上'
+                ans = '部屋一室借上'
             elif self.is_entrusted:
-                ans = '分譲専任'
+                ans = '部屋一室専任'
             elif self.is_condo_management:
                 ans = '分譲管理'
             else:
