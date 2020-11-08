@@ -48,3 +48,30 @@
 #data-list .col {
     border: solid 1px black;
 }
+
+#search-conditions-form {
+    padding: 0 30px;
+}
+
+#search-conditions-form table {
+    width: 100%;
+}
+
+#search-conditions-form td {
+    border-collapse: collapse;
+    border: solid 1px black;
+    padding: 2px;
+}
+
+#search-conditions-form .target-title {
+    text-align: center;
+    font-size: large;
+    font-weight: bold;
+    background-color: gray;
+    color: white;
+}
+
+#search-conditions-form .item-title {
+    text-align: center;
+    background-color: lightgray;
+}

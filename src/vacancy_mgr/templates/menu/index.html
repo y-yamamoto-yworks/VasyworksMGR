@@ -20,20 +20,26 @@
     {% block h1_title %}【メニュー】{{ company.company_name | default_if_none:'' }}{% endblock %}
 
     {% block contents %}
-        <div id="normal-menu" class="menu-group">
+        <div id="property-menu" class="menu-group">
         {% if company.is_default %}
             <div>※ 会社登録を行ってください。（登録後に再読み込みしてください。）</div>
         {% else %}
-            <h2>【データ管理】</h2>
+            <h2>【物件データ管理】</h2>
             <a href="{% url 'search_buildings_all' %}" class="btn btn-outline-primary">建物名検索（登録）</a>
             <a href="{% url 'search_buildings_area' %}" class="btn btn-outline-primary">建物エリア検索</a>
+            <a href="{% url 'search_rooms' %}" class="btn btn-outline-primary">部屋検索</a>
+        {% endif %}
+        </div>
+        {% if not company.is_default %}
+        <div id="etc-menu" class="menu-group">
+            <h2>【その他データ管理】</h2>
             <a href="{% url 'owner_owner_list' %}" class="btn btn-outline-primary">オーナー</a>
             <a href="{% url 'trader_trader_list' %}" class="btn btn-outline-primary">業者</a>
             <a href="{% url 'trader_trader_group_list' %}" class="btn btn-outline-primary">業者グループ</a>
             <a href="{% url 'documents_index' %}" class="btn btn-outline-primary">書類ファイル</a>
             <a href="{% url 'info_management_info_list' %}" class="btn btn-outline-primary">管理お知らせ</a>
-        {% endif %}
         </div>
+        {% endif %}
         {% if user.is_company_admin %}
         <div id="system-menu" class="menu-group">
             <h2>【システム管理】</h2>

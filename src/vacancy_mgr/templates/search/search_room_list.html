@@ -1,0 +1,133 @@
+{% extends 'vacancy_mgr/base.html' %}
+{% load static %}
+{% load humanize %}
+
+    {% block head_title %}部屋検索{% endblock %}
+    {% block head %}
+        <link rel="stylesheet" href="{% static 'search/css/style.css' %}">
+    {% endblock %}
+
+    {% block page_top %}{% endblock %}
+
+    {% block header %}{% endblock %}
+
+    {% block h1_title %}【部屋検索】{% endblock %}
+
+    {% block contents %}
+        <div id="search-conditions-form">
+            <form action="" method="post" enctype="multipart/form-data" v-on:submit="submit($event)">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col col-12">
+                        <table>
+                            <tbody>
+                                <tr><td colspan="6" class="target-title">建物条件</td></tr>
+                                <tr>
+                                    <td class="item-title">建物名称</td>
+                                    <td colspan="5" class="item">{{ form.building_name }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">エリア</td>
+                                    <td colspan="5" class="item">
+                                        <span class="form-inline">{{ form.pref }}&nbsp;{{ form.city }}&nbsp;{{ form.area }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">駅</td>
+                                    <td colspan="5" class="item">
+                                        <span class="form-inline">{{ form.railway }}&nbsp;{{ form.station }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">築年（西暦）</td>
+                                    <td colspan="5" class="item">
+                                        <span class="form-inline">{{ form.lower_build_year }}年&nbsp;～&nbsp;{{ form.upper_build_year }}年</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">管理種別</td>
+                                    <td class="item">{{ form.management_type }}</td>
+                                    <td class="item-title">駐車場</td>
+                                    <td class="item">{{ form.garage_type }}</td>
+                                    <td class="item-title">駐輪場</td>
+                                    <td class="item">{{ form.bike_parking_type }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">空室掲載</td>
+                                    <td class="item">{{ form.building_is_hidden_vacancy }}</td>
+                                    <td class="item-title">おすすめ</td>
+                                    <td class="item">{{ form.building_is_vacancy_recommend }}</td>
+                                    <td class="item-title">WEB掲載</td>
+                                    <td class="item">{{ form.building_is_hidden_web }}</td>
+                                </tr>
+                                <tr><td colspan="6" class="target-title">部屋条件</td></tr>
+                                <tr>
+                                    <td class="item-title">賃料</td>
+                                    <td colspan="3" class="item">
+                                        <span class="form-inline">{{ form.lower_rent }}円&nbsp;～&nbsp;{{ form.upper_rent }}円</span>
+                                    </td>
+                                    <td class="item-title">賃貸種別</td>
+                                    <td class="item">{{ form.rental_type }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">分譲管理</td>
+                                    <td class="item">{{ form.is_condo_management }}</td>
+                                    <td class="item-title">部屋一室借上</td>
+                                    <td class="item">{{ form.is_sublease }}</td>
+                                    <td class="item-title">部屋一室専任</td>
+                                    <td class="item">{{ form.is_entrusted }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">部屋状況</td>
+                                    <td class="item">{{ form.room_status_category }}</td>
+                                    <td class="item-title">間取り</td>
+                                    <td class="item">{{ form.layout_type }}</td>
+                                    <td class="item-title">閲覧レベル</td>
+                                    <td class="item">
+                                        <span class="form-inline">{{ form.lower_room_auth_level }}&nbsp;～&nbsp;{{ form.upper_room_auth_level }}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="item-title">空室掲載</td>
+                                    <td class="item">{{ form.room_is_publish_vacancy }}</td>
+                                    <td class="item-title">WEB掲載</td>
+                                    <td class="item">{{ form.room_is_publish_web }}</td>
+                                    <td colspan="2" class="item"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-6">
+                        <input type="submit" value="検索" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                    </div>
+                    <div class="col col-6">
+                        <input type="submit" value="クリア" v-on:click="clearConditions($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {% if is_searched %}
+        {% if rooms %}<div class="total-count">全 {{ rooms|length }} 件</div>{% endif %}
+        {% include 'search/includes/room_list.html' %}
+        {% else %}
+        <div class="search-message">
+            <p>条件を選択して、検索を実行してください。</p>
+        </div>
+        {% endif %}
+
+    {% endblock %}
+
+    {% block footer %}{% endblock %}
+
+    {% block page_bottom %}
+        <script type="text/javascript" src="{% static 'search/js/search_room.js' %}"></script>
+        <script type="text/javascript">
+            var searchApp = createSearchRoomVue(
+                "{{ api_key }}",
+                "{{ default_pref_id | default_if_none:'' }}"
+            );
+        </script>
+    {% endblock %}

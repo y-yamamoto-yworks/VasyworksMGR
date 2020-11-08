@@ -13,5 +13,7 @@ urlpatterns = [
     path('buildings/all/<int:page_number>', AllBuildingListView.as_view(), name='search_buildings_all'),
     path('buildings/area/', AreaBuildingListView.as_view(), name='search_buildings_area'),
 
+    path('rooms/', SearchRoomListView.as_view(), name='search_rooms'),
+
     path('', TemplateView.as_view(template_name='404.html'), name='search_index'),
 ]

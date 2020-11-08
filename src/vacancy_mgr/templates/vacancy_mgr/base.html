@@ -38,10 +38,16 @@
                         <a class="nav-link" href="/menu/">メニュー</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">データ管理</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">物件データ管理</a>
                         <div class="dropdown-menu" aria-labelledby="navMaster">
                             <a class="dropdown-item" href="{% url 'search_buildings_all' %}">建物</a>
                             <a class="dropdown-item" href="{% url 'search_buildings_area' %}">建物エリア検索</a>
+                            <a class="dropdown-item" href="{% url 'search_rooms' %}">部屋検索</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">その他データ管理</a>
+                        <div class="dropdown-menu" aria-labelledby="navMaster">
                             <a class="dropdown-item" href="{% url 'owner_owner_list' %}">オーナー</a>
                             <a class="dropdown-item" href="{% url 'trader_trader_list' %}">業者</a>
                             <a class="dropdown-item" href="{% url 'trader_trader_group_list' %}">業者グループ</a>
