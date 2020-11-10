@@ -552,18 +552,41 @@
                             <div class="col col-12">
                                 <div class="row sub-list-row">
                                     <div class="col col-2 col-lg-1 text-center"><label>部屋番号</label></div>
-                                    <div class="col col-4 col-lg-3 text-center"><label>部屋状況</label></div>
-                                    <div class="col col-3 col-lg-2 text-center"><label>賃料</label></div>
-                                    <div class="col col-2 col-lg-1 text-center"><label>間取り</label></div>
-                                    <div class="col col-1 col-lg-5"></div>
+                                    <div class="col col-2 col-lg-1"><label>部屋状況</label></div>
+                                    <div class="col col-3 col-lg-2"><label>賃料等</label></div>
+                                    <div class="col col-4 col-lg-7"><label>その他</label></div>
+                                    <div class="col col-1 col-lg-1"></div>
                                 </div>
                                 {% for item in rooms %}
                                 <div class="row sub-list-row">
-                                    <div class="col col-2 col-lg-1 text-center"><a href="{% url 'property_room' item.oid %}" target="_blank">{{ item.room_no }}</a></div>
-                                    <div class="col col-4 col-lg-3 text-center">{{ item.room_status.name | default_if_none:'' }}{% if item.room_status.for_rent %}<span class="nowrap">（状況: {{ item.vacancy_status.name | default_if_none:'' }}）</span>{% endif %}</div>
-                                    <div class="col col-3 col-lg-2 text-center">{{ item.rent_text | default_if_none:'' }}</div>
-                                    <div class="col col-2 col-lg-1 text-center">{{ item.layout_type.name | default_if_none:'' }}</div>
-                                    <div class="col col-1 col-lg-5">
+                                    <div class="col col-2 col-lg-1 text-center">
+                                        <div><a href="{% url 'property_room' item.oid %}" class="btn btn-sm btn-outline-primary" target="_blank">{{ item.room_no }}</a></div>
+                                        <div><span class="small">間取り:{{ item.layout_type.name | default_if_none:'---' }}</span></div>
+                                    </div>
+                                    <div class="col col-2 col-lg-1">
+                                        <div><span class="small">【{{ item.room_status.name | default_if_none:'-----' }}】</span></div>
+                                        {% if item.room_status.for_rent and item.vacancy_status.name %}<div><span class="small">現況:{{ item.vacancy_status.name }}</span></div>{% endif %}
+                                    </div>
+                                    <div class="col col-3 col-lg-2">
+                                        <div><span class="small">賃料:{{ item.rent_text | default_if_none:'-----' }}</span></div>
+                                        <div><span class="small">{{ condo_fees_name }}:{{ item.condo_fees_text | default_if_none:'-----' }}</span></div>
+                                        <div><span class="small">水道費:{{ item.water_cost_text | default_if_none:'-----' }}</span></div>
+                                    </div>
+                                    <div class="col col-4 col-lg-7">
+                                        {% if item.deposit_text1 or item.deposit_text2 or item.key_money_text1 or item.key_money_text2 %}
+                                        <div>
+                                            <span class="small nowrap">{{ item.deposit_text1 | default_if_none:''}}</span>
+                                            <span class="small nowrap">{{ item.deposit_text2 | default_if_none:''}}</span>
+                                            <span class="small nowrap">{{ item.key_money_text1 | default_if_none:''}}</span>
+                                            <span class="small nowrap">{{ item.key_money_text2 | default_if_none:''}}</span>
+                                            {% if not item.building.is_hidden_vacancy %}<span class="small nowrap">空室掲載:{% if item.is_publish_vacancy %}○{% else %}×{% endif %}</span>{% endif %}
+                                            {% if not item.building.is_hidden_web %}<span class="small nowrap">WEB掲載:{% if item.is_publish_web %}○{% else %}×{% endif %}</span>{% endif %}
+                                        </div>
+                                        {% endif %}
+                                        <div><span class="small">火災保険:{{ item.insurance_text | default_if_none:'---' }}</span></div>
+                                        <div><span class="small">保証会社:{{ item.guarantee_type.name | default_if_none:'---' }}{% if item.guarantee_company %}（{{ item.guarantee_company }}）{% endif %}</span></div>
+                                    </div>
+                                    <div class="col col-1 col-lg-1">
                                          <a href="{% url 'property_delete_room' item.oid %}?back_url={% url 'property_building' building.oid %}%3Fpage=rooms_page" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
                                 </div>
