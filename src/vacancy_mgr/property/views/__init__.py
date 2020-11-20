@@ -23,7 +23,7 @@ from .delete_room_equipment_view import DeleteRoomEquipmentView
 from .delete_room_movie_view import DeleteRoomMovieView
 from .delete_room_panorama_view import DeleteRoomPanoramaView
 from .delete_room_picture_view import DeleteRoomPictureView
-from .delete_room_vacancy_view import DeleteRoomVacancyThemeView
+from .delete_room_vacancy_theme_view import DeleteRoomVacancyThemeView
 from .edit_building_view import EditBuildingView
 from .edit_building_facility_view import EditBuildingFacilityView
 from .edit_building_file_view import EditBuildingFileView
