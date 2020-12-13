@@ -3,6 +3,13 @@ Vasyworks（ベイジーワークス）は賃貸管理業において、空室�
 
 VasyworksはVasyworksDB（データベース構築プロジェクト）、VasyworksMGR（空室情報データ管理プロジェクト）、VasyworksLIST（空室情報一覧プロジェクト）、VasyworksAPI（空室情報APIプロジェクト）など複数のプロジェクトから構成されています。
 
+Vasyworks全般についての説明は、下記のURLのサイトを参照してください。
+
+--
+Vasyworks:無料で使えるオープンソースの賃貸空室情報システム【賃貸管理業者向け】
+https://vasyworks.yworks.net
+--
+
 2.VasyworksMGR（空室情報データ管理プロジェクト）について
 VasyworksMGRはVasyworksの空室情報データ管理するためのプロジェクトです。VasyworksDBで構築されたデータベースを利用します。Vasyworksの空室情報の登録・変更・削除等にはVasyworksMGRを利用します。また、VasyworksLISTの閲覧ユーザの管理もVasyworksMGRで行います。
 
