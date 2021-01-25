@@ -81,7 +81,10 @@ class OwnerView(UpdateView):
             messages.error(self.request, 'DEMOモードのため保存できません。')
             return redirect(self.get_success_url())
         else:
-            form.save()
+            form.save(commit=False)
+            form.instance.updated_at = timezone.datetime.now()
+            form.instance.updated_user = self.user
+            form.instance.save()
             messages.success(self.request, '保存しました。')
             return super().form_valid(form)
 
