@@ -377,6 +377,12 @@
                                 <span class="nowrap"><label>開口向き:</label>{{ room.direction.name | default_if_none:'ーーー' }}</span>
                                 <span class="nowrap"><label>バルコニー面積:</label>{{ room.balcony_area_text }} m<sup>2</sup></span>
                             </div>
+                            {% if room.layout_note %}
+                            <div class="col col-12">
+                                <div><label>間取り備考:</label></div>
+                                <div>{{ room.layout_note | default_if_none:'' | linebreaksbr }}</div>
+                            </div>
+                            {% endif %}
                         </div>
                         <div class="row category-title">
                             <div class="col col-12">【主要設備】</div>
