@@ -724,10 +724,10 @@
                                 <div>{{ building.vacancy_cleaning_comment | default_if_none:'' | linebreaksbr }}</div>
                             </div>
                             {% endif %}
-                            {% if building.vacancy_cleaning_comment %}
+                            {% if building.vacancy_change_lock_comment %}
                             <div class="col col-12">
                                 <div><label>鍵交換コメント:</label></div>
-                                <div>{{ building.vacancy_cleaning_comment | default_if_none:'' | linebreaksbr }}</div>
+                                <div>{{ building.vacancy_change_lock_comment | default_if_none:'' | linebreaksbr }}</div>
                             </div>
                             {% endif %}
                             {% if building.vacancy_portal_note %}
