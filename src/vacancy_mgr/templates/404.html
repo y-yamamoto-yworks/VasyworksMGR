@@ -12,4 +12,5 @@
         {% endblock %}
         {%  block contents %}
             <p>ファイルが見つかりません。</p>
+            {% if message %}<p>{{ message }}</p>{% endif %}
         {% endblock %}

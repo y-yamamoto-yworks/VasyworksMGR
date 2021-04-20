@@ -38,6 +38,7 @@ urlpatterns = [
     path('trader/', include('trader.urls')),
     path('users/', include('users.urls')),
     path('vacancy_item/', include('vacancy_item.urls')),
+    path('viewer/', include('viewer.urls')),
 
     path('', MenuIndexView.as_view(), name='top'),
 ]

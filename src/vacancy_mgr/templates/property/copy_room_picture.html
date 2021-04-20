@@ -38,7 +38,7 @@
                     <div class="form-group row image-items">
                         <div class="col col-2 text-center image-item" v-for="picture in pictures">
                             <div>
-                                <img v-bind:src="'/media/public/buildings/{{ room.building.file_oid }}/thumbnails/' + picture.file_name" v-bind:alt="picture.picture_type.name" class="img-fluid">
+                                <img v-bind:src="'/viewer/public_media/buildings/{{ room.building.file_oid }}/thumbnails/' + picture.file_name" v-bind:alt="picture.picture_type.name" class="img-fluid">
                             </div>
                             <div>[[ picture.picture_type.name ]]</div>
                             <div>

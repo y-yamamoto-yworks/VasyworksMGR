@@ -466,8 +466,8 @@
                                 {% for item in pictures %}
                                     <div class="col col-2 text-center image-item">
                                         <div>
-                                            <a href="/media/public/buildings/{{ building.file_oid }}/pictures/{{ item.file_name }}" data-lightbox="pictures">
-                                                <img src="/media/public/buildings/{{ building.file_oid }}/thumbnails/{{ item.file_name }}" alt="{{ item.picture_type.name }}" class="img-fluid">
+                                            <a href="/viewer/public_media/buildings/{{ building.file_oid }}/pictures/{{ item.file_name }}" data-lightbox="pictures">
+                                                <img src="/viewer/public_media/buildings/{{ building.file_oid }}/thumbnails/{{ item.file_name }}" alt="{{ item.picture_type.name }}" class="img-fluid">
                                             </a>
                                         </div>
                                         <div><label>{{ item.picture_type.name }}</label></div>

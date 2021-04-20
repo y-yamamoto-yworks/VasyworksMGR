@@ -32,7 +32,10 @@ class MediaHelper:
 
     @staticmethod
     def get_uuid_filename(filename):
-        ext = filename.split('.')[-1]
+        ext = ''
+        if '.' in filename:
+            ext = filename.split('.')[-1]
+            ext = ext.lower()
         ans = "%s.%s" % (uuid.uuid4(), ext)
         ans = ans.replace('-', '')
         return ans

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'trader',
     'users',
     'vacancy_item',
+    'viewer',
 ]
 
 MIDDLEWARE = [
