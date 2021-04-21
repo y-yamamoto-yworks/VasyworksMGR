@@ -111,6 +111,8 @@ class UploadRoomPictureView(FormView):
                     data.cache_name_org = MediaHelper.get_uuid_filename(file_name)
                     data.building = self.room.building
                     data.room = self.room
+                    data.is_publish_web = False
+                    data.is_publish_vacancy = True
 
                     data.created_at = timezone.datetime.now()
                     data.created_user = self.user
