@@ -1495,9 +1495,9 @@ class Room(models.Model):
         if self.kitchen_type1.notation:
             ans = self.__add_layout_room(self.kitchen_type1.notation, self.kitchen1, ans)
         if self.kitchen_type2.notation:
-            ans = self.__add_layout_room(self.kitchen_type1.notation, self.kitchen2, ans)
+            ans = self.__add_layout_room(self.kitchen_type2.notation, self.kitchen2, ans)
         if self.kitchen_type3.notation:
-            ans = self.__add_layout_room(self.kitchen_type1.notation, self.kitchen3, ans)
+            ans = self.__add_layout_room(self.kitchen_type3.notation, self.kitchen3, ans)
 
         # その他スペース
         space = None
