@@ -20,7 +20,7 @@
                     <a href="{% url 'trader_create_trader_group' %}">業者グループ追加</a>
                 </div>
                 <div id="link-change-list" class="col col-6 text-right">
-                {% if all_traders %}
+                {% if all_trader_groups %}
                     <a href="{% url 'trader_trader_group_list' %}">業者グループ一覧</a>
                 {% else %}
                     <a href="{% url 'trader_all_trader_group_list' %}">全業者グループ一覧</a>
