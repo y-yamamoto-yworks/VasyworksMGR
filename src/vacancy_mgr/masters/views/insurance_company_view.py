@@ -39,9 +39,13 @@ class InsuranceCompanyView(UpdateView):
     model = InsuranceCompany
     form_class = InsuranceCompanyForm
     template_name = 'masters/insurance_company.html'
-    user = None
-    back_url = None
-    insurance_company = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.insurance_company = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

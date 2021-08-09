@@ -36,8 +36,12 @@ class DocumentFileListView(TemplateView):
     書類ファイルリスト
     """
     template_name = 'documents/document_file_list.html'
-    user = None
-    document_files = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.document_files = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

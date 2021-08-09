@@ -36,8 +36,12 @@ class VacancyInputGarageListView(TemplateView):
     空室入力駐車場リスト
     """
     template_name = 'vacancy_item/vacancy_input_list.html'
-    user = None
-    items = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.items = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

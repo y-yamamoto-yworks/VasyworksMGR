@@ -36,9 +36,13 @@ class OwnerListView(TemplateView):
     オーナーリスト
     """
     template_name = 'owner/owner_list.html'
-    user = None
     all_owners = False
-    owners = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.owners = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

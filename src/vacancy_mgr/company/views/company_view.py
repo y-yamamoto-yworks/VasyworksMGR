@@ -41,8 +41,12 @@ class CompanyView(UpdateView):
     form_class = CompanyForm
     template_name = 'company/company.html'
     success_url = reverse_lazy('company_index')
-    user = None
-    company = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.company = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

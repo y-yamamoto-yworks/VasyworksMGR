@@ -40,10 +40,14 @@ class CreateBuildingGarageView(FormView):
     form_class = CreateBuildingGarageForm
     template_name = 'property/create_building_garage.html'
     success_url = reverse_lazy('menu_index')
-    user = None
-    back_url = None
-    building = None
-    building_garage = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.building = None
+        self.building_garage = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

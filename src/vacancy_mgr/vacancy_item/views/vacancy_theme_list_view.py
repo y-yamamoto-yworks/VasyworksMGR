@@ -36,9 +36,13 @@ class VacancyThemeListView(TemplateView):
     空室情報テーマリスト
     """
     template_name = 'vacancy_item/vacancy_theme_list.html'
-    user = None
     all_trader_groups = False
-    vacancy_themes = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.vacancy_themes = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

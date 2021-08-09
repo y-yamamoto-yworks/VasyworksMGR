@@ -39,9 +39,13 @@ class GuaranteeCompanyView(UpdateView):
     model = GuaranteeCompany
     form_class = GuaranteeCompanyForm
     template_name = 'masters/guarantee_company.html'
-    user = None
-    back_url = None
-    guarantee_company = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.guarantee_company = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

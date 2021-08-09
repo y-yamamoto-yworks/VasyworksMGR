@@ -39,8 +39,12 @@ class CreateVacancyThemeView(FormView):
     form_class = CreateVacancyThemeForm
     template_name = 'vacancy_item/create_vacancy_theme.html'
     success_url = reverse_lazy('vacancy_item_vacancy_theme_list')
-    user = None
-    vacancy_theme = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.vacancy_theme = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

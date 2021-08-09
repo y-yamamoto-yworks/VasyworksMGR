@@ -38,10 +38,14 @@ class StaffListView(FormView):
     """
     form_class = SearchStaffForm
     template_name = 'company/staff_list.html'
-    user = None
     all_staffs = False
-    staffs = None
-    filter_name = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.staffs = None
+        self.filter_name = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

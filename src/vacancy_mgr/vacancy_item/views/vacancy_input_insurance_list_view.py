@@ -36,8 +36,12 @@ class VacancyInputInsuranceListView(TemplateView):
     空室入力火災保険リスト
     """
     template_name = 'vacancy_item/vacancy_input_list.html'
-    user = None
-    items = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.items = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

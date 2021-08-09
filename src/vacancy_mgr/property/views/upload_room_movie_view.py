@@ -42,10 +42,14 @@ class UploadRoomMovieView(FormView):
     form_class = UploadRoomMovieForm
     template_name = 'property/upload_room_movie.html'
     success_url = reverse_lazy('menu_index')
-    user = None
-    back_url = None
-    room = None
-    room_movie = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.room = None
+        self.room_movie = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

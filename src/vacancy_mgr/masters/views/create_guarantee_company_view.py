@@ -39,8 +39,12 @@ class CreateGuaranteeCompanyView(FormView):
     form_class = CreateWithTextForm
     template_name = 'masters/create_guarantee_company.html'
     success_url = reverse_lazy('masters_guarantee_company_list')
-    user = None
-    guarantee_company = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.guarantee_company = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

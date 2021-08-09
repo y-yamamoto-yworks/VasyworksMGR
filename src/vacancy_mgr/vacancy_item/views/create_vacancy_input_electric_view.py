@@ -39,8 +39,12 @@ class CreateVacancyInputElectricView(FormView):
     form_class = CreateWithTextForm
     template_name = 'vacancy_item/create_vacancy_input.html'
     success_url = reverse_lazy('vacancy_item_vacancy_input_electric_list')
-    user = None
-    vacancy_input_item = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.vacancy_input_item = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

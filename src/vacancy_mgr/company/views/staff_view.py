@@ -39,9 +39,13 @@ class StaffView(UpdateView):
     model = Staff
     form_class = StaffForm
     template_name = 'company/staff.html'
-    user = None
-    back_url = None
-    staff = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.staff = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

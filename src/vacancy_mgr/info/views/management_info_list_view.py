@@ -36,8 +36,12 @@ class ManagementInfoListView(TemplateView):
     管理お知らせリスト
     """
     template_name = 'info/management_info_list.html'
-    user = None
-    infos = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.infos = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

@@ -46,34 +46,38 @@ class SearchRoomListView(FormView):
     """
     form_class = SearchRoomForm
     template_name = 'search/search_room_list.html'
-    user = None
-    is_searched = False
-    building_name = None
-    pref = None
-    city = None
-    area = None
-    railway = None
-    station = None
-    lower_build_year = None
-    upper_build_year = None
-    management_type = None
-    garage_type = None
-    bike_parking_type = None
-    building_is_hidden_vacancy = None
-    building_is_vacancy_recommend = None
-    building_is_hidden_web = None
-    lower_rent = None
-    upper_rent = None
-    rental_type = None
-    is_sublease = None
-    is_condo_management = None
-    is_entrusted = None
-    room_status_category = None
-    layout_type = None
-    lower_room_auth_level = None
-    upper_room_auth_level = None
-    room_is_publish_vacancy = None
-    room_is_publish_web = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.is_searched = False
+        self.building_name = None
+        self.pref = None
+        self.city = None
+        self.area = None
+        self.railway = None
+        self.station = None
+        self.lower_build_year = None
+        self.upper_build_year = None
+        self. management_type = None
+        self.garage_type = None
+        self.bike_parking_type = None
+        self.building_is_hidden_vacancy = None
+        self.building_is_vacancy_recommend = None
+        self.building_is_hidden_web = None
+        self.lower_rent = None
+        self.upper_rent = None
+        self.rental_type = None
+        self.is_sublease = None
+        self.is_condo_management = None
+        self.is_entrusted = None
+        self.room_status_category = None
+        self.layout_type = None
+        self.lower_room_auth_level = None
+        self.upper_room_auth_level = None
+        self.room_is_publish_vacancy = None
+        self.room_is_publish_web = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

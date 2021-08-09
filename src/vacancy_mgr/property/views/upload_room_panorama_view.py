@@ -42,10 +42,14 @@ class UploadRoomPanoramaView(FormView):
     form_class = UploadRoomPanoramaForm
     template_name = 'property/upload_room_panorama.html'
     success_url = reverse_lazy('menu_index')
-    user = None
-    back_url = None
-    room = None
-    room_panorama = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.room = None
+        self.room_panorama = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

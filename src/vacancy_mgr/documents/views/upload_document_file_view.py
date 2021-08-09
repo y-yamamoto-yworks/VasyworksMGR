@@ -41,9 +41,13 @@ class UploadDocumentFileView(FormView):
     form_class = UploadDocumentFileForm
     template_name = 'documents/upload_document_file.html'
     success_url = reverse_lazy('menu_index')
-    user = None
-    back_url = None
-    document_file = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.document_file = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

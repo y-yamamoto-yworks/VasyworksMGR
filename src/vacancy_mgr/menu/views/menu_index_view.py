@@ -36,8 +36,12 @@ class MenuIndexView(TemplateView):
     メニュー
     """
     template_name = 'menu/index.html'
-    user = None
-    company = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.company = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

@@ -41,13 +41,17 @@ class EditRoomView(UpdateView):
     form_class = EditRoomForm
     template_name = 'property/edit_room.html'
     success_url = reverse_lazy('menu_index')
-    user = None
-    back_url = None
-    room = None
-    last_status = None
     query_pk_and_slug = True
     slug_field = 'building_id'
     slug_url_kwarg = 'building_id'
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.back_url = None
+        self.room = None
+        self.last_status = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

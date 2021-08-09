@@ -39,8 +39,12 @@ class CreateDepartmentView(FormView):
     form_class = CreateDepartmentForm
     template_name = 'company/create_department.html'
     success_url = reverse_lazy('company_department_list')
-    user = None
-    department = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.department = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

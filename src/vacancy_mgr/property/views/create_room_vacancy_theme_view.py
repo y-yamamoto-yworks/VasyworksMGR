@@ -40,10 +40,14 @@ class CreateRoomVacancyThemeView(FormView):
     form_class = CreateRoomVacancyThemeForm
     template_name = 'property/create_room_vacancy_theme.html'
     success_url = reverse_lazy('menu_index')
-    user = None
-    back_url = None
-    room = None
-    room_vacancy_theme = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.room = None
+        self.room_vacancy_theme = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

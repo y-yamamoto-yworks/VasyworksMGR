@@ -40,9 +40,13 @@ class OwnerView(UpdateView):
     model = Owner
     form_class = OwnerForm
     template_name = 'owner/owner.html'
-    user = None
-    back_url = None
-    owner = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.owner = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

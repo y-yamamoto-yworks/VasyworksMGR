@@ -39,9 +39,13 @@ class AllBuildingListView(FormView):
     """
     form_class = SearchBuildingNameForm
     template_name = 'search/all_building_list.html'
-    user = None
-    building_name = None
-    page_number = 1
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.building_name = None
+        self.page_number = 1
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

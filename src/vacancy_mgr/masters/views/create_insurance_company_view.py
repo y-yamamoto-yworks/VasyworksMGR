@@ -39,8 +39,12 @@ class CreateInsuranceCompanyView(FormView):
     form_class = CreateWithTextForm
     template_name = 'masters/create_insurance_company.html'
     success_url = reverse_lazy('masters_insurance_company_list')
-    user = None
-    insurance_company = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.insurance_company = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

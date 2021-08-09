@@ -41,8 +41,12 @@ class CopyRoomDataView(FormView):
     form_class = CopyRoomDataForm
     template_name = 'property/copy_room_data.html'
     success_url = reverse_lazy('menu_index')
-    user = None
-    room = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.room = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

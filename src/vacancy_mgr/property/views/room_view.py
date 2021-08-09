@@ -36,16 +36,20 @@ class RoomView(TemplateView):
     部屋表示
     """
     template_name = 'property/room.html'
-    user = None
-    back_url = None
-    room = None
-    equipments = None
-    pictures = None
-    movies = None
-    panoramas = None
-    vacancy_themes = None
-    status_logs = None
-    active_page = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.room = None
+        self.equipments = None
+        self.pictures = None
+        self.movies = None
+        self.panoramas = None
+        self.vacancy_themes = None
+        self.status_logs = None
+        self.back_url = None
+        self.active_page = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

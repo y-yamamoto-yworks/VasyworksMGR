@@ -39,9 +39,13 @@ class EditManagementInfoView(UpdateView):
     model = ManagementInfo
     form_class = EditManagementInfoForm
     template_name = 'info/edit_management_info.html'
-    user = None
-    back_url = None
-    info = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.info = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

@@ -38,8 +38,12 @@ class ChangeUserPasswordView(views.PasswordChangeView):
     form_class = ChangeUserPasswordForm
     template_name = 'users/change_user_password.html'
     success_url = reverse_lazy('users_user_list')
-    user = None
-    target_user = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.target_user = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

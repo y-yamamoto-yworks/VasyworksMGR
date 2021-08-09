@@ -39,9 +39,13 @@ class TraderGroupView(UpdateView):
     model = TraderGroup
     form_class = TraderGroupForm
     template_name = 'trader/trader_group.html'
-    user = None
-    back_url = None
-    trader_group = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.trader_group = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

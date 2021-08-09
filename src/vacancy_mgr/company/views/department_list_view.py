@@ -36,9 +36,13 @@ class DepartmentListView(TemplateView):
     部署リスト
     """
     template_name = 'company/department_list.html'
-    user = None
     all_departments = False
-    departments = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.departments = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

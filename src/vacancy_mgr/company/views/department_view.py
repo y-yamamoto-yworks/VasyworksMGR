@@ -39,9 +39,13 @@ class DepartmentView(UpdateView):
     model = Department
     form_class = DepartmentForm
     template_name = 'company/department.html'
-    user = None
-    back_url = None
-    department = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.department = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

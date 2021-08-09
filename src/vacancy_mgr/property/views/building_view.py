@@ -39,18 +39,22 @@ class BuildingView(TemplateView):
     建物表示
     """
     template_name = 'property/building.html'
-    user = None
-    back_url = None
-    building = None
-    rooms = None
-    landmarks = None
-    facilities = None
-    garages = None
-    pictures = None
-    movies = None
-    panoramas = None
-    files = None
-    active_page = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.building = None
+        self.rooms = None
+        self.landmarks = None
+        self.facilities = None
+        self.garages = None
+        self.pictures = None
+        self.movies = None
+        self.panoramas = None
+        self.files = None
+        self.active_page = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

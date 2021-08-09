@@ -39,9 +39,13 @@ class VacancyInputGasView(UpdateView):
     model = VacancyInputGas
     form_class = VacancyInputGasForm
     template_name = 'vacancy_item/vacancy_input.html'
-    user = None
-    back_url = None
-    item = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.item = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

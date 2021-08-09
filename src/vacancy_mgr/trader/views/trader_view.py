@@ -39,9 +39,13 @@ class TraderView(UpdateView):
     model = Trader
     form_class = TraderForm
     template_name = 'trader/trader.html'
-    user = None
-    back_url = None
-    trader = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.trader = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

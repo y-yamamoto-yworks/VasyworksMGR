@@ -39,9 +39,13 @@ class DeleteBuildingView(FormView):
     form_class = DeleteForm
     template_name = 'property/delete_building.html'
     success_url = reverse_lazy('search_buildings_all')
-    user = None
-    building = None
-    is_deletable = True
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.building = None
+        self.is_deletable = True
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

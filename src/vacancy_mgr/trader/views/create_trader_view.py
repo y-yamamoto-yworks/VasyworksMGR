@@ -39,8 +39,12 @@ class CreateTraderView(FormView):
     form_class = CreateWithNameForm
     template_name = 'trader/create_trader.html'
     success_url = reverse_lazy('trader_trader_list')
-    user = None
-    trader = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.trader = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

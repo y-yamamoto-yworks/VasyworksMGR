@@ -41,10 +41,14 @@ class UploadBuildingFileView(FormView):
     form_class = UploadBuildingFileForm
     template_name = 'property/upload_building_file.html'
     success_url = reverse_lazy('menu_index')
-    user = None
-    back_url = None
-    building = None
-    building_file = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.building = None
+        self.building_file = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

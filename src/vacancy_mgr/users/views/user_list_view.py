@@ -35,9 +35,13 @@ class UserListView(views.TemplateView):
     ユーザーリスト
     """
     template_name = 'users/user_list.html'
-    user = None
     all_users = False
-    company_users = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.company_users = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

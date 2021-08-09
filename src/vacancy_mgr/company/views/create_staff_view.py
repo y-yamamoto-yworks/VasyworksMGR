@@ -39,9 +39,13 @@ class CreateStaffView(FormView):
     form_class = CreateStaffForm
     template_name = 'company/create_staff.html'
     success_url = reverse_lazy('company_staff_list')
-    user = None
-    department = None
-    staff = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.department = None
+        self.staff = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

@@ -41,11 +41,15 @@ class AreaBuildingListView(FormView):
     """
     form_class = SearchBuildingAreaForm
     template_name = 'search/area_building_list.html'
-    user = None
-    is_searched = False
-    pref = None
-    city = None
-    area = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.is_searched = False
+        self.pref = None
+        self.city = None
+        self.area = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

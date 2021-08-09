@@ -36,9 +36,13 @@ class TraderGroupListView(TemplateView):
     賃貸管理業者グループリスト
     """
     template_name = 'trader/trader_group_list.html'
-    user = None
     all_trader_groups = False
-    trader_groups = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.trader_groups = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

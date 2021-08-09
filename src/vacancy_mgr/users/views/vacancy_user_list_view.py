@@ -38,10 +38,14 @@ class VacancyUserListView(views.FormView):
     """
     form_class = SearchVacancyUserForm
     template_name = 'users/vacancy_user_list.html'
-    user = None
     all_users = False
-    vacancy_users = None
-    filter_name = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.vacancy_users = None
+        self.filter_name = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

@@ -36,8 +36,12 @@ class InsuranceCompanyListView(TemplateView):
     火災保険会社リスト
     """
     template_name = 'masters/insurance_company_list.html'
-    user = None
-    insurance_companies = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.insurance_companies = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

@@ -39,9 +39,13 @@ class VacancyThemeView(UpdateView):
     model = VacancyTheme
     form_class = VacancyThemeForm
     template_name = 'vacancy_item/vacancy_theme.html'
-    user = None
-    back_url = None
-    vacancy_theme = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.vacancy_theme = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

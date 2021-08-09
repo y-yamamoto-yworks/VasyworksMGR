@@ -39,8 +39,12 @@ class CreateOwnerView(FormView):
     form_class = CreateWithNameForm
     template_name = 'owner/create_owner.html'
     success_url = reverse_lazy('owner_owner_list')
-    user = None
-    owner = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.owner = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

@@ -39,8 +39,12 @@ class CreateManagementInfoView(FormView):
     form_class = CreateManagementInfoForm
     template_name = 'info/create_management_info.html'
     success_url = reverse_lazy('info_management_info_list')
-    user = None
-    info = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.info = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

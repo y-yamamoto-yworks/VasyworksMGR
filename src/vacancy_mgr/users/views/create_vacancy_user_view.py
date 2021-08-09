@@ -38,9 +38,13 @@ class CreateVacancyUserView(views.FormView):
     form_class = CreateVacancyUserForm
     template_name = 'users/create_vacancy_user.html'
     success_url = reverse_lazy('users_vacancy_user_list')
-    user = None
-    back_url = None
-    target_user = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.target_user = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, *args, **kwargs):

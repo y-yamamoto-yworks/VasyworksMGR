@@ -39,12 +39,16 @@ class DeleteBuildingFileView(FormView):
     form_class = DeleteForm
     template_name = 'property/delete_building_file.html'
     success_url = reverse_lazy('menu_index')
-    user = None
-    back_url = None
-    building_file = None
     query_pk_and_slug = True
     slug_field = 'building_id'
     slug_url_kwarg = 'building_id'
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.building_file = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

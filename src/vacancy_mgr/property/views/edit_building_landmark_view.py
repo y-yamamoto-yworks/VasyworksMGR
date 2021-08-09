@@ -39,12 +39,16 @@ class EditBuildingLandmarkView(UpdateView):
     form_class = EditBuildingLandmarkForm
     template_name = 'property/edit_building_landmark.html'
     success_url = reverse_lazy('menu_index')
-    user = None
-    back_url = None
-    building_landmark = None
     query_pk_and_slug = True
     slug_field = 'building_id'
     slug_url_kwarg = 'building_id'
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.building_landmark = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):

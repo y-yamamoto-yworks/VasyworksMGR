@@ -39,9 +39,13 @@ class UserView(views.FormView):
     form_class = UserForm
     template_name = 'users/user.html'
     success_url = reverse_lazy('users_user_list')
-    user = None
-    back_url = None
-    target_user = None
+
+    def __init__(self, **kwargs):
+        self.user = None
+        self.target_user = None
+        self.back_url = None
+
+        super().__init__(**kwargs)
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
