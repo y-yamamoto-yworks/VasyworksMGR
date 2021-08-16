@@ -25,9 +25,10 @@ class UploadRoomPanoramaForm(forms.Form):
             required=True,
         )
 
-        self.fields['panorama'] = forms.FileField(
+        self.fields['panorama'] = forms.ImageField(
             label=_('パノラマファイル'),
             required=True,
+            widget=forms.FileInput(attrs={'accept': 'image/jpeg, image/png'}),
         )
 
         for key in self.fields.keys():

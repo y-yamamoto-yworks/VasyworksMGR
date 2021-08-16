@@ -28,6 +28,7 @@ class UploadRoomMovieForm(forms.Form):
         self.fields['movie'] = forms.FileField(
             label=_('動画ファイル'),
             required=True,
+            widget=forms.FileInput(attrs={'accept': 'video/*'}),
         )
 
         for key in self.fields.keys():

@@ -28,6 +28,7 @@ class UploadRoomPictureForm(forms.Form):
         self.fields['image'] = forms.ImageField(
             label=_('画像ファイル'),
             required=True,
+            widget=forms.FileInput(attrs={'accept': 'image/jpeg, image/png'}),
         )
 
         for key in self.fields.keys():
