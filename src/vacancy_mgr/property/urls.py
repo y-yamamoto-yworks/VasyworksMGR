@@ -43,6 +43,8 @@ urlpatterns = [
     path('building/edit_building_picture/<str:building_oid>/<int:id>', EditBuildingPictureView.as_view(), name='property_edit_building_picture'),
     path('building/delete_building_picture/<str:building_oid>/<int:id>', DeleteBuildingPictureView.as_view(), name='property_delete_building_picture'),
 
+    path('ledger/<str:oid>', LedgerView.as_view(), name='property_ledger'),
+
     path('room/<str:oid>', RoomView.as_view(), name='property_room'),
     path('room/edit/<str:oid>', EditRoomView.as_view(), name='property_edit_room'),
     path('room/copy/<str:oid>', CopyRoomDataView.as_view(), name='property_copy_room'),

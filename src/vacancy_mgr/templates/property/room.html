@@ -50,7 +50,10 @@
                 <ul class="tab-pages">
                     <li v-if="activeTabPage === 'main_page'">
                         <div class="row category-title">
-                            <div class="col col-12">【識別情報】</div>
+                            <div class="col col-12">
+                                【識別情報】
+                                <a href="{% url 'property_ledger' room.oid %} " class="btn btn-sm btn-info" target="_blank">台帳表示</a>
+                            </div>
                         </div>
                         <div class="row category-contents">
                             <div class="col col-12">
