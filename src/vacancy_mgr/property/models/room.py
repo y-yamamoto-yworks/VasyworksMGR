@@ -1066,12 +1066,15 @@ class Room(models.Model):
 
     @property
     def trader_rent_text(self):
-        ans = None
+        ans = ''
         if self.trader_rent > 0:
             ans = '{:,} 円'.format(self.trader_rent)
 
         if self.rent_tax_type.text:
             ans += '（{0}）'.format(self.rent_tax_type.text)
+
+        if ans == '':
+            ans = None
 
         return ans
 
