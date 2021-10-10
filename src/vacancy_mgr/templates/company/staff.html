@@ -83,7 +83,7 @@
                     <div class="col col-3 col-md-2 col-form-label"><label class="float-right">関連ユーザ</label></div>
                     <div class="col col-9 col-md-4 col-form-label">
                     {% for staff_user in staff.users.all %}
-                        <span class="staff_user"><a href="{% url 'users_user' staff_user.idb64 %}" target="_blank">{{ staff_user.full_name }}</a></span>
+                        <span class="staff_user"><a href="{% url 'users_user' staff_user.idb64 %}" target="_blank" rel="noopener noreferrer">{{ staff_user.full_name }}</a></span>
                     {% endfor %}
                     </div>
                 </div>

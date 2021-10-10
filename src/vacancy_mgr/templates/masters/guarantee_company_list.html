@@ -30,7 +30,7 @@
             </div>
             {% for item in guarantee_companies %}
             <div class="row">
-                <div class="col col-8"><a href="{% url 'masters_guarantee_company' item.idb64 %}" target="_blank">{{ item.name }}</a></div>
+                <div class="col col-8"><a href="{% url 'masters_guarantee_company' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.name }}</a></div>
                 <div class="col col-3 text-center">{{ item.priority }}</div>
                 <div class="col col-1 text-center">{% if item.is_stopped %}×{% else %}－{% endif %}</div>
             </div>

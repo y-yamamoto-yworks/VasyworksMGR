@@ -43,7 +43,7 @@
         {% if user.is_company_admin %}
         <div id="system-menu" class="menu-group">
             <h2>【システム管理】</h2>
-            <a href="{% url 'company_index' %}" class="btn btn-outline-primary" target="_blank">会社</a>
+            <a href="{% url 'company_index' %}" class="btn btn-outline-primary" target="_blank" rel="noopener noreferrer">会社</a>
         {% if not company.is_default %}
             <a href="{% url 'company_department_list' %}" class="btn btn-outline-primary">部署</a>
             <a href="{% url 'company_staff_list' %}" class="btn btn-outline-primary">スタッフ</a>

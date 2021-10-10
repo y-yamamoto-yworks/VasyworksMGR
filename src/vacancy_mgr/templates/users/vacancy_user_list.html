@@ -61,7 +61,7 @@
             </div>
             {% for item in users %}
             <div class="row">
-                <div class="col col-3"><a href="{% url 'users_vacancy_user' item.idb64 %}" target="_blank">{{ item.username }}</a></div>
+                <div class="col col-3"><a href="{% url 'users_vacancy_user' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.username }}</a></div>
                 <div class="col col-5">{{ item.full_name }}</div>
                 <div class="col col-2 text-center">{{ item.level.name }}</div>
                 <div class="col col-1 text-center">{% if item.is_active %}〇{% else %}×{% endif %}</div>

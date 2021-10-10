@@ -12,9 +12,9 @@
                 {% if item.building.management_type %}<span class="small">【{{ item.building.management_type.name }}】</span>{% endif %}
                 {% if item.building.build_year > 0 %}<span class="small">{{ item.building.build_year }}年築</span>{% endif %}
             </div>
-            <div><a href="{% url 'property_building' item.building.oid %}" target="_blank">{{ item.building.building_name | default_if_none:''}}</a></div>
+            <div><a href="{% url 'property_building' item.building.oid %}" target="_blank" rel="noopener noreferrer">{{ item.building.building_name | default_if_none:''}}</a></div>
             <div class="text-center">
-                <a href="{% url 'property_room' item.oid %}" class="btn btn-sm btn-outline-primary" target="_blank">{{ item.room_no | default_if_none:''}}号室</a>
+                <a href="{% url 'property_room' item.oid %}" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener noreferrer">{{ item.room_no | default_if_none:''}}号室</a>
             </div>
         </div>
         <div class="col col-5">

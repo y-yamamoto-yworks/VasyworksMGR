@@ -31,7 +31,7 @@
             </div>
             {% for item in vacancy_themes %}
             <div class="row">
-                <div class="col col-4"><a href="{% url 'vacancy_item_vacancy_theme' item.idb64 %}" target="_blank">{{ item.name }}</a></div>
+                <div class="col col-4"><a href="{% url 'vacancy_item_vacancy_theme' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.name }}</a></div>
                 <div class="col col-6">{{ item.title }}</div>
                 <div class="col col-1 text-center">{% if item.is_publish %}〇{% else %}－{% endif %}</div>
                 <div class="col col-1 text-center">{% if item.is_stopped %}×{% else %}－{% endif %}</div>

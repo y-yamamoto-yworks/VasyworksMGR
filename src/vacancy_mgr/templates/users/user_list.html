@@ -39,13 +39,13 @@
             </div>
             {% for item in users %}
             <div class="row">
-                <div class="col col-3"><a href="{% url 'users_user' item.idb64 %}" target="_blank">{{ item.username }}</a></div>
+                <div class="col col-3"><a href="{% url 'users_user' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.username }}</a></div>
                 <div class="col col-3">{{ item.full_name }}</div>
                 <div class="col col-1 text-center">{% if item.is_company_admin %}〇{% else %}－{% endif %}</div>
                 <div class="col col-1 text-center">{% if item.is_active %}〇{% else %}×{% endif %}</div>
                 <div class="col col-4">
                 {% if item.staff_id %}
-                    <a href="{% url 'company_staff' item.staff.idb64 %}" target="_blank">
+                    <a href="{% url 'company_staff' item.staff.idb64 %}" target="_blank" rel="noopener noreferrer">
                         {{ item.staff }} ({{ item.staff.department }})
                     </a>
                 {% endif %}

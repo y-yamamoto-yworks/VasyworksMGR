@@ -37,7 +37,7 @@
             </div>
             {% for item in traders %}
             <div class="row">
-                <div class="col col-10"><a href="{% url 'trader_detail' item.idb64 %}" target="_blank">{{ item.trader_name }}</a></div>
+                <div class="col col-10"><a href="{% url 'trader_detail' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.trader_name }}</a></div>
                 <div class="col col-1 text-center">{% if item.is_stopped %}×{% else %}－{% endif %}</div>
                 <div class="col col-1 text-center">{% if item.is_deleted %}×{% else %}－{% endif %}</div>
             </div>

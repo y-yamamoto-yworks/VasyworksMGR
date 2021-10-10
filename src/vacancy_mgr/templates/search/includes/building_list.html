@@ -10,7 +10,7 @@
 {% for item in buildings %}
     <div class="row">
         <div class="col col-3">
-            <div><a href="{% url 'property_building' item.oid %}" target="_blank">{{ item.building_name }}</a></div>
+            <div><a href="{% url 'property_building' item.oid %}" target="_blank" rel="noopener noreferrer">{{ item.building_name }}</a></div>
         </div>
         <div class="col col-4">
             <div class="small">{{ item.address }}</div>

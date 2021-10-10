@@ -64,7 +64,7 @@
             </div>
             {% for item in staffs %}
             <div class="row">
-                <div class="col col-4"><a href="{% url 'company_staff' item.idb64 %}" target="_blank">{{ item.full_name }}</a></div>
+                <div class="col col-4"><a href="{% url 'company_staff' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.full_name }}</a></div>
                 <div class="col col-4">{{ item.department.department_name }}</div>
                 <div class="col col-2 text-center">{{ item.priority }}</div>
                 <div class="col col-1 text-center">{% if item.is_stopped %}×{% else %}－{% endif %}</div>

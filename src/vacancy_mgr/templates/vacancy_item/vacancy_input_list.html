@@ -30,7 +30,7 @@
             </div>
             {% for item in items %}
             <div class="row">
-                <div class="col col-8"><a href="{{ item_url }}{{ item.idb64 }}" target="_blank">{{ item.input_contents }}</a></div>
+                <div class="col col-8"><a href="{{ item_url }}{{ item.idb64 }}" target="_blank" rel="noopener noreferrer">{{ item.input_contents }}</a></div>
                 <div class="col col-2 text-center">{{ item.priority | default_if_none:'' }}</div>
                 <div class="col col-2 text-center">{% if item.is_stopped %}×{% endif %}</div>
             </div>

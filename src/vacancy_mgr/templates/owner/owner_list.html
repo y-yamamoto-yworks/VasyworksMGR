@@ -39,7 +39,7 @@
             </div>
             {% for item in owners %}
             <div class="row">
-                <div class="col col-5"><a href="{% url 'owner_detail' item.idb64 %}" target="_blank">{{ item.owner_name }}</a></div>
+                <div class="col col-5"><a href="{% url 'owner_detail' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.owner_name }}</a></div>
                 <div class="col col-1 text-center">{% if item.is_corporation %}○{% else %}－{% endif %}</div>
                 <div class="col col-4 text-center">{{ item.corporation_owner_name | default_if_none:'' }}</div>
                 <div class="col col-1 text-center">{% if item.is_stopped %}×{% else %}－{% endif %}</div>

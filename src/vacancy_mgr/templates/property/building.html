@@ -154,7 +154,7 @@
                             {% if building.owner and building.owner.id != 0 %}
                                 <div>
                                     <label>オーナー名:</label>{{ building.owner.owner_name | default_if_none:'' }}
-                                    <a href="{% url 'owner_detail' building.owner.idb64 %}" class="btn btn-sm btn-info" target="_blank">詳細</a>
+                                    <a href="{% url 'owner_detail' building.owner.idb64 %}" class="btn btn-sm btn-info" target="_blank" rel="noopener noreferrer">詳細</a>
                                 </div>
                                 <div>
                                     <span class="nowrap"><label>電話番号1:</label>{{ building.owner.tel1 | default_if_none:'' }}</span>
@@ -176,7 +176,7 @@
                             <div class="col col-12">
                                 <div>
                                     <label>管理業者:</label>{{ building.trader.trader_name | default_if_none:'' }}
-                                    <a href="{% url 'trader_detail' building.trader.idb64 %}" class="btn btn-sm btn-info" target="_blank">詳細</a>
+                                    <a href="{% url 'trader_detail' building.trader.idb64 %}" class="btn btn-sm btn-info" target="_blank" rel="noopener noreferrer">詳細</a>
                                 </div>
                                 <div>
                                     <label>電話番号1:</label>{{ building.trader.tel1 | default_if_none:'' }}
@@ -560,7 +560,7 @@
                                 {% for item in rooms %}
                                 <div class="row sub-list-row">
                                     <div class="col col-2 col-lg-1 text-center">
-                                        <div><a href="{% url 'property_room' item.oid %}" class="btn btn-sm btn-outline-primary" target="_blank">{{ item.room_no }}</a></div>
+                                        <div><a href="{% url 'property_room' item.oid %}" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener noreferrer">{{ item.room_no }}</a></div>
                                         <div><span class="small">間取り:{{ item.layout_type.name | default_if_none:'---' }}</span></div>
                                     </div>
                                     <div class="col col-2 col-lg-1">
