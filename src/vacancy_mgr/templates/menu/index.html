@@ -5,6 +5,7 @@
     {% block head_title %}賃貸空室情報システム メニュー{% endblock %}
     {% block head %}
         <link rel="stylesheet" href="{% static 'menu/css/style.css' %}">
+        <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet">
     {% endblock %}
 
     {% block page_top %}{% endblock %}
@@ -24,56 +25,410 @@
         {% if company.is_default %}
             <div>※ 会社登録を行ってください。（登録後に再読み込みしてください。）</div>
         {% else %}
-            <h2>【物件データ管理】</h2>
-            <a href="{% url 'search_buildings_all' %}" class="btn btn-outline-primary">建物名検索（登録）</a>
-            <a href="{% url 'search_buildings_area' %}" class="btn btn-outline-primary">建物エリア検索</a>
-            <a href="{% url 'search_rooms' %}" class="btn btn-outline-primary">部屋検索</a>
+            <div class="row">
+                <div class="col col-12">
+                    <h2>【物件データ管理】</h2>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-search"></i> 建物名検索</div>
+                        <div class="card-body">
+                            <div>建物の名称の部分一致での建物の検索ができます。また、建物の新規登録もこちらから行ってください。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'search_buildings_all' %}" class="btn btn-primary">建物名検索</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-search"></i> 建物エリア検索</div>
+                        <div class="card-body">
+                            <div>建物の市区町村や地域での建物の検索ができます。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'search_buildings_area' %}" class="btn btn-primary">建物エリア検索</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-search"></i> 部屋条件検索</div>
+                        <div class="card-body">
+                            <div>詳細条件を指定して部屋の検索ができます。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'search_rooms' %}" class="btn btn-primary">部屋条件検索</a>
+                        </div>
+                   </div>
+                </div>
+            </div>
         {% endif %}
         </div>
         {% if not company.is_default %}
         <div id="etc-menu" class="menu-group">
-            <h2>【その他データ管理】</h2>
-            <a href="{% url 'owner_owner_list' %}" class="btn btn-outline-primary">オーナー</a>
-            <a href="{% url 'trader_trader_list' %}" class="btn btn-outline-primary">業者</a>
-            <a href="{% url 'trader_trader_group_list' %}" class="btn btn-outline-primary">業者グループ</a>
-            <a href="{% url 'documents_index' %}" class="btn btn-outline-primary">書類ファイル</a>
-            <a href="{% url 'info_management_info_list' %}" class="btn btn-outline-primary">管理お知らせ</a>
+            <div class="row">
+                <div class="col col-12">
+                    <h2>【その他データ管理】</h2>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="far fa-user-circle"></i> オーナー</div>
+                        <div class="card-body">
+                            <div>オーナー情報を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'owner_owner_list' %}" class="btn btn-primary">オーナー</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-user-tie"></i> 業者</div>
+                        <div class="card-body">
+                            <div>業者情報を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'trader_trader_list' %}" class="btn btn-primary">業者</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-user-tie"></i> 業者グループ</div>
+                        <div class="card-body">
+                            <div>業者グループを管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'trader_trader_group_list' %}" class="btn btn-primary">業者グループ</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="far fa-file-alt"></i> 書類ファイル</div>
+                        <div class="card-body">
+                            <div>空室情報に掲載する書類ファイルを管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'documents_index' %}" class="btn btn-primary">書類ファイル</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-scroll"></i> 管理お知らせ</div>
+                        <div class="card-body">
+                            <div>空室情報に掲載するお知らせを管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'info_management_info_list' %}" class="btn btn-primary">管理お知らせ</a>
+                        </div>
+                   </div>
+                </div>
+            </div>
         </div>
         {% endif %}
         {% if user.is_company_admin %}
         <div id="system-menu" class="menu-group">
-            <h2>【システム管理】</h2>
-            <a href="{% url 'company_index' %}" class="btn btn-outline-primary" target="_blank" rel="noopener noreferrer">会社</a>
+            <div class="row">
+                <div class="col col-12">
+                    <h2>【システム管理】</h2>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="far fa-building"></i> 会社</div>
+                        <div class="card-body">
+                            <div>会社情報を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'company_index' %}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">会社</a>
+                        </div>
+                   </div>
+                </div>
         {% if not company.is_default %}
-            <a href="{% url 'company_department_list' %}" class="btn btn-outline-primary">部署</a>
-            <a href="{% url 'company_staff_list' %}" class="btn btn-outline-primary">スタッフ</a>
-            <a href="{% url 'users_user_list' %}" class="btn btn-outline-primary">システムユーザ</a>
-            <a href="{% url 'users_vacancy_user_list' %}" class="btn btn-outline-primary">空室情報ユーザ</a>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-users"></i> 部署</div>
+                        <div class="card-body">
+                            <div>部署情報を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'company_department_list' %}" class="btn btn-primary">部署</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-user"></i> スタッフ</div>
+                        <div class="card-body">
+                            <div>スタッフ情報を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'company_staff_list' %}" class="btn btn-primary">スタッフ</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="far fa-id-card"></i> システムユーザ</div>
+                        <div class="card-body">
+                            <div>システムを利用する自社ユーザを管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'users_user_list' %}" class="btn btn-primary">システムユーザ</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="far fa-id-card"></i> 空室情報ユーザ</div>
+                        <div class="card-body">
+                            <div>空室情報を閲覧する業者ユーザを管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'users_vacancy_user_list' %}" class="btn btn-primary">空室情報ユーザ</a>
+                        </div>
+                   </div>
+                </div>
         {% endif %}
+            </div>
         </div>
         {% if not company.is_default %}
         <div id="system-menu" class="menu-group">
-            <h2>【マスタ管理】</h2>
-            <a href="{% url 'masters_guarantee_company_list' %}" class="btn btn-outline-primary">保証会社</a>
-            <a href="{% url 'masters_insurance_company_list' %}" class="btn btn-outline-primary">火災保険会社</a>
-            <a href="{% url 'vacancy_item_vacancy_input_bike_parking_list' %}" class="btn btn-outline-primary">駐輪場テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_cancel_notice_list' %}" class="btn btn-outline-primary">解約通知テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_short_cancel_list' %}" class="btn btn-outline-primary">短期解約テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_change_lock_list' %}" class="btn btn-outline-primary">鍵交換テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_cleaning_list' %}" class="btn btn-outline-primary">退去時清掃テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_document_price_list' %}" class="btn btn-outline-primary">書類代テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_electric_list' %}" class="btn btn-outline-primary">電気テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_garage_list' %}" class="btn btn-outline-primary">駐車場テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_gas_list' %}" class="btn btn-outline-primary">ガステキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_guarantee_list' %}" class="btn btn-outline-primary">保証会社テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_guarantor_limit_list' %}" class="btn btn-outline-primary">保証人極度額テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_insurance_list' %}" class="btn btn-outline-primary">火災保険テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_internet_list' %}" class="btn btn-outline-primary">インターネットテキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_payment_list' %}" class="btn btn-outline-primary">賃料支払いテキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_portal_list' %}" class="btn btn-outline-primary">ポータル掲載制限テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_renewal_charge_list' %}" class="btn btn-outline-primary">更新事務手数料テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_input_water_list' %}" class="btn btn-outline-primary">水道テキスト</a>
-            <a href="{% url 'vacancy_item_vacancy_theme_list' %}" class="btn btn-outline-primary">空室情報テーマ</a>
+            <div class="row">
+                <div class="col col-12">
+                    <h2>【マスタ管理】</h2>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 保証会社</div>
+                        <div class="card-body">
+                            <div>保証会社を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'masters_guarantee_company_list' %}" class="btn btn-primary">保証会社</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 火災保険会社</div>
+                        <div class="card-body">
+                            <div>火災保険会社を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'masters_insurance_company_list' %}" class="btn btn-primary">火災保険会社</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 駐輪場テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の駐輪場説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_bike_parking_list' %}" class="btn btn-primary">駐輪場</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 解約通知テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の解約通知説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_cancel_notice_list' %}" class="btn btn-primary">解約通知</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 短期解約テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の短期解約説明の定型文をを管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_short_cancel_list' %}" class="btn btn-primary">短期解約</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 鍵交換テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の鍵交換説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_change_lock_list' %}" class="btn btn-primary">鍵交換</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 退去時清掃テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の退去時清掃説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_cleaning_list' %}" class="btn btn-primary">退去時清掃</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 書類代テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の書類代説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_document_price_list' %}" class="btn btn-primary">書類代</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 電気テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の電気説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_electric_list' %}" class="btn btn-primary">電気</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 駐車場テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の駐車場説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_garage_list' %}" class="btn btn-primary">駐車場</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> ガステキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用のガス説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_gas_list' %}" class="btn btn-primary">ガス</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 保証会社テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の保証会社説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_guarantee_list' %}" class="btn btn-primary">保証会社</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 保証人極度額テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の保証人極度額説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_guarantor_limit_list' %}" class="btn btn-primary">保証人極度額</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 火災保険テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の火災保険説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_insurance_list' %}" class="btn btn-primary">火災保険</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> インターネットテキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用のインターネット説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_internet_list' %}" class="btn btn-primary">インターネット</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 賃料支払いテキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の賃料支払い説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_payment_list' %}" class="btn btn-primary">賃料支払い</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> ポータル掲載制限テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用のポータル掲載制限説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_portal_list' %}" class="btn btn-primary">ポータル掲載制限</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 更新事務手数料テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の更新事務手数料説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_renewal_charge_list' %}" class="btn btn-primary">更新事務手数料</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 水道テキスト</div>
+                        <div class="card-body">
+                            <div>空室情報用の水道説明の定型文を管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_input_water_list' %}" class="btn btn-primary">水道</a>
+                        </div>
+                   </div>
+                </div>
+                <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                    <div class="card">
+                        <div class="card-header text-center"><i class="fas fa-database"></i> 空室情報テーマ</div>
+                        <div class="card-body">
+                            <div>空室情報テーマを管理します。</div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <a href="{% url 'vacancy_item_vacancy_theme_list' %}" class="btn btn-primary">空室情報テーマ</a>
+                        </div>
+                   </div>
+                </div>
+            </div>
         {% endif %}
         </div>
         {% endif %}

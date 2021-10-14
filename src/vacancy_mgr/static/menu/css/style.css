@@ -12,3 +12,7 @@ div.menu-group h2 {
 div.menu-group a {
     margin: 5px 0;
 }
+
+div.card {
+    height: 100%;
+}
