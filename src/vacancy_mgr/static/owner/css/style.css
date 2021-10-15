@@ -24,6 +24,10 @@
     border: solid 1px black;
 }
 
+#search-conditions-form {
+    padding: 0 30px;
+}
+
 /* モーダル */
 .modal-select-hint {
     padding: 5px 0;

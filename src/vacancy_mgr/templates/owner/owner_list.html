@@ -14,6 +14,27 @@
     {% block h1_title %}【オーナー一覧】{% endblock %}
 
     {% block contents %}
+        <div id="search-conditions-form">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group row">
+                    <div class="col col-2 col-form-label"><label class="float-right">オーナー名</label></div>
+                    <div class="col-8">{{ form.owner_name }}</div>
+                    <div class="col-2"></div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-2"></div>
+                    <div class="col-4">
+                        <input type="submit" value="検索" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                    </div>
+                    <div class="col-4">
+                        <input type="submit" value="クリア" v-on:click="clearConditions($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+                    </div>
+                    <div class="col-2"></div>
+                </div>
+            </form>
+        </div>
+
         <div  id="data-list-header">
             <div class="row">
                 <div id="link-add-item" class="col col-6 text-left">
@@ -56,4 +77,11 @@
 
     {% block footer %}{% endblock %}
 
-    {% block page_bottom %}{% endblock %}
+    {% block page_bottom %}
+        <script type="text/javascript" src="{% static 'owner/js/search_name.js' %}"></script>
+        <script type="text/javascript">
+            var searchApp = createSearchNameVue(
+                "{{ default_owner_name | default_if_none:'' }}"
+            );
+        </script>
+    {% endblock %}
