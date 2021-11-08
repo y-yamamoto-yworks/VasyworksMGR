@@ -367,9 +367,10 @@
                                     <div class="col col-1 col-form-label text-center">{{ item.garage_status.name }}</div>
                                     <div class="col col-1 col-form-label text-center">{{ item.priority }}</div>
                                     <div class="col col-3 col-form-label text-center">
-                                        <div>{{ item.garage_fee_text | default_if_none:'' }}</div>
-                                        <div>{{ item.garage_charge_text | default_if_none:'' }}</div>
-                                        <div>{{ item.certification_fee_text | default_if_none:'' }}</div>
+                                        <div><span class="small">月額：{{ item.garage_fee_text | default_if_none:'' }}</span></div>
+                                        <div><span class="small">手数料：{{ item.garage_charge_text | default_if_none:'' }}</span></div>
+                                        <div><span class="small">保証金：{{ item.garage_deposit_text | default_if_none:'' }}</span></div>
+                                        <div><span class="small">車庫証明：{{ item.certification_fee_text | default_if_none:'' }}</span></div>
                                     </div>
                                     <div class="col col-3 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
                                     <div class="col col-2">
