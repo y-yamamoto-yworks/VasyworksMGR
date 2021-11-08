@@ -1245,7 +1245,7 @@ class Room(models.Model):
         ans = None
 
         if self.document_cost_existence.is_exists:
-            ans = ' {0:,} 円'.format(self.document_cost)
+            ans = '{0:,} 円'.format(self.document_cost)
             if self.document_cost_tax_type.text:
                 ans += '（{0}）'.format(self.document_cost_tax_type.text)
 
@@ -1256,7 +1256,7 @@ class Room(models.Model):
         ans = None
 
         if self.key_change_cost_existence.is_exists:
-            ans = ' {0:,} 円'.format(self.key_change_cost)
+            ans = '{0:,} 円'.format(self.key_change_cost)
             if self.key_change_cost_tax_type.text:
                 ans += '（{0}）'.format(self.key_change_cost_tax_type.text)
 
@@ -1353,14 +1353,14 @@ class Room(models.Model):
         ans = None
 
         if self.renewal_fee_notation.is_money:
-            ans = ' {0:,.0f} {1}'.format(
+            ans = '{0:,.0f} {1}'.format(
                 self.renewal_fee_value,
                 self.renewal_fee_notation.unit,
             )
             if self.renewal_fee_tax_type.text:
                 ans += '（{0}）'.format(self.renewal_fee_tax_type.text)
         elif self.renewal_fee_notation.is_month:
-            ans = ' {0}の {1} {2}'.format(
+            ans = '{0}の {1} {2}'.format(
                 self.renewal_fee_notation.header,
                 float_normalize(xfloat(self.renewal_fee_value)),
                 self.renewal_fee_notation.unit,
@@ -1368,7 +1368,7 @@ class Room(models.Model):
             if self.renewal_fee_tax_type.text:
                 ans += '（{0}）'.format(self.renewal_fee_tax_type.text)
         elif self.renewal_fee_notation.is_rate:
-            ans = ' {0}の {1:.0f} {2}'.format(
+            ans = '{0}の {1:.0f} {2}'.format(
                 self.renewal_fee_notation.header,
                 float_normalize(xfloat(self.renewal_fee_value)),
                 self.renewal_fee_notation.unit,
@@ -1376,7 +1376,7 @@ class Room(models.Model):
             if self.renewal_fee_tax_type.text:
                 ans += '（{0}）'.format(self.renewal_fee_tax_type.text)
         else:
-            ans = ' {0}'.format(self.renewal_fee_notation.name)
+            ans = '{0}'.format(self.renewal_fee_notation.name)
 
         return ans
 
@@ -1385,7 +1385,7 @@ class Room(models.Model):
         ans = None
 
         if self.renewal_charge_existence.is_exists:
-            ans = ' {0:,} 円'.format(self.renewal_charge)
+            ans = '{0:,} 円'.format(self.renewal_charge)
             if self.renewal_charge_tax_type.text:
                 ans += '（{0}）'.format(self.renewal_charge_tax_type.text)
 
@@ -1396,7 +1396,7 @@ class Room(models.Model):
         ans = None
 
         if self.recontract_fee_existence.is_exists:
-            ans = ' {0:,} 円'.format(self.recontract_fee)
+            ans = '{0:,} 円'.format(self.recontract_fee)
             if self.recontract_fee_tax_type.text:
                 ans += '（{0}）'.format(self.recontract_fee_tax_type.text)
 
@@ -1416,7 +1416,7 @@ class Room(models.Model):
         ans = self.cleaning_type.name
 
         if self.cleaning_type.is_money:
-            ans += ' {0:,} 円'.format(self.cleaning_cost)
+            ans += '{0:,} 円'.format(self.cleaning_cost)
             if self.cleaning_cost_tax_type.text:
                 ans += '（{0}）'.format(self.cleaning_cost_tax_type.text)
 
