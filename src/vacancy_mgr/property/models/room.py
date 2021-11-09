@@ -1535,21 +1535,21 @@ class Room(models.Model):
         ans = self.ad_type.name
 
         if self.ad_type.is_money:
-            ans = ' {0:,.0f} {1}'.format(
+            ans = '{0:,.0f} {1}'.format(
                 self.ad_value,
                 self.ad_type.unit,
             )
             if self.ad_tax_type.text:
                 ans += '（{0}）'.format(self.ad_tax_type.text)
         elif self.ad_type.is_month:
-            ans = ' 賃料の {0} {1}'.format(
+            ans = '賃料の {0} {1}'.format(
                 float_normalize(xfloat(self.ad_value)),
                 self.ad_type.unit,
             )
             if self.ad_tax_type.text:
                 ans += '（{0}）'.format(self.ad_tax_type.text)
         else:
-            ans = ' {0}'.format(self.ad_type.name)
+            ans = '{0}'.format(self.ad_type.name)
 
         return ans
 
@@ -1560,20 +1560,20 @@ class Room(models.Model):
         if self.trader_ad_type.is_unknown:
             ans = None
         elif self.trader_ad_type.is_money:
-            ans = ' {0:,.0f} {1}'.format(
+            ans = '{0:,.0f} {1}'.format(
                 self.trader_ad_value,
                 self.trader_ad_type.unit,
             )
             if self.trader_ad_tax_type.text:
                 ans += '（{0}）'.format(self.trader_ad_tax_type.text)
         elif self.trader_ad_type.is_month:
-            ans = ' 賃料の {0} {1}'.format(
+            ans = '賃料の {0} {1}'.format(
                 float_normalize(xfloat(self.trader_ad_value)),
                 self.trader_ad_type.unit,
             )
             if self.trader_ad_tax_type.text:
                 ans += '（{0}）'.format(self.trader_ad_tax_type.text)
         else:
-            ans = ' {0}'.format(self.trader_ad_type.name)
+            ans = '{0}'.format(self.trader_ad_type.name)
 
         return ans
