@@ -50,7 +50,7 @@
                     {% if back_url %}
                         <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
                     {% else %}
-                        <a href="{% url 'property_building' building.oid %}?page=pictures_page#movie-anchor" class="btn btn-secondary">戻る</a>
+                        <a href="{% url 'property_building' data.building.oid %}?page=pictures_page#movie-anchor" class="btn btn-secondary">戻る</a>
                     {% endif %}
                     </div>
                     <div class="col-2"></div>
