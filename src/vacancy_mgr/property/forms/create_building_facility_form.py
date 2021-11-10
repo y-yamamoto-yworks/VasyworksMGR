@@ -26,7 +26,7 @@ class CreateBuildingFacilityForm(forms.Form):
 
         self.fields['facility_name'] = forms.CharField(
             label=_('施設名'),
-            max_length=20,
+            max_length=100,
             required=False,
         )
 
