@@ -33,7 +33,7 @@ from property.models import Building
 
 class EditBuildingLatLngView(UpdateView):
     """
-    建物周辺施設編集
+    建物緯度経度編集
     """
     model = Building
     form_class = EditBuildingLatLngForm
