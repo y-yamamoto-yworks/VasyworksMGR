@@ -18,6 +18,9 @@ from api.serializers import InsuranceCompanySerializer
 
 
 class InsuranceCompanyViewSet(viewsets.ModelViewSet):
+    """
+    火災保険会社
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

@@ -18,6 +18,9 @@ from api.serializers import VacancyInputGuarantorLimitSerializer
 
 
 class VacancyInputGuarantorLimitViewSet(viewsets.ModelViewSet):
+    """
+    空室情報入力（保証人極度額）
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

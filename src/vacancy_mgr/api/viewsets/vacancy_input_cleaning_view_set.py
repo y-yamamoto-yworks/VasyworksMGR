@@ -18,6 +18,9 @@ from api.serializers import VacancyInputCleaningSerializer
 
 
 class VacancyInputCleaningViewSet(viewsets.ModelViewSet):
+    """
+    空室情報入力（退去時清掃）
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

@@ -18,6 +18,9 @@ from api.serializers import AreaSerializer
 
 
 class AreaViewSet(viewsets.ModelViewSet):
+    """
+    地域
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

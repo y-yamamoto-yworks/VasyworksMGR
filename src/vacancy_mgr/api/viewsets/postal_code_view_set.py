@@ -18,6 +18,9 @@ from api.serializers import PostalCodeSerializer
 
 
 class PostalCodeViewSet(viewsets.ModelViewSet):
+    """
+    郵便番号
+    """
     def retrieve(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

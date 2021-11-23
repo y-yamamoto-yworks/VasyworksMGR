@@ -18,6 +18,9 @@ from api.serializers import VacancyInputGarageSerializer
 
 
 class VacancyInputGarageViewSet(viewsets.ModelViewSet):
+    """
+    空室情報入力（駐車場）
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

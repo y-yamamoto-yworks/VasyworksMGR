@@ -18,6 +18,9 @@ from api.serializers import ElementarySchoolSerializer
 
 
 class ElementarySchoolViewSet(viewsets.ModelViewSet):
+    """
+    小学校
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

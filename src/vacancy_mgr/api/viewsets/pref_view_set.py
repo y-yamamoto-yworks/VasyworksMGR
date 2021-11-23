@@ -18,6 +18,9 @@ from api.serializers import PrefSerializer
 
 
 class PrefViewSet(viewsets.ModelViewSet):
+    """
+    都道府県
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

@@ -28,7 +28,13 @@ class ApiHelper:
         """APIキー確認"""
         ans = False
         company = Company.objects.get(pk=settings.COMPANY_ID)
-        if company.internal_api_key == ApiHelper.get_3des_decrypt(key, company.api_key):
+
+        try:
+            key = ApiHelper.get_3des_decrypt(key, company.api_key)
+        except:
+            key = None
+
+        if company.internal_api_key == key:
             ans = True
 
         return ans

@@ -18,6 +18,9 @@ from api.serializers import LandmarkTypeSerializer
 
 
 class LandmarkTypeViewSet(viewsets.ModelViewSet):
+    """
+    ランドマーク種別
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

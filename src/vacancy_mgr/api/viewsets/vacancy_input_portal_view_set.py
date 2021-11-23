@@ -18,6 +18,9 @@ from api.serializers import VacancyInputPortalSerializer
 
 
 class VacancyInputPortalViewSet(viewsets.ModelViewSet):
+    """
+    空室情報入力（ポータル掲載）
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

@@ -18,6 +18,9 @@ from api.serializers import VacancyInputElectricSerializer
 
 
 class VacancyInputElectricViewSet(viewsets.ModelViewSet):
+    """
+    空室情報入力（電気）
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

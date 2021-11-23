@@ -18,6 +18,9 @@ from api.serializers import VacancyInputShortCancelSerializer
 
 
 class VacancyInputShortCancelViewSet(viewsets.ModelViewSet):
+    """
+    空室情報入力（短期解約）
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

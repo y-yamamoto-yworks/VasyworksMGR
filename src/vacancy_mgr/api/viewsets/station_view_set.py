@@ -18,6 +18,9 @@ from api.serializers import StationSerializer
 
 
 class StationViewSet(viewsets.ModelViewSet):
+    """
+    駅
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

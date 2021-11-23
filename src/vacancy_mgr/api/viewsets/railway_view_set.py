@@ -18,6 +18,9 @@ from api.serializers import PrefSerializer
 
 
 class RailwayViewSet(viewsets.ModelViewSet):
+    """
+    鉄道沿線
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

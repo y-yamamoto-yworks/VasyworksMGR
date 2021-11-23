@@ -19,6 +19,9 @@ from api.serializers import RoomPictureSerializer
 
 
 class RoomPictureViewSet(viewsets.ModelViewSet):
+    """
+    部屋画像
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

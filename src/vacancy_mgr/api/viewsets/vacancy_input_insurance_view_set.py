@@ -18,6 +18,9 @@ from api.serializers import VacancyInputInsuranceSerializer
 
 
 class VacancyInputInsuranceViewSet(viewsets.ModelViewSet):
+    """
+    空室情報入力（火災保険）
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

@@ -18,6 +18,9 @@ from api.api_helper import ApiHelper
 
 
 class NewKeyViewSet(viewsets.ViewSet):
+    """
+    新規キー
+    """
     def retrieve(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

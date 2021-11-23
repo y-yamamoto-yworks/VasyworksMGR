@@ -18,6 +18,9 @@ from api.serializers import StaffSerializer
 
 
 class StaffViewSet(viewsets.ModelViewSet):
+    """
+    スタッフ
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

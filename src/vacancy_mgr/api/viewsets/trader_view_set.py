@@ -18,6 +18,9 @@ from api.serializers import TraderSerializer
 
 
 class TraderViewSet(viewsets.ModelViewSet):
+    """
+    賃貸管理業者
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

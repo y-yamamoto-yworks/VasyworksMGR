@@ -18,6 +18,9 @@ from api.serializers import VacancyInputDocumentPriceSerializer
 
 
 class VacancyInputDocumentPriceViewSet(viewsets.ModelViewSet):
+    """
+    空室情報入力（書類代）
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

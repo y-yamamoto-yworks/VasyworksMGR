@@ -18,6 +18,9 @@ from api.serializers import CitySerializer
 
 
 class CityViewSet(viewsets.ModelViewSet):
+    """
+    市区町村
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

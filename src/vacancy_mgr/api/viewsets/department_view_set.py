@@ -18,6 +18,9 @@ from api.serializers import DepartmentSerializer
 
 
 class DepartmentViewSet(viewsets.ModelViewSet):
+    """
+    部署
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):

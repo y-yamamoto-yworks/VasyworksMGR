@@ -18,6 +18,9 @@ from api.serializers import VacancyThemeSerializer
 
 
 class VacancyThemeViewSet(viewsets.ModelViewSet):
+    """
+    空室テーマ
+    """
     def list(self, request, *args, **kwargs):
         key = kwargs.get('key')
         if not ApiHelper.check_key(key):
