@@ -73,10 +73,10 @@ class CreateManagementInfoView(FormView):
         if settings.DEMO:
             messages.error(self.request, 'DEMOモードのため追加できません。')
         elif self.request.method == 'POST':
-            information = self.request.POST['information']
-            start_date = self.request.POST['start_date']
-            end_date = self.request.POST['end_date']
-            link_url = self.request.POST['link_url']
+            information = self.request.POST.get('information')
+            start_date = self.request.POST.get('start_date')
+            end_date = self.request.POST.get('end_date')
+            link_url = self.request.POST.get('link_url')
             is_emphasized = False
             if self.request.POST.get('is_emphasized'):
                 is_emphasized = True
