@@ -34,7 +34,7 @@ from masters.models import InsuranceCompany
 
 class CreateInsuranceCompanyView(FormView):
     """
-    保証会社作成
+    火災保険会社作成
     """
     form_class = CreateWithTextForm
     template_name = 'masters/create_insurance_company.html'
