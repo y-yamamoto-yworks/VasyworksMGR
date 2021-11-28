@@ -1,0 +1,2 @@
+from .test_private_media_viewer_view import PrivateMediaViewerViewTest
+from .test_public_media_viewer_view import PublicMediaViewerViewTest

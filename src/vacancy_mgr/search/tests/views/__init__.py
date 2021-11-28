@@ -1,0 +1,2 @@
+from .test_all_building_list_view import AllBuildingListViewTest
+from .test_area_building_list_view import AreaBuildingListViewTest

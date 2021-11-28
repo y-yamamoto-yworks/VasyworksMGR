@@ -1,0 +1,7 @@
+from .test_company_view import CompanyViewTest
+from .test_create_department_view import CreateDepartmentViewTest
+from .test_staff_view import StaffViewTest
+from .test_department_list_view import DepartmentListViewTest
+from .test_department_view import DepartmentViewTest
+from .test_staff_list_view import StaffListViewTest
+from .test_staff_view import StaffViewTest

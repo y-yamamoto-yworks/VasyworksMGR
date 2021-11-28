@@ -1,0 +1,4 @@
+from .test_create_management_info_view import CreateManagementInfoViewTest
+from .test_delete_management_info_view import DeleteManagementInfoViewTest
+from .test_edit_management_info_view import EditManagementInfoViewTest
+from .test_management_info_list_view import ManagementInfoListViewTest

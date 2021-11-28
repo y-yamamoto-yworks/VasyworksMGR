@@ -1,0 +1,3 @@
+from .test_create_vacancy_input_bike_parking_view import CreateVacancyInputBikeParkingViewTest
+from .test_vacancy_input_bike_parking_list_view import VacancyInputBikeParkingListViewTest
+from .test_vacancy_input_bike_parking_view import VacancyInputBikeParkingViewTest

@@ -1,0 +1,2 @@
+from .test_auth_user import UserModelTest
+from .test_auth_vacancy_user import VacancyUserModelTest
