@@ -40,28 +40,6 @@ class PrivateMediaViewerViewTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    def test_get_private_media_viewer_view(self):
-        response = self.client.post(
-            reverse('login'),
-            {'username': 't-kanri', 'password': 'guest1234', },
-            follow=True
-        )
-        self.assertEqual(response.status_code, 200)
-
-        url = reverse(
-            'viewer_private_media',
-            args=['test_viewer/sample_picture.jpg'],
-        )
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-
-        url = reverse(
-            'viewer_private_media',
-            args=['test_viewer/sample_document.pdf'],
-        )
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-
         url = reverse(
             'viewer_private_media',
             args=['test_viewer/sample_movie.mp4'],

@@ -33,6 +33,17 @@ class AllBuildingListViewTest(TestCase):
         building = response.context['buildings'][0]
         self.assertEqual(building.building_name, 'サンプルマンション')
 
+    def test_get_all_building_list_view_with_page(self):
+        url = reverse(
+            'search_buildings_all',
+            args=['2'],
+        )
+        response = self.client.get(url)
+
+        self.assertEqual(response.status_code, 200)
+        building = response.context['buildings'][0]
+        self.assertEqual(building.building_name, 'サンプルガレージ10')
+
     def test_post_all_building_list_view(self):
         url = reverse('search_buildings_all')
         response = self.client.post(
