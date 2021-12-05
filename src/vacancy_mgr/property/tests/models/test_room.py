@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 Yasuhiro Yamamoto
 """
 from unittest import TestCase
+from django.db import transaction
 from property.models import Building, BuildingGarage
 import warnings
 
@@ -17,6 +18,12 @@ class RoomModelTest(TestCase):
         warnings.simplefilter('ignore')
         self.building = Building.objects.get(pk=2)      # 表示項目確認用マンション
         self.room = self.building.rooms.first()
+
+        if transaction.get_autocommit():
+            transaction.set_autocommit(False)
+
+    def tearDown(self):
+        transaction.rollback()
 
     def test_room_other_rooms(self):
         other_rooms = self.room.other_rooms

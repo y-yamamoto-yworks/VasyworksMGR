@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 Yasuhiro Yamamoto
 """
 from unittest import TestCase
+from django.db import transaction
 from enums.models import TaxType
 import warnings
 
@@ -15,6 +16,12 @@ class TaxTypeModelTest(TestCase):
     """
     def setUp(self):
         warnings.simplefilter('ignore')
+
+        if transaction.get_autocommit():
+            transaction.set_autocommit(False)
+
+    def tearDown(self):
+        transaction.rollback()
 
     def test_is_excluding(self):
         self.assertFalse(TaxType.objects.get(pk=0).is_excluding)

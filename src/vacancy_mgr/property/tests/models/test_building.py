@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 Yasuhiro Yamamoto
 """
 from unittest import TestCase
+from django.db import transaction
 from property.models import Building
 import warnings
 
@@ -16,6 +17,12 @@ class BuildingModelTest(TestCase):
     def setUp(self):
         warnings.simplefilter('ignore')
         self.building = Building.objects.get(pk=2)      # 表示項目確認用マンション
+
+        if transaction.get_autocommit():
+            transaction.set_autocommit(False)
+
+    def tearDown(self):
+        transaction.rollback()
 
     def test_building_address(self):
         self.assertEqual(self.building.address, '京都府京都市上京区住所町域DEMO町番地DEMOデータ A棟')

@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 Yasuhiro Yamamoto
 """
 from unittest import TestCase
+from django.db import transaction
 from users.models import VacancyUser
 import warnings
 
@@ -16,6 +17,12 @@ class VacancyUserModelTest(TestCase):
     def setUp(self):
         warnings.simplefilter('ignore')
         self.user = VacancyUser.objects.get(username='yworks')
+
+        if transaction.get_autocommit():
+            transaction.set_autocommit(False)
+
+    def tearDown(self):
+        transaction.rollback()
 
     def test_full_name(self):
         self.assertEqual(self.user.full_name, 'ワイワークス不動産')

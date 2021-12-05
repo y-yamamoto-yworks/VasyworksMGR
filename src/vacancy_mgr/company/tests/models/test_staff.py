@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 Yasuhiro Yamamoto
 """
 from unittest import TestCase
+from django.db import transaction
 from company.models import Staff
 import warnings
 
@@ -16,6 +17,12 @@ class StaffModelTest(TestCase):
     def setUp(self):
         warnings.simplefilter('ignore')
         self.Staff = Staff.objects.get(pk=2)      # 管理 太郎
+
+        if transaction.get_autocommit():
+            transaction.set_autocommit(False)
+
+    def tearDown(self):
+        transaction.rollback()
 
     def test_full_name(self):
         self.assertEqual(self.Staff.full_name, '管理 太郎')

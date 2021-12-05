@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 Yasuhiro Yamamoto
 """
 from unittest import TestCase
+from django.db import transaction
 from enums.models import Existence
 import warnings
 
@@ -15,6 +16,12 @@ class ExistenceModelTest(TestCase):
     """
     def setUp(self):
         warnings.simplefilter('ignore')
+
+        if transaction.get_autocommit():
+            transaction.set_autocommit(False)
+
+    def tearDown(self):
+        transaction.rollback()
 
     def test_is_exists(self):
         self.assertFalse(Existence.objects.get(pk=0).is_exists)

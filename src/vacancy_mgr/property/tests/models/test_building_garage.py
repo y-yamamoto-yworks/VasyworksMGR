@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 Yasuhiro Yamamoto
 """
 from unittest import TestCase
+from django.db import transaction
 from property.models import Building, BuildingGarage
 import warnings
 
@@ -18,6 +19,11 @@ class BuildingGarageModelTest(TestCase):
         self.building = Building.objects.get(pk=2)      # 表示項目確認用マンション
         self.garage = self.building.building_garages.first()
 
+        if transaction.get_autocommit():
+            transaction.set_autocommit(False)
+
+    def tearDown(self):
+        transaction.rollback()
 
     def test_building_garage_garage_fee_text(self):
         self.assertEqual(self.garage.garage_fee_text, '10,000 円（税別）')
