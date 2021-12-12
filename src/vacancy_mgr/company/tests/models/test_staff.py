@@ -16,7 +16,7 @@ class StaffModelTest(TestCase):
     """
     def setUp(self):
         warnings.simplefilter('ignore')
-        self.Staff = Staff.objects.get(pk=2)      # 管理 太郎
+        self.staff = Staff.objects.get(pk=2)      # 管理 太郎
 
         if transaction.get_autocommit():
             transaction.set_autocommit(False)
@@ -25,7 +25,7 @@ class StaffModelTest(TestCase):
         transaction.rollback()
 
     def test_full_name(self):
-        self.assertEqual(self.Staff.full_name, '管理 太郎')
+        self.assertEqual(self.staff.full_name, '管理 太郎')
 
     def test_staff_name(self):
-        self.assertEqual(self.Staff.staff_name, '管理 太郎 (部署:賃貸管理部)')
+        self.assertEqual(self.staff.staff_name, '管理 太郎 (部署:賃貸管理部)')
