@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 Yasuhiro Yamamoto
 """
 import os
+import re
 import shutil
 import qrcode
 from PIL import Image, ImageDraw, ImageFont
@@ -15,8 +16,9 @@ class ImageHelper:
     @staticmethod
     def save_image(image: Image, file_path, max_size=1280):
         """画像の保存"""
-        file_basename = os.path.basename(file_path)
-        file_dir = file_path.replace(file_basename, '')
+        secure_file_path = re.sub(r'\.+' + repr(os.sep), '', file_path)
+        file_basename = os.path.basename(secure_file_path)
+        file_dir = secure_file_path.replace(file_basename, '')
         if not os.path.isdir(file_dir):
             os.makedirs(file_dir)
 
@@ -38,9 +40,11 @@ class ImageHelper:
         """画像ファイルのコピー"""
         ans = False
 
-        if os.path.exists(src) and not os.path.exists(dest):
+        secure_src = re.sub(r'\.+' + repr(os.sep), '', src)
+        secure_dest = re.sub(r'\.+' + repr(os.sep), '', dest)
+        if os.path.exists(secure_src) and not os.path.exists(secure_dest):
             try:
-                shutil.copy2(src, dest)
+                shutil.copy2(secure_src, secure_dest)
                 ans = True
             except:
                 ans = False
@@ -50,24 +54,26 @@ class ImageHelper:
     @staticmethod
     def delete_image(file_path):
         """画像の削除"""
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        secure_file_path = re.sub(r'\.+' + repr(os.sep), '', file_path)
+        if os.path.exists(secure_file_path):
+            os.remove(secure_file_path)
 
     @staticmethod
     def make_qrcode(data, file_path, force=False):
         """QRコード画像の作成"""
-        if os.path.exists(file_path):
+        secure_file_path = re.sub(r'\.+' + repr(os.sep), '', file_path)
+        if os.path.exists(secure_file_path):
             if force:
-                os.remove(file_path)
+                os.remove(secure_file_path)
             else:
                 return
 
-        file_dir = os.path.dirname(file_path)
+        file_dir = os.path.dirname(secure_file_path)
         if not os.path.isdir(file_dir):
             os.makedirs(file_dir)
 
         img = qrcode.make(data)
-        img.save(file_path)
+        img.save(secure_file_path)
 
     @staticmethod
     def rotate_image(image: Image):

@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 Yasuhiro Yamamoto
 """
 import os
+import re
 import uuid
 import urllib.parse
 import shutil
@@ -22,11 +23,12 @@ class MediaHelper:
     @staticmethod
     def upload_binary_file(source_file, destination_file_path):
         """バイナリファイルのアップロード"""
-        file_dir = os.path.dirname(destination_file_path)
+        secure_destination_file_path = re.sub(r'\.+' + repr(os.sep), '', destination_file_path)
+        file_dir = os.path.dirname(secure_destination_file_path)
         if not os.path.isdir(file_dir):
             os.makedirs(file_dir)
 
-        with open(destination_file_path, 'wb') as f:
+        with open(secure_destination_file_path, 'wb') as f:
             for chunk in source_file.chunks():
                 f.write(chunk)
 
@@ -38,6 +40,7 @@ class MediaHelper:
             ext = ext.lower()
         ans = "%s.%s" % (uuid.uuid4(), ext)
         ans = ans.replace('-', '')
+        ans = re.sub(r'\.+' + repr(os.sep), '', ans)
         return ans
 
     """
@@ -52,6 +55,7 @@ class MediaHelper:
     def get_upload_document_path(file_name: str):
         """書類ファイルのアップロードパス"""
         if file_name:
+            file_name = re.sub(r'\.+' + repr(os.sep), '', file_name)
             return os.path.join(MediaHelper.get_document_root(),
                                 'files',
                                 file_name)
@@ -70,6 +74,7 @@ class MediaHelper:
     def get_upload_picture_path(instance: Building, file_name: str):
         """画像のアップロードパス"""
         if instance and file_name:
+            file_name = re.sub(r'\.+' + repr(os.sep), '', file_name)
             return os.path.join(MediaHelper.get_property_media_root(),
                                 instance.file_oid,
                                 'pictures',
@@ -81,6 +86,7 @@ class MediaHelper:
     def get_picture_thumbnail_path(file_path: str):
         """サムネイル画像用のパス"""
         ans = os.path.join(file_path.replace('pictures', 'thumbnails'))
+        ans = re.sub(r'\.+' + repr(os.sep), '', ans)
 
         thumbnail_dir = os.path.dirname(ans)
         if not os.path.isdir(thumbnail_dir):
@@ -92,6 +98,7 @@ class MediaHelper:
     def get_upload_panorama_path(instance: Building, file_name: str):
         """パノラマのアップロードパス"""
         if instance and file_name:
+            file_name = re.sub(r'\.+' + repr(os.sep), '', file_name)
             return os.path.join(MediaHelper.get_property_media_root(),
                                 instance.file_oid,
                                 'panoramas',
@@ -103,6 +110,7 @@ class MediaHelper:
     def get_upload_movie_path(instance: Building, file_name: str):
         """動画のアップロードパス"""
         if instance and file_name:
+            file_name = re.sub(r'\.+' + repr(os.sep), '', file_name)
             return os.path.join(MediaHelper.get_property_media_root(),
                                 instance.file_oid,
                                 'movies',
@@ -114,6 +122,7 @@ class MediaHelper:
     def get_upload_file_path(instance: Building, file_name: str):
         """物件資料ファイルのアップロードパス"""
         if instance and file_name:
+            file_name = re.sub(r'\.+' + repr(os.sep), '', file_name)
             return os.path.join(MediaHelper.get_property_media_root(),
                                 instance.file_oid,
                                 'files',
