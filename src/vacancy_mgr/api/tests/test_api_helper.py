@@ -21,13 +21,13 @@ class ApiHelperTest(TestCase):
     def test_get_key(self):
         self.assertEqual(
             ApiHelper.get_key(),
-            'd3f001762f51e18a0241bde03544d91cdcf0efb154b792d739ccfa36e1138577520af5a81240ceca'
+            'f7e815ad8b88969d48a2e43f81e0b1aee28523f9f1330e345cc172747cc811d02ec6531855dece38dbe3692104c34c67'
         )
 
     def test_check_key(self):
         self.assertTrue(ApiHelper.check_key(
-            'd3f001762f51e18a0241bde03544d91cdcf0efb154b792d739ccfa36e1138577520af5a81240ceca'
+            'f7e815ad8b88969d48a2e43f81e0b1aee28523f9f1330e345cc172747cc811d02ec6531855dece38dbe3692104c34c67'
         ))
         self.assertFalse(ApiHelper.check_key(
-            '54b792d739ccfa36e1138577520af5a81240cecad3f001762f51e18a0241bde03544d91cdcf0efb1'
+            '5cc172747cc811d02ec6531855dece38dbe3692104c34c67f7e815ad8b88969d48a2e43f81e0b1aee28523f9f1330e34'
         ))
