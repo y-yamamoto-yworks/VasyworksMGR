@@ -83,7 +83,7 @@ class DeleteBuildingGarageView(FormView):
             messages.error(self.request, 'DEMOモードのため削除できません。')
         elif self.building_garage:
             self.building_garage.is_deleted = True
-            self.building_garage.updated_at = timezone.datetime.now()
+            self.building_garage.updated_at = timezone.now()
             self.building_garage.updated_user = self.user
             self.building_garage.save()
             messages.success(self.request, '削除しました。')

@@ -30,7 +30,7 @@ class LogHelper:
             data.room_status = status
             data.last_room_status = last_status
 
-            data.created_at = timezone.datetime.now()
+            data.created_at = timezone.now()
             data.created_user = user
 
             data.save()

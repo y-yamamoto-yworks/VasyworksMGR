@@ -129,7 +129,7 @@ class CreateRoomEquipmentView(FormView):
                                             else:
                                                 item.is_remained = False
 
-                                            item.updated_at = timezone.datetime.now()
+                                            item.updated_at = timezone.now()
                                             item.updated_user = self.user
                                             item.save()
                                             messages.success(self.request, '追加しました。')
@@ -144,9 +144,9 @@ class CreateRoomEquipmentView(FormView):
                                 data.room = self.room
                                 data.building = self.room.building
 
-                                data.created_at = timezone.datetime.now()
+                                data.created_at = timezone.now()
                                 data.created_user = self.user
-                                data.updated_at = timezone.datetime.now()
+                                data.updated_at = timezone.now()
                                 data.updated_user = self.user
 
                                 data.save()

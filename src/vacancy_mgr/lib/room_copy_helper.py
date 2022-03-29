@@ -294,9 +294,9 @@ class RoomCopyHelper:
             is_changed = True
 
         if is_changed:
-            destination_room.created_at = timezone.datetime.now()
+            destination_room.created_at = timezone.now()
             destination_room.created_user = user
-            destination_room.updated_at = timezone.datetime.now()
+            destination_room.updated_at = timezone.now()
             destination_room.updated_user = user
 
             destination_room.save()
@@ -320,7 +320,7 @@ class RoomCopyHelper:
             for item in destination_equipments:
                 # 一旦、登録済み設備を全て削除
                 item.is_deleted = True
-                item.updated_at = timezone.datetime.now()
+                item.updated_at = timezone.now()
                 item.updated_user = user
                 item.save()
 
@@ -335,7 +335,7 @@ class RoomCopyHelper:
                         item.is_remained = source.is_remained
                         item.note = source.note
                         item.priority = source.priority
-                        item.updated_at = timezone.datetime.now()
+                        item.updated_at = timezone.now()
                         item.updated_user = user
                         item.save()
 
@@ -350,9 +350,9 @@ class RoomCopyHelper:
                     data.room = destination_room
                     data.building = destination_room.building
 
-                    data.created_at = timezone.datetime.now()
+                    data.created_at = timezone.now()
                     data.created_user = user
-                    data.updated_at = timezone.datetime.now()
+                    data.updated_at = timezone.now()
                     data.updated_user = user
 
                     data.save()
@@ -383,7 +383,7 @@ class RoomCopyHelper:
                             item.is_publish_web = source.is_publish_web
                             item.comment = source.comment
                             item.note = source.note
-                            item.updated_at = timezone.datetime.now()
+                            item.updated_at = timezone.now()
                             item.updated_user = user
                             item.save()
 
@@ -405,9 +405,9 @@ class RoomCopyHelper:
                     data.room = destination_room
                     data.building = destination_room.building
 
-                    data.created_at = timezone.datetime.now()
+                    data.created_at = timezone.now()
                     data.created_user = user
-                    data.updated_at = timezone.datetime.now()
+                    data.updated_at = timezone.now()
                     data.updated_user = user
 
                     data.save()

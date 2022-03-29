@@ -80,7 +80,7 @@ class DeleteBuildingView(FormView):
             messages.error(self.request, '部屋の登録が存在するため削除できません。')
         elif self.building:
             self.building.is_deleted = True
-            self.building.updated_at = timezone.datetime.now()
+            self.building.updated_at = timezone.now()
             self.building.updated_user = self.user
             self.building.save()
             messages.success(self.request, '削除しました。')

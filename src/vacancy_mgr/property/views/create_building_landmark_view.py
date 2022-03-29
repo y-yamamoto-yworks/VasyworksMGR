@@ -100,9 +100,9 @@ class CreateBuildingLandmarkView(FormView):
                         data.distance = distance
                     data.building = self.building
 
-                    data.created_at = timezone.datetime.now()
+                    data.created_at = timezone.now()
                     data.created_user = self.user
-                    data.updated_at = timezone.datetime.now()
+                    data.updated_at = timezone.now()
                     data.updated_user = self.user
 
                     data.save()

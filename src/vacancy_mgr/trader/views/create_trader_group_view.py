@@ -79,9 +79,9 @@ class CreateTraderGroupView(FormView):
             data = TraderGroup()
             data.trader_group_name = name
             data.trader_group_kana = kana
-            data.created_at = timezone.datetime.now()
+            data.created_at = timezone.now()
             data.created_user = self.user
-            data.updated_at = timezone.datetime.now()
+            data.updated_at = timezone.now()
             data.updated_user = self.user
             data.is_stopped = False
             data.is_deleted = False

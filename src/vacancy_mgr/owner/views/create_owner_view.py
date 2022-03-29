@@ -79,9 +79,9 @@ class CreateOwnerView(FormView):
             data = Owner()
             data.owner_name = name
             data.owner_kana = kana
-            data.created_at = timezone.datetime.now()
+            data.created_at = timezone.now()
             data.created_user = self.user
-            data.updated_at = timezone.datetime.now()
+            data.updated_at = timezone.now()
             data.updated_user = self.user
             data.is_stopped = False
             data.is_deleted = False

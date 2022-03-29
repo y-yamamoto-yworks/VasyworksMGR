@@ -97,9 +97,9 @@ class CreateBuildingView(FormView):
 
             data.management_type = ManagementType.objects.get(pk=10)        # 自社管理
 
-            data.created_at = timezone.datetime.now()
+            data.created_at = timezone.now()
             data.created_user = self.user
-            data.updated_at = timezone.datetime.now()
+            data.updated_at = timezone.now()
             data.updated_user = self.user
 
             data.save()

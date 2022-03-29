@@ -82,7 +82,7 @@ class CreateVacancyThemeView(FormView):
             data.name = name
             data.title = title
             data.is_publish = False
-            data.created_at = timezone.datetime.now()
+            data.created_at = timezone.now()
             data.is_stopped = False
             data.save()
             self.vacancy_theme = data

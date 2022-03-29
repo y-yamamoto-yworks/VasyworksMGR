@@ -83,7 +83,7 @@ class DeleteRoomVacancyThemeView(FormView):
             messages.error(self.request, 'DEMOモードのため削除できません。')
         elif self.room_vacancy_theme:
             self.room_vacancy_theme.is_deleted = True
-            self.room_vacancy_theme.updated_at = timezone.datetime.now()
+            self.room_vacancy_theme.updated_at = timezone.now()
             self.room_vacancy_theme.updated_user = self.user
             self.room_vacancy_theme.save()
             messages.success(self.request, '削除しました。')

@@ -83,7 +83,7 @@ class DeleteBuildingLandmarkView(FormView):
             messages.error(self.request, 'DEMOモードのため削除できません。')
         elif self.building_landmark:
             self.building_landmark.is_deleted = True
-            self.building_landmark.updated_at = timezone.datetime.now()
+            self.building_landmark.updated_at = timezone.now()
             self.building_landmark.updated_user = self.user
             self.building_landmark.save()
             messages.success(self.request, '削除しました。')

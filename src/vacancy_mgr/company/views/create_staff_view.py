@@ -99,7 +99,7 @@ class CreateStaffView(FormView):
             data.priority = 100
             data.is_pm_staff = True
             data.is_publish_vacancy = True
-            data.created_at = timezone.datetime.now()
+            data.created_at = timezone.now()
             data.is_stopped = False
             data.is_deleted = False
 

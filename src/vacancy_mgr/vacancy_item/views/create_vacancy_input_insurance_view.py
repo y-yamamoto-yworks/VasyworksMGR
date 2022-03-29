@@ -81,7 +81,7 @@ class CreateVacancyInputInsuranceView(FormView):
 
             data = VacancyInputInsurance()
             data.input_contents = text
-            data.created_at = timezone.datetime.now()
+            data.created_at = timezone.now()
             data.is_stopped = False
             data.save()
             self.vacancy_input_item = data

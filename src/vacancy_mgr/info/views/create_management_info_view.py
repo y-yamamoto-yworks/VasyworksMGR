@@ -87,9 +87,9 @@ class CreateManagementInfoView(FormView):
             data.end_date = end_date
             data.link_url = link_url
             data.is_emphasized = is_emphasized
-            data.created_at = timezone.datetime.now()
+            data.created_at = timezone.now()
             data.created_user = self.user
-            data.updated_at = timezone.datetime.now()
+            data.updated_at = timezone.now()
             data.updated_user = self.user
             data.is_stopped = False
             data.is_deleted = False

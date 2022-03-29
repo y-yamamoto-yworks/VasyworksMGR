@@ -83,7 +83,7 @@ class DeleteBuildingPictureView(FormView):
             messages.error(self.request, 'DEMOモードのため削除できません。')
         elif self.building_picture:
             self.building_picture.is_deleted = True
-            self.building_picture.updated_at = timezone.datetime.now()
+            self.building_picture.updated_at = timezone.now()
             self.building_picture.updated_user = self.user
             self.building_picture.save()
             messages.success(self.request, '削除しました。')

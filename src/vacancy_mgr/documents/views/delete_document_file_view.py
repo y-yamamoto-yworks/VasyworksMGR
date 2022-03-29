@@ -83,7 +83,7 @@ class DeleteDocumentFileView(FormView):
             messages.error(self.request, 'DEMOモードのため削除できません。')
         elif self.document_file:
             self.document_file.is_deleted = True
-            self.document_file.updated_at = timezone.datetime.now()
+            self.document_file.updated_at = timezone.now()
             self.document_file.updated_user = self.user
             self.document_file.save()
             messages.success(self.request, '削除しました。')

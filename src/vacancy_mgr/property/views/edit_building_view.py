@@ -81,7 +81,7 @@ class EditBuildingView(UpdateView):
             return redirect(self.get_success_url())
         else:
             form.save(commit=False)
-            form.instance.updated_at = timezone.datetime.now()
+            form.instance.updated_at = timezone.now()
             form.instance.updated_user = self.user
             form.instance.save()
             messages.success(self.request, '保存しました。')

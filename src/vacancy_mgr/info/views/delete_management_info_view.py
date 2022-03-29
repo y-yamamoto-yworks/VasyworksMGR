@@ -83,7 +83,7 @@ class DeleteManagementInfoView(FormView):
             messages.error(self.request, 'DEMOモードのため削除できません。')
         elif self.info:
             self.info.is_deleted = True
-            self.info.updated_at = timezone.datetime.now()
+            self.info.updated_at = timezone.now()
             self.info.updated_user = self.user
             self.info.save()
             messages.success(self.request, '削除しました。')
