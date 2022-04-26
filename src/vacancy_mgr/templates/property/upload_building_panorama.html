@@ -29,32 +29,34 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row">
-                    <div class="col-2 col-form-label"><label class="float-right">パノラマ種別</label></div>
-                    <div class="col-10">{{ form.panorama_type }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-2 col-form-label"><label class="float-right">パノラマファイル</label></div>
-                    <div class="col-10">{{ form.panorama }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-8"><p class="notice-message">※ 個人情報や機密事項を含むファイルはアップロードしないでください。</p></div>
-                    <div class="col-2"></div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
-                        <input type="submit" value="追加" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                <div class="row py-1 justify-content-center">
+                    <div class="col col-auto">
+                        <div class="row py-1">
+                            <div class="col col-auto col-form-label"><label class="float-right">パノラマ種別</label></div>
+                            <div class="col col-auto">{{ form.panorama_type }}</div>
+                        </div>
+                        <div class="row py-1">
+                            <div class="col col-auto col-form-label"><label class="float-right">パノラマファイル</label></div>
+                            <div class="col container-fluid">{{ form.panorama }}</div>
+                        </div>
+                        <div class="row py-1">
+                            <div class="col col-auto"><p class="notice-message">※ 個人情報や機密事項を含むファイルはアップロードしないでください。</p></div>
+                        </div>
+                        <div class="row py-3">
+                            <div class="col col-2"></div>
+                            <div class="col col-4">
+                                <input type="submit" value="追加" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                            </div>
+                            <div class="col col-4">
+                            {% if back_url %}
+                                <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                            {% else %}
+                                <a href="{% url 'property_building' building.oid %}?page=pictures_page#panorama-anchor" class="btn btn-secondary">戻る</a>
+                            {% endif %}
+                            </div>
+                            <div class="col col-2"></div>
+                        </div>
                     </div>
-                    <div class="col-4">
-                    {% if back_url %}
-                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
-                    {% else %}
-                        <a href="{% url 'property_building' building.oid %}?page=pictures_page#panorama-anchor" class="btn btn-secondary">戻る</a>
-                    {% endif %}
-                    </div>
-                    <div class="col-2"></div>
                 </div>
              </form>
         </div>

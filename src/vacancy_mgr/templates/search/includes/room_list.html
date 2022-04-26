@@ -1,13 +1,11 @@
 <div id="data-list">
 {% if rooms %}
-    <div class="row">
-        <div class="col col-2 text-center">名称/号室/賃料</div>
-        <div class="col col-5 text-center">住所/最寄駅</div>
-        <div class="col col-5 text-center">その他</div>
-    </div>
-{% for item in rooms %}
-    <div class="row">
-        <div class="col col-2">
+    <div class="row pb-5">
+        <div class="col col-2 py-2 text-center">名称/号室/賃料</div>
+        <div class="col col-5 py-2 text-center">住所/最寄駅</div>
+        <div class="col col-5 py-2 text-center">その他</div>
+    {% for item in rooms %}
+        <div class="col col-2 py-2">
             <div>
                 {% if item.building.management_type %}<span class="small">【{{ item.building.management_type.name }}】</span>{% endif %}
                 {% if item.building.build_year > 0 %}<span class="small">{{ item.building.build_year }}年築</span>{% endif %}
@@ -17,13 +15,13 @@
                 <a href="{% url 'property_room' item.oid %}" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener noreferrer">{{ item.room_no | default_if_none:''}}号室</a>
             </div>
         </div>
-        <div class="col col-5">
+        <div class="col col-5 py-2">
             <div class="small">{{ item.building.address }}</div>
             {% if item.building.nearest_station1 %}<div class="small">{{ item.building.nearest_station1 }}</div>{% endif %}
             {% if item.building.nearest_station2 %}<div class="small">{{ item.building.nearest_station2 }}</div>{% endif %}
             {% if item.building.nearest_station3 %}<div class="small">{{ item.building.nearest_station3 }}</div>{% endif %}
         </div>
-        <div class="col col-5">
+        <div class="col col-5 py-2">
             <div>
                 <span class="small">賃料:{{ item.rent_text | default_if_none:'---' }}</span>
                 {% if item.room_status %}<span class="small">【{{ item.room_status.name }}】</span>{% endif %}
@@ -51,8 +49,8 @@
                 <span class="small">駐輪場:{{ item.building.bike_parking_type.name | default_if_none:'---' }}</span>
             </div>
         </div>
+    {% endfor %}
     </div>
-{% endfor %}
 {% else %}
     <p>該当する建物はありません。</p>
 {% endif %}

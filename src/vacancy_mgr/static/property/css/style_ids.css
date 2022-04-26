@@ -43,7 +43,7 @@
 }
 
 #id_bus_stop1 {
-    width: 150px;
+    width: 200px;
 }
 
 #id_bus_stop_time1 {
@@ -57,7 +57,7 @@
 }
 
 #id_bus_stop2 {
-    width: 150px;
+    width: 200px;
 }
 
 #id_bus_stop_time2 {
@@ -71,7 +71,7 @@
 }
 
 #id_bus_stop3 {
-    width: 150px;
+    width: 200px;
 }
 
 #id_bus_stop_time3 {
@@ -96,6 +96,7 @@
 }
 
 #id_map {
+    margin-top: 10px;
     width: 600px;
     height: 400px;
 }

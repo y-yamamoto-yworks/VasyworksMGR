@@ -28,72 +28,70 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">オーナーID</label></div>
-                    <div class="col col-9 col-md-10 col-form-label">{{ owner.id }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>オーナーID</label></div>
+                    <div class="col col-auto col-form-label">{{ owner.id }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">オーナー名</label></div>
-                    <div class="col col-9 col-md-10">{{ form.owner_name }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>オーナー名</label></div>
+                    <div class="col container-fluid">{{ form.owner_name }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">カナ</label></div>
-                    <div class="col col-9 col-md-10">{{ form.owner_kana }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>カナ</label></div>
+                    <div class="col container-fluid">{{ form.owner_kana }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">法人区分</label></div>
-                    <div class="col col-3 col-md-2 text-center">{{ form.is_corporation }}<label class="form-check-label">法人</label></div>
-                    <div class="col col-6 col-md-8"></div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>法人区分</label></div>
+                    <div class="col col-auto col-form-label text-center">{{ form.is_corporation }}<label class="form-check-label">法人</label></div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">法人オーナー名</label></div>
-                    <div class="col col-9 col-md-10">{{ form.corporation_owner_name }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>法人オーナー名</label></div>
+                    <div class="col container-fluid">{{ form.corporation_owner_name }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">郵便番号</label></div>
-                    <div class="col col-3 col-md-4">{{ form.postal_code }}</div>
-                    <div class="col col-6"></div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>郵便番号</label></div>
+                    <div class="col col-auto">{{ form.postal_code }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">住所</label></div>
-                    <div class="col col-9 col-md-10">{{ form.address }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>住所</label></div>
+                    <div class="col container-fluid">{{ form.address }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">電話番号1</label></div>
-                    <div class="col col-3 col-md-4">{{ form.tel1 }}</div>
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">電話番号2</label></div>
-                    <div class="col col-3 col-md-4">{{ form.tel2 }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>電話番号1</label></div>
+                    <div class="col col-auto">{{ form.tel1 }}</div>
+                    <div class="col col-auto col-form-label text-end"><label>電話番号2</label></div>
+                    <div class="col col-auto">{{ form.tel2 }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">FAX番号</label></div>
-                    <div class="col col-9 col-md-10">{{ form.fax }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>FAX番号</label></div>
+                    <div class="col col-auto">{{ form.fax }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">E-MAIL</label></div>
-                    <div class="col col-9 col-md-10">{{ form.mail }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>E-MAIL</label></div>
+                    <div class="col container-fluid">{{ form.mail }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">担当者</label></div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>担当者</label></div>
                     <div class="col col-9 col-md-10">
-                        <div class="form-inline">
-                            [[ staffName ]]{{ form.staff }}&nbsp;
-                            <input type="button" value="選択" v-on:click="openStaffModal($event)" class="btn d-block d-flex align-items-center btn-info">&nbsp;
+                        <div class="row">
+                            <div class="col col-auto col-form-label">[[ staffName ]]</div>
+                            <div class="col col-auto">{{ form.staff }}</div>
+                            <div class="col col-auto"><input type="button" value="選択" v-on:click="openStaffModal($event)" class="btn d-block d-flex align-items-center btn-info"></div>
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">備考</label></div>
-                    <div class="col col-9 col-md-10">{{ form.note }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>備考</label></div>
+                    <div class="col container-fluid">{{ form.note }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">停止 / 削除</label></div>
-                    <div class="col col-3 col-md-2 col-form-label text-center">{{ form.is_stopped }}<label class="form-check-label">{{form.is_stopped.label}}</label></div>
-                    <div class="col col-3 col-md-2 col-form-label text-center">{{ form.is_deleted }}<label class="form-check-label">{{form.is_deleted.label}}</label></div>
-                    <div class="col col-3 col-md-6"></div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>停止 / 削除</label></div>
+                    <div class="col col-auto col-form-label text-center">{{ form.is_stopped }}<label class="form-check-label">{{form.is_stopped.label}}</label></div>
+                    <div class="col col-auto col-form-label text-center">{{ form.is_deleted }}<label class="form-check-label">{{form.is_deleted.label}}</label></div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">登録情報</label></div>
-                    <div class="col col-9 col-md-10 col-form-label">
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>登録情報</label></div>
+                    <div class="col col-auto col-form-label">
                         <div>
                             <label>登録日時:</label>{{ owner.created_at }}
                             <label>登録ユーザ:</label>{{ owner.created_user }}
@@ -104,19 +102,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
+                <div class="row py-1">
+                    <div class="col col-2"></div>
+                    <div class="col col-4">
                         <input type="submit" value="保存" class="btn d-block mx-auto d-flex align-items-center btn-primary">
                     </div>
-                    <div class="col-4">
+                    <div class="col col-4">
                     {% if back_url %}
                         <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
                     {% else %}
                         <input type="button" value="閉じる" onclick="window.close();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
                     {% endif %}
                     </div>
-                    <div class="col-2"></div>
+                    <div class="col col-2"></div>
                 </div>
             </form>
 
@@ -134,7 +132,7 @@
                         </div>
                         <div class="col col-1"></div>
                     </div>
-                    <div class="row">
+                    <div class="row py-1">
                         <div class="col col-12">
                             <select class="modal-select form-control" v-model="selectedStaff">
                                 <option v-for="staff in selectStaffs" v-bind:value="staff.id">[[ staff.staff_name ]]</option>
@@ -144,7 +142,7 @@
                 </div>
 
                 <div>
-                    <div class="row">
+                    <div class="row py-1">
                         <div class="col col-2"></div>
                         <div class="col col-4">
                             <button v-on:click="okCloseStaffModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>

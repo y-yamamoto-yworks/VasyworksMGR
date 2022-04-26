@@ -23,3 +23,12 @@
 #data-list .col {
     border: solid 1px black;
 }
+
+/* 各項目 */
+#id_agency_no {
+    width: 300px;
+}
+
+#id_pm_no {
+    width: 300px;
+}

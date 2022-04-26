@@ -497,7 +497,7 @@ function createEditBuildingVue(
                 this.inputRenewalCharge = "";
                 this.$modal.hide("input-renewal-charge");
             },
-            cancelCloseInputRenuewalChargeModal: function(event) {
+            cancelCloseInputRenewalChargeModal: function(event) {
                 // 更新事務手数料定型入力画面のキャンセルの処理
                 this.inputRenewalCharge = "";
                 this.$modal.hide("input-renewal-charge");

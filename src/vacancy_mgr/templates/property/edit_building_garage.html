@@ -29,102 +29,104 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row">
-                    <div class="col-2 col-form-label"><label class="float-right">駐車場名:</label></div>
-                    <div class="col-10">{{ form.garage_name }}</div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label class="float-right">駐車場名:</label></div>
+                    <div class="col container-fluid">{{ form.garage_name }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-2 col-form-label"><label class="float-right">空き状況:</label></div>
-                    <div class="col-3">{{ form.garage_status }}</div>
-                    <div class="col-2">{{ form.allow_no_room }} 外部貸し可</div>
-                    <div class="col-5"></div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label class="float-right">空き状況:</label></div>
+                    <div class="col col-auto">{{ form.garage_status }}</div>
+                    <div class="col col-auto pt-2"><label>外部貸し可:</label>{{ form.allow_no_room }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>優先順:</label></div>
-                    <div class="col col-10 form-inline">{{ form.priority }}</div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label>優先順:</label></div>
+                    <div class="col col-auto">{{ form.priority }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>月額:</label></div>
-                    <div class="col col-10 form-inline">
-                        {{ form.garage_fee }}&nbsp;円
-                        <label>税区分:</label>{{ form.garage_fee_tax_type }}
-                    </div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label>月額:</label></div>
+                    <div class="col col-auto">{{ form.garage_fee }}</div>
+                    <div class="col col-auto col-form-label text-start"><span>円</span></div>
+                    <div class="col col-auto col-form-label text-end"><label>税区分:</label></div>
+                    <div class="col col-auto">{{ form.garage_fee_tax_type }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>手数料:</label></div>
-                    <div class="col col-10 form-inline">
-                        {{ form.garage_charge }}&nbsp;円
-                        <label>税区分:</label>{{ form.garage_charge_tax_type }}
-                    </div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label>手数料:</label></div>
+                    <div class="col col-auto">{{ form.garage_charge }}</div>
+                    <div class="col col-auto col-form-label text-start"><span>円</span></div>
+                    <div class="col col-auto col-form-label text-end"><label>税区分:</label></div>
+                    <div class="col col-auto">{{ form.garage_charge_tax_type }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>保証料:</label></div>
-                    <div class="col col-10 form-inline">
-                        {{ form.garage_deposit }}&nbsp;円
-                        <label>税区分:</label>{{ form.garage_deposit_tax_type }}
-                    </div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label>保証料:</label></div>
+                    <div class="col col-auto">{{ form.garage_deposit }}</div>
+                    <div class="col col-auto col-form-label text-start"><span>円</span></div>
+                    <div class="col col-auto col-form-label text-end"><label>税区分:</label></div>
+                    <div class="col col-auto">{{ form.garage_deposit_tax_type }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>車庫証明費用:</label></div>
-                    <div class="col col-10 form-inline">
-                        {{ form.certification_fee }}&nbsp;円
-                        <label>税区分:</label>{{ form.certification_fee_tax_type }}
-                    </div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label>車庫証明費用:</label></div>
+                    <div class="col col-auto">{{ form.certification_fee }}</div>
+                    <div class="col col-auto col-form-label text-start"><span>円</span></div>
+                    <div class="col col-auto col-form-label text-end"><label>税区分:</label></div>
+                    <div class="col col-auto">{{ form.certification_fee_tax_type }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>初期費用1:</label></div>
-                    <div class="col col-10 form-inline">
-                        <label>費用名:</label>{{ form.initial_cost_name1 }}
-                        <label>金額:</label>{{ form.initial_cost1 }}&nbsp;円
-                        <label>税区分:</label>{{ form.initial_cost_tax_type1 }}
-                    </div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label>初期費用1:</label></div>
+                    <div class="col col-auto">{{ form.initial_cost_name1 }}</div>
+                    <div class="col col-auto">{{ form.initial_cost1 }}</div>
+                    <div class="col col-auto col-form-label text-start"><span>円</span></div>
+                    <div class="col col-auto col-form-label text-end"><label>税区分:</label></div>
+                    <div class="col col-auto">{{ form.initial_cost_tax_type1 }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>初期費用2:</label></div>
-                    <div class="col col-10 form-inline">
-                        <label>費用名:</label>{{ form.initial_cost_name2 }}
-                        <label>金額:</label>{{ form.initial_cost2 }}&nbsp;円
-                        <label>税区分:</label>{{ form.initial_cost_tax_type2 }}
-                    </div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label>初期費用2:</label></div>
+                    <div class="col col-auto">{{ form.initial_cost_name2 }}</div>
+                    <div class="col col-auto">{{ form.initial_cost2 }}</div>
+                    <div class="col col-auto col-form-label text-start"><span>円</span></div>
+                    <div class="col col-auto col-form-label text-end"><label>税区分:</label></div>
+                    <div class="col col-auto">{{ form.initial_cost_tax_type2}}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>初期費用3:</label></div>
-                    <div class="col col-10 form-inline">
-                        <label>費用名:</label>{{ form.initial_cost_name3 }}
-                        <label>金額:</label>{{ form.initial_cost3 }}&nbsp;円
-                        <label>税区分:</label>{{ form.initial_cost_tax_type3 }}
-                    </div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label>初期費用3:</label></div>
+                    <div class="col col-auto">{{ form.initial_cost_name3 }}</div>
+                    <div class="col col-auto">{{ form.initial_cost3 }}</div>
+                    <div class="col col-auto col-form-label text-start"><span>円</span></div>
+                    <div class="col col-auto col-form-label text-end"><label>税区分:</label></div>
+                    <div class="col col-auto">{{ form.initial_cost_tax_type3 }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>サイズ:</label></div>
-                    <div class="col col-10 form-inline">
-                        <label>幅:</label>{{ form.width }}&nbsp;m
-                        <label>奥行き:</label>{{ form.length }}&nbsp;m
-                        <label>高さ:</label>{{ form.height }}&nbsp;m
-                    </div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label>サイズ:</label></div>
+                    <div class="col col-auto col-form-label"><span>幅:</span></div>
+                    <div class="col col-auto">{{ form.width }}</div>
+                    <div class="col col-auto col-form-label text-start"><span>m</span></div>
+                    <div class="col col-auto col-form-label"><span>奥行き:</span></div>
+                    <div class="col col-auto">{{ form.length }}</div>
+                    <div class="col col-auto col-form-label text-start"><span>m</span></div>
+                    <div class="col col-auto col-form-label"><span>高さ:</span></div>
+                    <div class="col col-auto">{{ form.height }}</div>
+                    <div class="col col-auto col-form-label text-start"><span>m</span></div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>コメント:</label></div>
-                    <div class="col col-10 form-inline">{{ form.comment }}</div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label class="float-right">コメント:</label></div>
+                    <div class="col container-fluid">{{ form.comment }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>備考:</label></div>
-                    <div class="col col-10 form-inline">{{ form.note }}</div>
+                <div class="row py-1">
+                    <div class="col col-2 col-form-label text-end"><label class="float-right">備考:</label></div>
+                    <div class="col container-fluid">{{ form.note }}</div>
                 </div>
-
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
+                <div class="row py-3">
+                    <div class="col col-2"></div>
+                    <div class="col col-4">
                         <input type="submit" value="保存" class="btn d-block mx-auto d-flex align-items-center btn-primary">
                     </div>
-                    <div class="col-4">
+                    <div class="col col-4">
                     {% if back_url %}
                         <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
                     {% else %}
                         <a href="{% url 'property_building' data.building.oid %}?page=garage_page#garage-list-anchor" class="btn btn-secondary">戻る</a>
                     {% endif %}
                     </div>
-                    <div class="col-2"></div>
+                    <div class="col col-2"></div>
                 </div>
             </form>
         </form>

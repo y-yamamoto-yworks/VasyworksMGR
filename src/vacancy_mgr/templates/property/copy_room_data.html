@@ -26,49 +26,54 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row">
-                    <div class="col-2 col-form-label"><label class="float-right">コピー元部屋</label></div>
-                    <div class="col-10">{{ form.selected_room }}</div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-2 col-md-2 col-form-label"><label class="float-right">コピー対象</label></div>
-                    <div class="col-9 col-md-6 copy-room-targets">
-                        <div class="form-inline">
-                            <label>基本情報</label>{{ form.base }}
-                            <label>間取り</label>{{ form.layout }}
-                            <label>設備・入居条件</label>{{ form.features }}
+                <div class="row py-1 justify-content-center">
+                    <div class="col col-auto">
+                        <div class="row py-1">
+                            <div class="col col-auto col-form-label"><label class="float-right">コピー元部屋</label></div>
+                            <div class="col col-auto">{{ form.selected_room }}</div>
                         </div>
-                        <div class="form-inline">
-                            <label>空室掲載</label>{{ form.vacancy }}
-                            <label>WEB掲載</label>{{ form.web }}
+                        <div class="row py-1">
+                            <div class="col col-12 col-form-label"><label class="float-right">コピー対象</label></div>
+                            <div class="col col-12 copy-room-targets">
+                                <div class="row py-1">
+                                    <div class="col col-auto pt-2"><label>基本情報:</label>{{ form.base }}</div>
+                                    <div class="col col-auto pt-2"><label>間取り:</label>{{ form.layout }}</div>
+                                    <div class="col col-auto pt-2"><label>設備・入居条件:</label>{{ form.features }}</div>
+                                </div>
+                                <div class="row py-1">
+                                    <div class="col col-auto pt-2"><label>空室掲載:</label>{{ form.vacancy }}</div>
+                                    <div class="col col-auto pt-2"><label>WEB掲載:</label>{{ form.web }}</div>
+                                </div>
+                                <div class="row py-1">
+                                    <div class="col col-auto pt-2"><label>月額費用:</label>{{ form.monthly_cost }}</div>
+                                    <div class="col col-auto pt-2"><label>初期費用:</label>{{ form.initial_cost }}</div>
+                                    <div class="col col-auto pt-2"><label>更新・再契約費用:</label>{{ form.renewal_cost }}</div>
+                                </div>
+                                <div class="row py-3 justify-content-center">
+                                    <div class="col col-auto px-5">
+                                        <a href="#" v-on:click="selectAllTarget($event)" class="btn btn-sm btn-outline-primary">全選択</a>&nbsp;
+                                    </div>
+                                    <div class="col col-auto px-5">
+                                        <a href="#" v-on:click="clearAllTarget($event)" class="btn btn-sm btn-outline-secondary">クリア</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-inline">
-                            <label>月額費用</label>{{ form.monthly_cost }}
-                            <label>初期費用</label>{{ form.initial_cost }}
-                            <label>更新・再契約費用</label>{{ form.renewal_cost }}
-                        </div>
-                        <div class="text-center">
-                            <a href="#" v-on:click="selectAllTarget($event)" class="btn btn-sm btn-outline-primary">全選択</a>&nbsp;
-                            <a href="#" v-on:click="clearAllTarget($event)" class="btn btn-sm btn-outline-secondary">クリア</a>
+                        <div class="row py-5">
+                            <div class="col col-2"></div>
+                            <div class="col col-4">
+                                <input type="submit" value="データコピー" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                            </div>
+                            <div class="col col-4">
+                            {% if back_url %}
+                                <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                            {% else %}
+                                <a href="{% url 'property_edit_room' room.oid %}" class="btn btn-secondary">戻る</a>
+                            {% endif %}
+                            </div>
+                            <div class="col col-2"></div>
                         </div>
                     </div>
-                    <div class="col-1 col-md-4"></div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
-                        <input type="submit" value="データコピー" class="btn d-block mx-auto d-flex align-items-center btn-primary">
-                    </div>
-                    <div class="col-4">
-                    {% if back_url %}
-                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
-                    {% else %}
-                        <a href="{% url 'property_edit_room' room.oid %}" class="btn btn-secondary">戻る</a>
-                    {% endif %}
-                    </div>
-                    <div class="col-2"></div>
                 </div>
              </form>
         </div>

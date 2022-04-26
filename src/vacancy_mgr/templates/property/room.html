@@ -17,15 +17,15 @@
 
     {% block contents %}
         <div class="row">
-            <div class="col-3 text-center">
+            <div class="col col-3 text-center">
             {% if back_url %}
                 <a href="{% url 'property_edit_room' room.oid %}?back_url={{ escaped_back_url }}" class="btn btn-primary">編集</a>
             {% else %}
                 <a href="{% url 'property_edit_room' room.oid %}" class="btn btn-primary">編集</a>
             {% endif %}
             </div>
-            <div class="col-6"></div>
-            <div class="col-3 text-center">
+            <div class="col col-6"></div>
+            <div class="col col-3 text-center">
             {% if back_url %}
                 <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
             {% else %}
@@ -455,17 +455,17 @@
                         <div class="row category-contents">
                             <div class="col col-12">
                                 <div class="row sub-list-row">
-                                    <div class="col col-2 col-lg-2 text-center"><label>カテゴリ</label></div>
-                                    <div class="col col-4 col-lg-3 text-center"><label>設備名</label></div>
-                                    <div class="col col-4 col-lg-3 text-center"><label>備考</label></div>
-                                    <div class="col col-2 col-lg-4"></div>
+                                    <div class="col col-2 col-lg-2 py-2 text-center"><label>カテゴリ</label></div>
+                                    <div class="col col-4 col-lg-3 py-2 text-center"><label>設備名</label></div>
+                                    <div class="col col-4 col-lg-3 py-2 text-center"><label>備考</label></div>
+                                    <div class="col col-2 col-lg-4 py-2"></div>
                                 </div>
                                 {% for item in equipments %}
                                 <div class="row sub-list-row">
-                                    <div class="col col-2 col-lg-2 col-form-label text-center">{{ item.equipment.category.name | default_if_none:'' }}</div>
-                                    <div class="col col-4 col-lg-3 col-form-label text-center">{{ item.equipment.name | default_if_none:'' }}{% if item.is_remained %}(残置物){% endif %}</div>
-                                    <div class="col col-4 col-lg-3 col-form-label text-center">{{ item.note | default_if_none:'' }}</div>
-                                    <div class="col col-2 col-lg-4">
+                                    <div class="col col-2 col-lg-2 py-2 col-form-label text-center">{{ item.equipment.category.name | default_if_none:'' }}</div>
+                                    <div class="col col-4 col-lg-3 py-2 col-form-label text-center">{{ item.equipment.name | default_if_none:'' }}{% if item.is_remained %}(残置物){% endif %}</div>
+                                    <div class="col col-4 col-lg-3 py-2 col-form-label text-center">{{ item.note | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-4 py-2">
                                         <a href="{% url 'property_edit_room_equipment' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=room_page%23equipment-anchor" class="btn btn-sm btn-outline-primary">編集</a>
                                         <a href="{% url 'property_delete_room_equipment' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=room_page%23equipment-anchor" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
@@ -593,17 +593,17 @@
                         <div class="row category-contents">
                             <div class="col col-12">
                                 <div class="row sub-list-row">
-                                    <div class="col col-3 col-lg-2 text-center">種別</div>
-                                    <div class="col col-5 col-lg-4 text-center">コメント</div>
-                                    <div class="col col-2 col-lg-1 text-center">優先順</div>
-                                    <div class="col col-2 col-lg-5"></div>
+                                    <div class="col col-3 col-lg-2 py-2 text-center">種別</div>
+                                    <div class="col col-5 col-lg-4 py-2 text-center">コメント</div>
+                                    <div class="col col-2 col-lg-1 py-2 text-center">優先順</div>
+                                    <div class="col col-2 col-lg-5 py-2"></div>
                                 </div>
                                 {% for item in panoramas %}
                                 <div class="row sub-list-row">
-                                    <div class="col col-3 col-lg-2 col-form-label text-center">{{ item.panorama_type.name }}</div>
-                                    <div class="col col-5 col-lg-4 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
-                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
-                                    <div class="col col-2 col-lg-5">
+                                    <div class="col col-3 col-lg-2 py-2 col-form-label text-center">{{ item.panorama_type.name }}</div>
+                                    <div class="col col-5 col-lg-4 py-2 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 py-2 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-5 py-2">
                                         <a href="{% url 'property_edit_room_panorama' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page%23panorama-anchor" class="btn btn-sm btn-outline-primary">編集</a>
                                         <a href="{% url 'property_delete_room_panorama' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page%23panorama-anchor" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
@@ -622,17 +622,17 @@
                         <div class="row category-contents">
                             <div class="col col-12">
                                 <div class="row sub-list-row">
-                                    <div class="col col-3 col-lg-2 text-center">種別</div>
-                                    <div class="col col-5 col-lg-4 text-center">コメント</div>
-                                    <div class="col col-2 col-lg-1 text-center">優先順</div>
-                                    <div class="col col-2 col-lg-5"></div>
+                                    <div class="col col-3 col-lg-2 py-2 text-center">種別</div>
+                                    <div class="col col-5 col-lg-4 py-2 text-center">コメント</div>
+                                    <div class="col col-2 col-lg-1 py-2 text-center">優先順</div>
+                                    <div class="col col-2 col-lg-5 py-2"></div>
                                 </div>
                                 {% for item in movies %}
                                 <div class="row sub-list-row">
-                                    <div class="col col-5 col-lg-2 col-form-label text-center">{{ item.movie_type.name }}</div>
-                                    <div class="col col-5 col-lg-4 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
-                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
-                                    <div class="col col-2 col-lg-5">
+                                    <div class="col col-5 col-lg-2 py-2 col-form-label text-center">{{ item.movie_type.name }}</div>
+                                    <div class="col col-5 col-lg-4 py-2 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 py-2 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-5 py-2">
                                         <a href="{% url 'property_edit_room_movie' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page%23movie-anchor" class="btn btn-sm btn-outline-primary">編集</a>
                                         <a href="{% url 'property_delete_room_movie' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=pictures_page%23movie-anchor" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
@@ -683,14 +683,14 @@
                         </div>
                         <div class="row category-contents">
                             <div class="col col-12">
-                                <div class="row">
+                                <div class="row sub-list-row">
                                     <div class="col col-10 col-lg-4 text-center"><label>掲載空室テーマ</label></div>
                                     <div class="col col-2 col-lg-8"></div>
                                 </div>
-                                <div class="row">
+                                <div class="row sub-list-row">
                                 {% for item in vacancy_themes %}
-                                    <div class="col col-10 col-lg-4 col-form-label text-center">{{ item.vacancy_theme.name | default_if_none:'' }}</div>
-                                    <div class="col col-2 col-lg-8">
+                                    <div class="col col-10 col-lg-4 py-2 col-form-label text-center">{{ item.vacancy_theme.name | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-8 py-2">
                                         <a href="{% url 'property_delete_room_vacancy_theme' room.oid item.id %}?back_url={% url 'property_room' room.oid %}%3Fpage=vacancy_page#vacancy-theme-anchor" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
                                 {% endfor %}
@@ -755,18 +755,18 @@
                         </div>
                         <div class="row category-contents">
                             <div class="col col-12">
-                                <div class="row">
-                                    <div class="col col-3 text-center">変更日</div>
-                                    <div class="col col-3 text-center">部屋状況</div>
-                                    <div class="col col-3 text-center">変更前</div>
-                                    <div class="col col-3 text-center">変更担当者</div>
+                                <div class="row sub-list-row">
+                                    <div class="col col-3 py-2 text-center">変更日</div>
+                                    <div class="col col-3 py-2 text-center">部屋状況</div>
+                                    <div class="col col-3 py-2 text-center">変更前</div>
+                                    <div class="col col-3 py-2 text-center">変更担当者</div>
                                 </div>
-                                <div class="row">
+                                <div class="row sub-list-row">
                                 {% for item in status_logs %}
-                                    <div class="col col-3 col-form-label text-center">{{ item.created_at | date:'Y/m/d' }}</div>
-                                    <div class="col col-3 col-form-label text-center">{{ item.room_status.name | default_if_none:'' }}</div>
-                                    <div class="col col-3 col-form-label text-center">{{ item.last_room_status.name | default_if_none:'' }}</div>
-                                    <div class="col col-3 col-form-label text-center">{{ item.created_user.full_name | default_if_none:'' }}</div>
+                                    <div class="col col-3 py-2 col-form-label text-center">{{ item.created_at | date:'Y/m/d' }}</div>
+                                    <div class="col col-3 py-2 col-form-label text-center">{{ item.room_status.name | default_if_none:'' }}</div>
+                                    <div class="col col-3 py-2 col-form-label text-center">{{ item.last_room_status.name | default_if_none:'' }}</div>
+                                    <div class="col col-3 py-2 col-form-label text-center">{{ item.created_user.full_name | default_if_none:'' }}</div>
                                 {% endfor %}
                                 </div>
                             </div>
@@ -780,7 +780,7 @@
     {% block footer %}{% endblock %}
 
     {% block page_bottom %}
-        <script src="{% static 'lib/lightbox2/js/lightbox.min.js' %}"></script>
+        <script src="{% static 'lib/lightbox2/js/lightbox-plus-jquery.min.js' %}"></script>
         <script>
             lightbox.option({
                 'wrapAround': true,

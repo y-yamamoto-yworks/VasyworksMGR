@@ -29,32 +29,15 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label text-right"><label>緯度:</label></div>
-                    <div class="col col-3 form-inline">{{ form.lat }}</div>
-                    <div class="col col-2 col-form-label col-form-label text-right"><label>経度:</label></div>
-                    <div class="col col-3 form-inline">{{ form.lng }}</div>
-                    <div class="col col-2"></div>
+                <div class="row py-1 justify-content-center">
+                    <div class="col col-auto col-form-label"><label>緯度:</label></div>
+                    <div class="col col-auto">{{ form.lat }}</div>
+                    <div class="col col-auto col-form-label"><label>経度:</label></div>
+                    <div class="col col-auto">{{ form.lng }}</div>
                 </div>
 
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
-                        <input type="submit" value="保存" class="btn d-block mx-auto d-flex align-items-center btn-primary">
-                    </div>
-                    <div class="col-4">
-                    {% if back_url %}
-                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
-                    {% else %}
-                        <a href="{% url 'property_building' data.oid %}?page=map_page" class="btn btn-secondary">戻る</a>
-                    {% endif %}
-                    </div>
-                    <div class="col-2"></div>
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col col-8">
+                <div class="row py-3 justify-content-center">
+                    <div class="col col-auto">
                         <div id="id_map">
                             <l-map :zoom="zoom" :center="center" @update:center="updateCenter">
                                 <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
@@ -62,8 +45,20 @@
                             </l-map>
                         </div>
                     </div>
-                    <div class="col-2"></div>
                 </div>
+                <div class="row py-3 justify-content-center">
+                    <div class="col col-auto px-5">
+                        <input type="submit" value="保存" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                    </div>
+                    <div class="col col-auto px-5">
+                    {% if back_url %}
+                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                    {% else %}
+                        <a href="{% url 'property_building' data.oid %}?page=map_page" class="btn btn-secondary">戻る</a>
+                    {% endif %}
+                    </div>
+                </div>
+
             </form>
         </div>
     {% endblock %}

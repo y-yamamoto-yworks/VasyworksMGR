@@ -1,38 +1,36 @@
 <div id="data-list">
 {% if buildings %}
-    <div class="row">
-        <div class="col col-3 text-center">建物名称</div>
-        <div class="col col-4 text-center">住所</div>
-        <div class="col col-1 text-center">管理</div>
-        <div class="col col-3 text-center">その他</div>
-        <div class="col col-1"></div>
-    </div>
-{% for item in buildings %}
-    <div class="row">
-        <div class="col col-3">
+    <div class="row pb-5">
+        <div class="col col-3 col-md-3 py-2 text-center">建物名称</div>
+        <div class="col col-3 col-md-4 py-2 text-center">住所</div>
+        <div class="col col-1 col-md-1 py-2 text-center">管理</div>
+        <div class="col col-3 col-md-3 py-2 text-center">その他</div>
+        <div class="col col-2 col-md-1 py-2"></div>
+    {% for item in buildings %}
+        <div class="col col-3 col-md-3 py-2">
             <div><a href="{% url 'property_building' item.oid %}" target="_blank" rel="noopener noreferrer">{{ item.building_name }}</a></div>
         </div>
-        <div class="col col-4">
+        <div class="col col-3 col-md-4 py-2">
             <div class="small">{{ item.address }}</div>
         </div>
-        <div class="col col-1">
+        <div class="col col-1 col-md-1 py-2">
             <div class="small text-center">{{  item.management_type.name | default_if_none:'-----'  }}</div>
         </div>
-        <div class="col col-3">
+        <div class="col col-3 col-md-3 py-2">
             {% if item.building_old_name %}<div class="small">旧:&nbsp;{{ item.building_old_name }}</div>{% endif %}
             <div class="small">
-                {% if item.is_hidden_vacancy %}<span class="nowrap">【空室情報非公開】</span>{% endif %}
-                {% if item.is_vacancy_recommend %}<span class="nowrap">【空室情報おすすめ】</span>{% endif %}
-                {% if item.is_hidden_web %}<span class="nowrap">【WEB非公開】</span>{% endif %}
+                {% if item.is_hidden_vacancy %}<span class="small">【空室情報非公開】</span>{% endif %}
+                {% if item.is_vacancy_recommend %}<span class="small">【空室情報おすすめ】</span>{% endif %}
+                {% if item.is_hidden_web %}<span class="small">【WEB非公開】</span>{% endif %}
             </div>
         </div>
-        <div class="col col-1">
+        <div class="col col-2 col-md-1 py-2">
             <div class="text-center">
                 <a href="{% url 'property_delete_building' item.oid %}" class="btn btn-sm btn-outline-danger">削除</a>
             </div>
         </div>
+    {% endfor %}
     </div>
-{% endfor %}
 {% else %}
     <p>該当する建物はありません。</p>
 {% endif %}

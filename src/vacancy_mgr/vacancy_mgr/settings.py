@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'rest_framework',
+    'django_bootstrap5',
     'django_filters',
     'api',
     'property',

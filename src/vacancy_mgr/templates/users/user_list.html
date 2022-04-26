@@ -15,11 +15,11 @@
 
     {% block contents %}
         <div  id="user-list-header">
-            <div class="row">
-                <div id="link-add-user" class="col col-6 text-left">
+            <div class="row py-2">
+                <div id="link-add-user" class="col col-6 py-2 text-start">
                     <a href="{% url 'users_create_user' %}">ユーザ追加</a>
                 </div>
-                <div id="link-change-list" class="col col-6 text-right">
+                <div id="link-change-list" class="col col-6 py-2 text-end">
                 {% if all_users %}
                     <a href="{% url 'users_user_list' %}">ユーザ一覧</a>
                 {% else %}
@@ -30,31 +30,28 @@
         </div>
         <div id="user-list">
         {% if users %}
-            <div class="row">
-                <div class="col col-3 text-center">ユーザ名</div>
-                <div class="col col-3 text-center">氏名</div>
-                <div class="col col-1 text-center">管理者</div>
-                <div class="col col-1 text-center">有効</div>
-                <div class="col col-4 text-center">スタッフ</div>
-            </div>
+            <div class="row pb-5">
+                <div class="col col-3 py-2 text-center">ユーザ名</div>
+                <div class="col col-3 py-2 text-center">氏名</div>
+                <div class="col col-1 py-2 text-center">管理者</div>
+                <div class="col col-1 py-2 text-center">有効</div>
+                <div class="col col-4 py-2 text-center">スタッフ</div>
             {% for item in users %}
-            <div class="row">
-                <div class="col col-3"><a href="{% url 'users_user' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.username }}</a></div>
-                <div class="col col-3">{{ item.full_name }}</div>
-                <div class="col col-1 text-center">{% if item.is_company_admin %}〇{% else %}－{% endif %}</div>
-                <div class="col col-1 text-center">{% if item.is_active %}〇{% else %}×{% endif %}</div>
-                <div class="col col-4">
+                <div class="col col-3 py-2"><a href="{% url 'users_user' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.username }}</a></div>
+                <div class="col col-3 py-2">{{ item.full_name }}</div>
+                <div class="col col-1 py-2 text-center">{% if item.is_company_admin %}〇{% else %}－{% endif %}</div>
+                <div class="col col-1 py-2 text-center">{% if item.is_active %}〇{% else %}×{% endif %}</div>
+                <div class="col col-4 py-2">
                 {% if item.staff_id %}
                     <a href="{% url 'company_staff' item.staff.idb64 %}" target="_blank" rel="noopener noreferrer">
                         {{ item.staff }} ({{ item.staff.department }})
                     </a>
                 {% endif %}
-                </div>
             </div>
             {% endfor %}
         {% else %}
             <div class="row">
-                <div class="col col-12 text-center">該当するユーザはありません。</div>
+                <div class="col col-12 py-2 text-center">該当するユーザはありません。</div>
             </div>
         {% endif %}
         </div>

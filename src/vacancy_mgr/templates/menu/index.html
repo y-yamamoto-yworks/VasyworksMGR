@@ -11,8 +11,8 @@
     {% block page_top %}{% endblock %}
 
     {% block header %}
-        <div class="row">
-            <div class="col col-12 text-right">
+        <div class="row gy-3">
+            <div class="col col-12 text-end">
                 <p class="user_info">{{ company.company_name }} : {{ user.last_name }} {{ user.first_name }}</p>
             </div>
         </div>
@@ -25,12 +25,10 @@
         {% if company.is_default %}
             <div>※ 会社登録を行ってください。（登録後に再読み込みしてください。）</div>
         {% else %}
-            <div class="row">
+            <div class="row gx-3 gy-3">
                 <div class="col col-12">
                     <h2>【物件データ管理】</h2>
                 </div>
-            </div>
-            <div class="row ">
                 <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <div class="card">
                         <div class="card-header text-center"><i class="fas fa-search"></i> 建物名検索</div>
@@ -69,12 +67,10 @@
         </div>
         {% if not company.is_default %}
         <div id="etc-menu" class="menu-group">
-            <div class="row">
+            <div class="row gx-3 gy-3">
                 <div class="col col-12">
                     <h2>【その他データ管理】</h2>
                 </div>
-            </div>
-            <div class="row ">
                 <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <div class="card">
                         <div class="card-header text-center"><i class="far fa-user-circle"></i> オーナー</div>
@@ -135,12 +131,10 @@
         {% endif %}
         {% if user.is_company_admin %}
         <div id="system-menu" class="menu-group">
-            <div class="row">
+            <div class="row gx-3 gy-3">
                 <div class="col col-12">
                     <h2>【システム管理】</h2>
                 </div>
-            </div>
-            <div class="row ">
                 <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <div class="card">
                         <div class="card-header text-center"><i class="far fa-building"></i> 会社</div>
@@ -202,12 +196,10 @@
         </div>
         {% if not company.is_default %}
         <div id="system-menu" class="menu-group">
-            <div class="row">
+            <div class="row gx-3 gy-3">
                 <div class="col col-12">
                     <h2>【マスタ管理】</h2>
                 </div>
-            </div>
-            <div class="row ">
                 <div class="col col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                     <div class="card">
                         <div class="card-header text-center"><i class="fas fa-database"></i> 保証会社</div>

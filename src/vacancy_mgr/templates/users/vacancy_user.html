@@ -28,80 +28,66 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">{{form.username.label}}</label></div>
+                <div class="row gy-3 py-3">
+                    <div class="col col-3 col-form-label"><label>{{form.username.label}}</label></div>
                     <div class="col col-9">{{ form.username }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-3 col-form-label"><label class="float-right">{{form.password.label}}</label></div>
-                    <div class="col-7">{{ form.password }}</div>
+
+                    <div class="col col-3 col-form-label"><label>{{form.password.label}}</label></div>
+                    <div class="col col-7">{{ form.password }}</div>
                     <div class="col col-2 border-primary col-form-label">
                             <a href="{% url 'users_vacancy_user_change_password' target_user.idb64 %}" class="btn btn-outline-primary">変更</a>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">{{form.display_name.label}}</label></div>
+
+                    <div class="col col-3 col-form-label"><label>{{form.display_name.label}}</label></div>
                     <div class="col col-9">{{ form.display_name }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">{{form.email.label}}</label></div>
+
+                    <div class="col col-3 col-form-label"><label>{{form.email.label}}</label></div>
                     <div class="col col-9">{{ form.email }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">有効化</label></div>
+
+                    <div class="col col-3 col-form-label"><label>有効化</label></div>
                     <div class="col col-3 col-form-label text-center">{{ form.is_active }}<label class="form-check-label">{{form.is_active.label}}</label></div>
                     <div class="col col-6"></div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">種別</label></div>
+
+                    <div class="col col-3 col-form-label"><label>種別</label></div>
                     <div class="col col-3 col-form-label text-center">{{ form.is_company }}<label class="form-check-label">{{form.is_company.label}}</label></div>
                     <div class="col col-6"></div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">{{form.level.label}}</label></div>
+
+                    <div class="col col-3 col-form-label"><label>{{form.level.label}}</label></div>
                     <div class="col col-9">{{ form.level }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">権限</label></div>
+
+                    <div class="col col-3 col-form-label"><label>権限</label></div>
                     <div class="col col-9 col-form-label text-center">{{ form.allow_org_image }}<label class="form-check-label">{{form.allow_org_image.label}}</label></div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">{{form.trader_name.label}}</label></div>
+
+                    <div class="col col-3 col-form-label"><label>{{form.trader_name.label}}</label></div>
                     <div class="col col-9">{{ form.trader_name }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">{{form.trader_department_name.label}}</label></div>
+
+                    <div class="col col-3 col-form-label"><label>{{form.trader_department_name.label}}</label></div>
                     <div class="col col-9">{{ form.trader_department_name }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">{{form.trader_department_tel.label}}</label></div>
+
+                    <div class="col col-3 col-form-label"><label>{{form.trader_department_tel.label}}</label></div>
                     <div class="col col-9">{{ form.trader_department_tel }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">{{form.trader_department_address.label}}</label></div>
+
+                    <div class="col col-3 col-form-label"><label>{{form.trader_department_address.label}}</label></div>
                     <div class="col col-9">{{ form.trader_department_address }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">{{form.note.label}}</label></div>
+
+                    <div class="col col-3 col-form-label"><label>{{form.note.label}}</label></div>
                     <div class="col col-9">{{ form.note }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-form-label"><label class="float-right">最終ログイン</label></div>
+
+                    <div class="col col-3 col-form-label"><label>最終ログイン</label></div>
                     <div class="col col-9 col-form-label">{{ target_user.last_login | default_if_none:'' }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
+
+                    <div class="col col-2"></div>
+                    <div class="col col-4">
                         <input type="submit" value="保存" class="btn d-block mx-auto d-flex align-items-center btn-primary">
                     </div>
-                    <div class="col-4">
+                    <div class="col col-4">
                     {% if back_url %}
                         <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
                     {% else %}
                         <input type="button" value="閉じる" onclick="window.close();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
                     {% endif %}
                     </div>
-                    <div class="col-2"></div>
+                    <div class="col col-2"></div>
                 </div>
             </form>
         </div>

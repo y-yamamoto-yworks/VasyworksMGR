@@ -11,11 +11,10 @@
     <meta name="format-detection" content="telephone=no">
     <title>{% block head_title %}{% endblock %}</title>
     <link rel="shortcut icon" href="{% static 'vacancy_mgr/images/favicon.ico' %}">
-    <link rel="stylesheet" href="{% static 'lib/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'lib/bootstrap5/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'lib/vue-js-modal/styles.css' %}">
     <link rel="stylesheet" href="{% static 'vacancy_mgr/css/style.css' %}">
-    <script type="text/javascript" src="{% static 'lib/jquery/jquery-3.4.1.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'lib/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/bootstrap5/js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/popper/popper.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/vue/vue.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'lib/axios/axios.min.js' %}"></script>
@@ -29,7 +28,7 @@
     <div id="container">
         <div id="navigation-bar">
             <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu" aria-controls="navbarMenu" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarMenu">
@@ -38,39 +37,45 @@
                         <a class="nav-link" href="/menu/">メニュー</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">物件データ管理</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">物件データ管理</a>
                         <div class="dropdown-menu" aria-labelledby="navMaster">
                             <a class="dropdown-item" href="{% url 'search_buildings_all' %}">建物</a>
+                            <hr class="dropdown-divider">
                             <a class="dropdown-item" href="{% url 'search_buildings_area' %}">建物エリア検索</a>
                             <a class="dropdown-item" href="{% url 'search_rooms' %}">部屋検索</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">その他データ管理</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">その他データ管理</a>
                         <div class="dropdown-menu" aria-labelledby="navMaster">
                             <a class="dropdown-item" href="{% url 'owner_owner_list' %}">オーナー</a>
+                            <hr class="dropdown-divider">
                             <a class="dropdown-item" href="{% url 'trader_trader_list' %}">業者</a>
                             <a class="dropdown-item" href="{% url 'trader_trader_group_list' %}">業者グループ</a>
+                            <hr class="dropdown-divider">
                             <a class="dropdown-item" href="{% url 'documents_index' %}">書類ファイル</a>
+                            <hr class="dropdown-divider">
                             <a class="dropdown-item" href="{% url 'info_management_info_list' %}">管理お知らせ</a>
                         </div>
                     </li>
                     {% if user.is_company_admin %}
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">システム管理</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">システム管理</a>
                         <div class="dropdown-menu" aria-labelledby="navMaster">
                             <a class="dropdown-item" href="{% url 'company_index' %}" target="_blank" rel="noopener noreferrer">会社</a>
                             <a class="dropdown-item" href="{% url 'company_department_list' %}">部署</a>
                             <a class="dropdown-item" href="{% url 'company_staff_list' %}">スタッフ</a>
+                            <hr class="dropdown-divider">
                             <a class="dropdown-item" href="{% url 'users_user_list' %}">システムユーザ</a>
                             <a class="dropdown-item" href="{% url 'users_vacancy_user_list' %}">空室情報ユーザ</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">マスタ管理</a>
+                        <a class="nav-link dropdown-toggle" href="#" id="navMaster" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">マスタ管理</a>
                         <div class="dropdown-menu" aria-labelledby="navMaster">
                             <a class="dropdown-item" href="{% url 'masters_guarantee_company_list' %}">保証会社</a>
                             <a class="dropdown-item" href="{% url 'masters_insurance_company_list' %}">火災保険会社</a>
+                            <hr class="dropdown-divider">
                             <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_bike_parking_list' %}">駐輪場テキスト</a>
                             <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_cancel_notice_list' %}">解約通知テキスト</a>
                             <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_short_cancel_list' %}">短期解約テキスト</a>
@@ -88,6 +93,7 @@
                             <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_portal_list' %}">ポータル掲載制限テキスト</a>
                             <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_renewal_charge_list' %}">更新事務手数料テキスト</a>
                             <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_input_water_list' %}">水道テキスト</a>
+                            <hr class="dropdown-divider">
                             <a class="dropdown-item" href="{% url 'vacancy_item_vacancy_theme_list' %}">空室情報テーマ</a>
                         </div>
                     </li>

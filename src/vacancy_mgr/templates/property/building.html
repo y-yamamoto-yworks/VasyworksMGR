@@ -20,15 +20,15 @@
 
     {% block contents %}
         <div class="row">
-            <div class="col-3 text-center">
+            <div class="col col-3 text-center">
             {% if back_url %}
                 <a href="{% url 'property_edit_building' building.oid %}?back_url={{ escaped_back_url }}" class="btn btn-primary">編集</a>
             {% else %}
                 <a href="{% url 'property_edit_building' building.oid %}" class="btn btn-primary">編集</a>
             {% endif %}
             </div>
-            <div class="col-6"></div>
-            <div class="col-3 text-center">
+            <div class="col col-6"></div>
+            <div class="col col-3 text-center">
             {% if back_url %}
                 <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
             {% else %}
@@ -78,8 +78,8 @@
                         <div class="row category-title">
                             <div class="col col-12">【最寄り駅】</div>
                         </div>
-                        <div class="row">
-                            <div class="col col-12 category-contents">
+                        <div class="row category-contents">
+                            <div class="col col-12">
                                 <div>
                                     <label>1:</label>{{ building.nearest_station1 | default_if_none:'' }}
                                 </div>
@@ -137,8 +137,8 @@
                         <div class="row category-title">
                             <div class="col col-12">【登記情報】</div>
                         </div>
-                        <div class="row">
-                            <div class="col col-12 category-contents">
+                        <div class="row category-contents">
+                            <div class="col col-12">
                                 <span class="nowrap"><label>登記所在地:</label>{{ building.register_address | default_if_none:'' }}</span>
                                 <span class="nowrap"><label>登記名義人:</label>{{ building.register_name | default_if_none:'' }}</span>
                                 <span class="nowrap"><label>家屋番号:</label>{{ building.register_building_no | default_if_none:'' }}</span>
@@ -196,18 +196,26 @@
                         </div>
                         <div class="row category-contents">
                             <div class="col col-12">
-                                <div>
-                                    <label>緯度:</label>{{ building.lat }}
-                                    <label>経度:</label>{{ building.lng }}
+                                <div class="row py-1 justify-content-center">
+                                    <div class="col col-auto">
+                                        <div>
+                                            <label>緯度:</label>{{ building.lat }}
+                                            <label>経度:</label>{{ building.lng }}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div id="id_map">
-                            {% if building.lat > 0 and building.lng > 0 %}
-                                <l-map :zoom="zoom" :center="center">
-                                    <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-                                    <l-marker :lat-lng="marker"></l-marker>
-                                </l-map>
-                            {% endif %}
+                                <div class="row py-1 justify-content-center">
+                                    <div class="col col-auto">
+                                        <div id="id_map">
+                                        {% if building.lat > 0 and building.lng > 0 %}
+                                            <l-map :zoom="zoom" :center="center">
+                                                <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+                                                <l-marker :lat-lng="marker"></l-marker>
+                                            </l-map>
+                                        {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </li>
@@ -222,19 +230,19 @@
                         <div class="row category-contents">
                             <div class="col col-12">
                                 <div class="row sub-list-row">
-                                    <div class="col col-2 col-lg-1 text-center"><label>種別</label></div>
-                                    <div class="col col-4 col-lg-3 text-center"><label>ランドマーク名</label></div>
-                                    <div class="col col-2 col-lg-1 text-center"><label>距離</label></div>
-                                    <div class="col col-2 col-lg-1 text-center"><label>優先順</label></div>
-                                    <div class="col col-2 col-lg-6"></div>
+                                    <div class="col col-2 col-lg-1 py-2 text-center"><label>種別</label></div>
+                                    <div class="col col-4 col-lg-3 py-2 text-center"><label>ランドマーク名</label></div>
+                                    <div class="col col-2 col-lg-1  py-2text-center"><label>距離</label></div>
+                                    <div class="col col-2 col-lg-1 py-2 text-center"><label>優先順</label></div>
+                                    <div class="col col-2 col-lg-6 py-2"></div>
                                 </div>
                                 {% for item in landmarks %}
                                 <div class="row sub-list-row">
-                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.landmark.landmark_type.name }}</div>
-                                    <div class="col col-4 col-lg-3 col-form-label text-center">{{ item.landmark.name }}</div>
-                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.distance }} m</div>
-                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
-                                    <div class="col col-2 col-lg-6">
+                                    <div class="col col-2 col-lg-1 py-2 col-form-label text-center">{{ item.landmark.landmark_type.name }}</div>
+                                    <div class="col col-4 col-lg-3 py-2 col-form-label text-center">{{ item.landmark.name }}</div>
+                                    <div class="col col-2 col-lg-1 py-2 col-form-label text-center">{{ item.distance }} m</div>
+                                    <div class="col col-2 col-lg-1 py-2 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-6 py-2">
                                         <a href="{% url 'property_edit_building_landmark' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=around_page" class="btn btn-sm btn-outline-primary">編集</a>
                                         <a href="{% url 'property_delete_building_landmark' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=around_page" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
@@ -253,19 +261,19 @@
                         <div class="row category-contents">
                             <div class="col col-12">
                                 <div class="row sub-list-row">
-                                    <div class="col col-2 col-lg-1 text-center"><label>種別</label></div>
-                                    <div class="col col-4 col-lg-3 text-center"><label>施設名</label></div>
-                                    <div class="col col-2 col-lg-1 text-center"><label>距離</label></div>
-                                    <div class="col col-2 col-lg-1 text-center"><label>優先順</label></div>
-                                    <div class="col col-2 col-lg-6"></div>
+                                    <div class="col col-2 col-lg-1 py-2 text-center"><label>種別</label></div>
+                                    <div class="col col-4 col-lg-3 py-2 text-center"><label>施設名</label></div>
+                                    <div class="col col-2 col-lg-1 py-2 text-center"><label>距離</label></div>
+                                    <div class="col col-2 col-lg-1 py-2 text-center"><label>優先順</label></div>
+                                    <div class="col col-2 col-lg-6 py-2"></div>
                                 </div>
                                 {% for item in facilities %}
                                 <div class="row sub-list-row">
-                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.facility.name }}</div>
-                                    <div class="col col-4 col-lg-3 col-form-label text-center">{{ item.facility_name | default_if_none:'' }}</div>
-                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.distance }} m</div>
-                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
-                                    <div class="col col-2 col-lg-6">
+                                    <div class="col col-2 col-lg-1 py-2 col-form-label text-center">{{ item.facility.name }}</div>
+                                    <div class="col col-4 col-lg-3 py-2 col-form-label text-center">{{ item.facility_name | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 py-2 col-form-label text-center">{{ item.distance }} m</div>
+                                    <div class="col col-2 col-lg-1 py-2 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-6 py-2">
                                         <a href="{% url 'property_edit_building_facility' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=around_page%23facility-anchor" class="btn btn-sm btn-outline-primary">編集</a>
                                         <a href="{% url 'property_delete_building_facility' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=around_page%23facility-anchor" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
@@ -354,26 +362,26 @@
                         <div class="row category-contents">
                             <div class="col col-12">
                                 <div class="row sub-list-row">
-                                    <div class="col col-2 text-center"><label>駐車場名</label></div>
-                                    <div class="col col-1 text-center"><label>空き状況</label></div>
-                                    <div class="col col-1 text-center"><label>優先順</label></div>
-                                    <div class="col col-3 text-center"><label>費用</label></div>
-                                    <div class="col col-3 text-center"><label>コメント</label></div>
-                                    <div class="col col-2"></div>
+                                    <div class="col col-2 py-2 text-center"><label>駐車場名</label></div>
+                                    <div class="col col-1 py-2 text-center"><label>空き状況</label></div>
+                                    <div class="col col-1 py-2 text-center"><label>優先順</label></div>
+                                    <div class="col col-3 py-2 text-center"><label>費用</label></div>
+                                    <div class="col col-3 py-2 text-center"><label>コメント</label></div>
+                                    <div class="col col-2 py-2"></div>
                                 </div>
                                 {% for item in garages %}
                                 <div class="row sub-list-row">
-                                    <div class="col col-2 col-form-label text-center">{{ item.garage_name | default_if_none:'' }}</div>
-                                    <div class="col col-1 col-form-label text-center">{{ item.garage_status.name }}</div>
-                                    <div class="col col-1 col-form-label text-center">{{ item.priority }}</div>
-                                    <div class="col col-3 col-form-label text-center">
+                                    <div class="col col-2 py-2 col-form-label text-center">{{ item.garage_name | default_if_none:'' }}</div>
+                                    <div class="col col-1 py-2 col-form-label text-center">{{ item.garage_status.name }}</div>
+                                    <div class="col col-1 py-2 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-3 py-2 col-form-label text-center">
                                         <div><span class="small">月額：{{ item.garage_fee_text | default_if_none:'' }}</span></div>
                                         <div><span class="small">手数料：{{ item.garage_charge_text | default_if_none:'' }}</span></div>
                                         <div><span class="small">保証金：{{ item.garage_deposit_text | default_if_none:'' }}</span></div>
                                         <div><span class="small">車庫証明：{{ item.certification_fee_text | default_if_none:'' }}</span></div>
                                     </div>
-                                    <div class="col col-3 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
-                                    <div class="col col-2">
+                                    <div class="col col-3 py-2 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2 py-2">
                                         <a href="{% url 'property_edit_building_garage' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=garage_page%23garage-list-anchor" class="btn btn-sm btn-outline-primary">編集</a>
                                         <a href="{% url 'property_delete_building_garage' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=garage_page%23garage-list-anchor" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
@@ -434,17 +442,17 @@
                         <div class="row category-contents">
                             <div class="col col-12">
                                 <div class="row sub-list-row">
-                                    <div class="col col-3 col-lg-2 text-center"><label>タイトル</label></div>
-                                    <div class="col col-5 col-lg-4 text-center"><label>コメント</label></div>
-                                    <div class="col col-2 col-lg-1 text-center"><label>優先順</label></div>
-                                    <div class="col col-2 col-lg-5"></div>
+                                    <div class="col col-3 col-lg-2 py-2 text-center"><label>タイトル</label></div>
+                                    <div class="col col-5 col-lg-4 py-2 text-center"><label>コメント</label></div>
+                                    <div class="col col-2 col-lg-1 py-2 text-center"><label>優先順</label></div>
+                                    <div class="col col-2 col-lg-5 py-2"></div>
                                 </div>
                                 {% for item in files %}
                                 <div class="row sub-list-row">
-                                    <div class="col col-3 col-lg-2 col-form-label text-center">{{ item.file_title | default_if_none:'' }}</div>
-                                    <div class="col col-5 col-lg-4 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
-                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
-                                    <div class="col col-2 col-lg-5">
+                                    <div class="col col-3 col-lg-2 py-2 col-form-label text-center">{{ item.file_title | default_if_none:'' }}</div>
+                                    <div class="col col-5 col-lg-4 py-2 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 py-2 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-5 py-2">
                                         <a href="{% url 'property_edit_building_file' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pm_page%23file-anchor" class="btn btn-sm btn-outline-primary">編集</a>
                                         <a href="{% url 'property_delete_building_file' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pm_page%23file-anchor" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
@@ -493,17 +501,17 @@
                         <div class="row category-contents">
                             <div class="col col-12">
                                 <div class="row sub-list-row">
-                                    <div class="col col-3 col-lg-2 text-center"><label>種別</label></div>
-                                    <div class="col col-5 col-lg-4 text-center"><label>コメント</label></div>
-                                    <div class="col col-2 col-lg-1 text-center"><label>優先順</label></div>
-                                    <div class="col col-2 col-lg-5"></div>
+                                    <div class="col col-3 col-lg-2 py-2 text-center"><label>種別</label></div>
+                                    <div class="col col-5 col-lg-4 py-2 text-center"><label>コメント</label></div>
+                                    <div class="col col-2 col-lg-1 py-2 text-center"><label>優先順</label></div>
+                                    <div class="col col-2 col-lg-5 py-2"></div>
                                 </div>
                                 {% for item in panoramas %}
                                 <div class="row sub-list-row">
-                                    <div class="col col-3 col-lg-2 col-form-label text-center">{{ item.panorama_type.name }}</div>
-                                    <div class="col col-5 col-lg-4 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
-                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
-                                    <div class="col col-2 col-lg-5">
+                                    <div class="col col-3 col-lg-2 py-2 col-form-label text-center">{{ item.panorama_type.name }}</div>
+                                    <div class="col col-5 col-lg-4 py-2 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 py-2 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-5 py-2">
                                         <a href="{% url 'property_edit_building_panorama' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page%23panorama-anchor" class="btn btn-sm btn-outline-primary">編集</a>
                                         <a href="{% url 'property_delete_building_panorama' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page%23panorama-anchor" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
@@ -522,17 +530,17 @@
                         <div class="row category-contents">
                             <div class="col col-12">
                                 <div class="row sub-list-row">
-                                    <div class="col col-3 col-lg-2 text-center"><label>種別</label></div>
-                                    <div class="col col-5 col-lg-4 text-center"><label>コメント</label></div>
-                                    <div class="col col-2 col-lg-1 text-center"><label>優先順</label></div>
-                                    <div class="col col-2 col-lg-5"></div>
+                                    <div class="col col-3 col-lg-2 py-2 text-center"><label>種別</label></div>
+                                    <div class="col col-5 col-lg-4 py-2 text-center"><label>コメント</label></div>
+                                    <div class="col col-2 col-lg-1 py-2 text-center"><label>優先順</label></div>
+                                    <div class="col col-2 col-lg-5 py-2"></div>
                                 </div>
                                 {% for item in movies %}
                                 <div class="row sub-list-row">
-                                    <div class="col col-3 col-lg-2 col-form-label text-center">{{ item.movie_type.name }}</div>
-                                    <div class="col col-5 col-lg-4 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
-                                    <div class="col col-2 col-lg-1 col-form-label text-center">{{ item.priority }}</div>
-                                    <div class="col col-2 col-lg-5">
+                                    <div class="col col-3 col-lg-2 py-2 col-form-label text-center">{{ item.movie_type.name }}</div>
+                                    <div class="col col-5 col-lg-4 py-2 col-form-label text-center">{{ item.comment | default_if_none:'' }}</div>
+                                    <div class="col col-2 col-lg-1 py-2 col-form-label text-center">{{ item.priority }}</div>
+                                    <div class="col col-2 col-lg-5 py-2">
                                         <a href="{% url 'property_edit_building_movie' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page%23movie-anchor" class="btn btn-sm btn-outline-primary">編集</a>
                                         <a href="{% url 'property_delete_building_movie' building.oid item.id %}?back_url={% url 'property_building' building.oid %}%3Fpage=pictures_page%23movie-anchor" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
@@ -552,28 +560,28 @@
                         <div id="room_list" class="row category-contents">
                             <div class="col col-12">
                                 <div class="row sub-list-row">
-                                    <div class="col col-2 col-lg-1 text-center"><label>部屋番号</label></div>
-                                    <div class="col col-2 col-lg-1"><label>部屋状況</label></div>
-                                    <div class="col col-3 col-lg-2"><label>賃料等</label></div>
-                                    <div class="col col-4 col-lg-7"><label>その他</label></div>
-                                    <div class="col col-1 col-lg-1"></div>
+                                    <div class="col col-2 col-lg-1 py-2 text-center"><label>部屋番号</label></div>
+                                    <div class="col col-2 col-lg-1 py-2"><label>部屋状況</label></div>
+                                    <div class="col col-3 col-lg-2 py-2"><label>賃料等</label></div>
+                                    <div class="col col-4 col-lg-7 py-2"><label>その他</label></div>
+                                    <div class="col col-1 col-lg-1 py-2"></div>
                                 </div>
                                 {% for item in rooms %}
                                 <div class="row sub-list-row">
-                                    <div class="col col-2 col-lg-1 text-center">
+                                    <div class="col col-2 col-lg-1 py-2 text-center">
                                         <div><a href="{% url 'property_room' item.oid %}" class="btn btn-sm btn-outline-primary" target="_blank" rel="noopener noreferrer">{{ item.room_no }}</a></div>
                                         <div><span class="small">間取り:{{ item.layout_type.name | default_if_none:'---' }}</span></div>
                                     </div>
-                                    <div class="col col-2 col-lg-1">
+                                    <div class="col col-2 col-lg-1 py-2">
                                         <div><span class="small">【{{ item.room_status.name | default_if_none:'-----' }}】</span></div>
                                         {% if item.room_status.for_rent and item.vacancy_status.name %}<div><span class="small">現況:{{ item.vacancy_status.name }}</span></div>{% endif %}
                                     </div>
-                                    <div class="col col-3 col-lg-2">
+                                    <div class="col col-3 col-lg-2 py-2">
                                         <div><span class="small">賃料:{{ item.rent_text | default_if_none:'-----' }}</span></div>
                                         <div><span class="small">{{ condo_fees_name }}:{{ item.condo_fees_text | default_if_none:'-----' }}</span></div>
                                         <div><span class="small">水道費:{{ item.water_cost_text | default_if_none:'-----' }}</span></div>
                                     </div>
-                                    <div class="col col-4 col-lg-7">
+                                    <div class="col col-4 col-lg-7 py-2">
                                         {% if item.deposit_text1 or item.deposit_text2 or item.key_money_text1 or item.key_money_text2 %}
                                         <div>
                                             <span class="small nowrap">{{ item.deposit_text1 | default_if_none:''}}</span>
@@ -587,7 +595,7 @@
                                         <div><span class="small">火災保険:{{ item.insurance_text | default_if_none:'---' }}</span></div>
                                         <div><span class="small">保証会社:{{ item.guarantee_type.name | default_if_none:'---' }}{% if item.guarantee_company %}（{{ item.guarantee_company }}）{% endif %}</span></div>
                                     </div>
-                                    <div class="col col-1 col-lg-1">
+                                    <div class="col col-1 col-lg-1 py-2">
                                          <a href="{% url 'property_delete_room' item.oid %}?back_url={% url 'property_building' building.oid %}%3Fpage=rooms_page" class="btn btn-sm btn-outline-danger">削除</a>
                                     </div>
                                 </div>
@@ -822,7 +830,7 @@
     {% block footer %}{% endblock %}
 
     {% block page_bottom %}
-        <script src="{% static 'lib/lightbox2/js/lightbox.min.js' %}"></script>
+        <script src="{% static 'lib/lightbox2/js/lightbox-plus-jquery.min.js' %}"></script>
         <script>
             lightbox.option({
                 'wrapAround': true,

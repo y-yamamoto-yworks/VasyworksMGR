@@ -28,36 +28,35 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">保証会社ID</label></div>
-                    <div class="col col-9 col-md-10 col-form-label">{{ guarantee_company.id }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>保証会社ID</label></div>
+                    <div class="col col-auto col-form-label">{{ guarantee_company.id }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">保証会社名</label></div>
-                    <div class="col col-9 col-md-10">{{ form.name }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>保証会社名</label></div>
+                    <div class="col container-fluid">{{ form.name }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label text-right"><label>優先順:</label></div>
-                    <div class="col col-9 col-md-10 form-inline">{{ form.priority }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>優先順:</label></div>
+                    <div class="col col-auto">{{ form.priority }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">停止</label></div>
-                    <div class="col col-3 col-md-2 col-form-label text-center">{{ form.is_stopped }}<label class="form-check-label">{{form.is_stopped.label}}</label></div>
-                    <div class="col col-6 col-md-8"></div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>停止</label></div>
+                    <div class="col col-auto col-form-label text-center">{{ form.is_stopped }}<label class="form-check-label">{{form.is_stopped.label}}</label></div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
+                <div class="row py-3">
+                    <div class="col col-2"></div>
+                    <div class="col col-4">
                         <input type="submit" value="保存" class="btn d-block mx-auto d-flex align-items-center btn-primary">
                     </div>
-                    <div class="col-4">
+                    <div class="col col-4">
                     {% if back_url %}
                         <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
                     {% else %}
                         <input type="button" value="閉じる" onclick="window.close();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
                     {% endif %}
                     </div>
-                    <div class="col-2"></div>
+                    <div class="col col-2"></div>
                 </div>
             </form>
         </div>

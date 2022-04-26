@@ -28,68 +28,64 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">賃貸不動産業者ID</label></div>
-                    <div class="col col-9 col-md-10 col-form-label">{{ trader.id }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>賃貸不動産業者ID</label></div>
+                    <div class="col col-auto col-form-label">{{ trader.id }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">業者名</label></div>
-                    <div class="col col-9 col-md-10">{{ form.trader_name }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>業者名</label></div>
+                    <div class="col container-fluid">{{ form.trader_name }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">カナ</label></div>
-                    <div class="col col-9 col-md-10">{{ form.trader_kana }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>カナ</label></div>
+                    <div class="col container-fluid">{{ form.trader_kana }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">業者グループ</label></div>
-                    <div class="col col-9 col-md-10">{{ form.trader_group }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>業者グループ</label></div>
+                    <div class="col col-auto">{{ form.trader_group }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">郵便番号</label></div>
-                    <div class="col col-3 col-md-4">{{ form.postal_code }}</div>
-                    <div class="col col-6"></div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>郵便番号</label></div>
+                    <div class="col col-auto">{{ form.postal_code }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">住所</label></div>
-                    <div class="col col-9 col-md-10">{{ form.address }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>住所</label></div>
+                    <div class="col container-fluid">{{ form.address }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">電話番号1</label></div>
-                    <div class="col col-3 col-md-4">{{ form.tel1 }}</div>
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">電話番号2</label></div>
-                    <div class="col col-3 col-md-4">{{ form.tel2 }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>電話番号1</label></div>
+                    <div class="col col-auto">{{ form.tel1 }}</div>
+                    <div class="col col-auto col-form-label text-end"><label>電話番号2</label></div>
+                    <div class="col col-auto">{{ form.tel2 }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">FAX番号</label></div>
-                    <div class="col col-9 col-md-10">{{ form.fax }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>FAX番号</label></div>
+                    <div class="col col-auto">{{ form.fax }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">E-MAIL</label></div>
-                    <div class="col col-9 col-md-10">{{ form.mail }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>E-MAIL</label></div>
+                    <div class="col container-fluid">{{ form.mail }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">取引</label></div>
-                    <div class="col col-3 col-md-2 col-form-label text-center">{{ form.no_trading }}<label class="form-check-label">取引不可</label></div>
-                     <div class="col col-6 col-md-8"></div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>取引</label></div>
+                    <div class="col col-auto col-form-label text-center">{{ form.no_trading }}<label class="form-check-label">取引不可</label></div>
                </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">物件掲載</label></div>
-                    <div class="col col-4 col-md-3 col-form-label text-center">{{ form.no_portal }}<label class="form-check-label">ポータルへの掲載不可</label></div>
-                    <div class="col col-5 col-md-7"></div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>物件掲載</label></div>
+                    <div class="col col-auto col-form-label text-center">{{ form.no_portal }}<label class="form-check-label">ポータルへの掲載不可</label></div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">備考</label></div>
-                    <div class="col col-9 col-md-10">{{ form.note }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>備考</label></div>
+                    <div class="col container-fluid">{{ form.note }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">停止 / 削除</label></div>
-                    <div class="col col-3 col-md-2 col-form-label text-center">{{ form.is_stopped }}<label class="form-check-label">{{form.is_stopped.label}}</label></div>
-                    <div class="col col-3 col-md-2 col-form-label text-center">{{ form.is_deleted }}<label class="form-check-label">{{form.is_deleted.label}}</label></div>
-                    <div class="col col-3 col-md-6"></div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>停止 / 削除</label></div>
+                    <div class="col col-auto col-form-label text-center">{{ form.is_stopped }}<label class="form-check-label">{{form.is_stopped.label}}</label></div>
+                    <div class="col col-auto col-form-label text-center">{{ form.is_deleted }}<label class="form-check-label">{{form.is_deleted.label}}</label></div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">登録情報</label></div>
-                    <div class="col col-9 col-md-10 col-form-label">
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>登録情報</label></div>
+                    <div class="col col-auto col-form-label">
                         <div>
                             <label>登録日時:</label>{{ trader.created_at }}
                             <label>登録ユーザ:</label>{{ trader.created_user }}
@@ -100,19 +96,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
+                <div class="row py-3">
+                    <div class="col col-2"></div>
+                    <div class="col col-4">
                         <input type="submit" value="保存" class="btn d-block mx-auto d-flex align-items-center btn-primary">
                     </div>
-                    <div class="col-4">
+                    <div class="col col-4">
                     {% if back_url %}
                         <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
                     {% else %}
                         <input type="button" value="閉じる" onclick="window.close();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
                     {% endif %}
                     </div>
-                    <div class="col-2"></div>
+                    <div class="col col-2"></div>
                 </div>
             </form>
         </div>

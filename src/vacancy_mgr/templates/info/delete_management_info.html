@@ -28,36 +28,38 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row form-inline">
-                    <div class="col-3"></div>
-                    <div class="col-7">
-                        <div>
-                            <p>公開日: {{ data.start_date }}</p>
-                            <p>終了日: {{ data.end_date }}</p>
-                            <div>
-                                <div>【お知らせ内容】</div>
-                                <p>{{ data.information | default_if_none:'' | linebreaksbr }}</p>
+                <div class="row py-1 justify-content-center">
+                    <div class="col col-auto">
+                        <div class="row py-1">
+                            <div class="col col-auto pt-2">
+                                <div>
+                                    <p>公開日: {{ data.start_date }}</p>
+                                    <p>終了日: {{ data.end_date }}</p>
+                                    <div>
+                                        <div>【お知らせ内容】</div>
+                                        <p>{{ data.information | default_if_none:'' | linebreaksbr }}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    {{ form.confirm }}&nbsp;上記のお知らせの削除を確認しました。
+                                </div>
                             </div>
                         </div>
-                        <div>
-                            {{ form.confirm }}&nbsp;上記のお知らせの削除を確認しました。
+                        <div class="row py-e">
+                            <div class="col col-2"></div>
+                            <div class="col col-4">
+                                <input type="submit" value="削除" class="btn d-block mx-auto d-flex align-items-center btn-danger">
+                            </div>
+                            <div class="col col-4">
+                            {% if back_url %}
+                                <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                            {% else %}
+                                <a href="{% url 'info_management_info_list' %}" class="btn btn-secondary">戻る</a>
+                            {% endif %}
+                            </div>
+                            <div class="col col-2"></div>
                         </div>
                     </div>
-                    <div class="col-2"></div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
-                        <input type="submit" value="削除" class="btn d-block mx-auto d-flex align-items-center btn-danger">
-                    </div>
-                    <div class="col-4">
-                    {% if back_url %}
-                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
-                    {% else %}
-                        <a href="{% url 'info_management_info_list' %}" class="btn btn-secondary">戻る</a>
-                    {% endif %}
-                    </div>
-                    <div class="col-2"></div>
                 </div>
              </form>
         </div>

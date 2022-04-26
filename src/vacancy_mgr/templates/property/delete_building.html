@@ -26,34 +26,36 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row form-inline">
-                    <div class="col-2"></div>
-                    <div class="col-8">
-                        {{ form.confirm }}&nbsp;{{ data.building_name }} の削除を確認しました。
+                <div class="row py-1 justify-content-center">
+                    <div class="col col-auto">
+                        <div class="row py-1">
+                            <div class="col col-auto pt-2">
+                                {{ form.confirm }}&nbsp;{{ data.building_name }} の削除を確認しました。
+                            </div>
+                        </div>
+                        <div class="row py-3">
+                            <div class="col col-2"></div>
+                            <div class="col col-4">
+                                <input type="submit" value="削除" class="btn d-block mx-auto d-flex align-items-center btn-danger">
+                            </div>
+                            <div class="col col-4">
+                                <input type="button" value="戻る" onclick="history.back();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+                            </div>
+                            <div class="col col-2"></div>
+                        </div>
                     </div>
-                    <div class="col-2"></div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
-                        <input type="submit" value="削除" class="btn d-block mx-auto d-flex align-items-center btn-danger">
-                    </div>
-                    <div class="col-4">
-                        <input type="button" value="戻る" onclick="history.back();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
-                    </div>
-                    <div class="col-2"></div>
                 </div>
              </form>
         {% else %}
             <div class="row">
-                <div class="col-2"></div>
-                <div class="col-10">
+                <div class="col col-2"></div>
+                <div class="col col-10">
                     <div>部屋が登録されているため、建物の削除ができません。</div>
                     <div>建物を削除するためには、登録されている部屋を全て削除してください。</div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
+                <div class="col col-12">
                     <input type="button" value="戻る" onclick="history.back();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
                 </div>
             </div>

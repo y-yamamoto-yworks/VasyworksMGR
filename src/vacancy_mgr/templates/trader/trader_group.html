@@ -28,31 +28,30 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">賃貸不動産業者グループID</label></div>
-                    <div class="col col-9 col-md-10 col-form-label">{{ trader_group.id }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>グループID</label></div>
+                    <div class="col col-auto col-form-label">{{ trader_group.id }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">業者グループ名</label></div>
-                    <div class="col col-9 col-md-10">{{ form.trader_group_name }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>グループ名</label></div>
+                    <div class="col container-fluid">{{ form.trader_group_name }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">カナ</label></div>
-                    <div class="col col-9 col-md-10">{{ form.trader_group_kana }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>カナ</label></div>
+                    <div class="col container-fluid">{{ form.trader_group_kana }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">備考</label></div>
-                    <div class="col col-9 col-md-10">{{ form.note }}</div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>備考</label></div>
+                    <div class="col container-fluid">{{ form.note }}</div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">停止 / 削除</label></div>
-                    <div class="col col-3 col-md-2 col-form-label text-center">{{ form.is_stopped }}<label class="form-check-label">{{form.is_stopped.label}}</label></div>
-                    <div class="col col-3 col-md-2 col-form-label text-center">{{ form.is_deleted }}<label class="form-check-label">{{form.is_deleted.label}}</label></div>
-                    <div class="col col-3 col-md-6"></div>
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>停止 / 削除</label></div>
+                    <div class="col col-auto col-form-label text-center">{{ form.is_stopped }}<label class="form-check-label">{{form.is_stopped.label}}</label></div>
+                    <div class="col col-auto col-form-label text-center">{{ form.is_deleted }}<label class="form-check-label">{{form.is_deleted.label}}</label></div>
                 </div>
-                <div class="form-group row">
-                    <div class="col col-3 col-md-2 col-form-label"><label class="float-right">登録情報</label></div>
-                    <div class="col col-9 col-md-10 col-form-label">
+                <div class="row py-1">
+                    <div class="col col-3 col-md-2 col-form-label text-end"><label>登録情報</label></div>
+                    <div class="col col-auto col-form-label">
                         <div>
                             <label>登録日時:</label>{{ trader_group.created_at }}
                             <label>登録ユーザ:</label>{{ trader_group.created_user }}
@@ -63,19 +62,19 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
+                <div class="row py-3">
+                    <div class="col col-2"></div>
+                    <div class="col col-4">
                         <input type="submit" value="保存" class="btn d-block mx-auto d-flex align-items-center btn-primary">
                     </div>
-                    <div class="col-4">
+                    <div class="col col-4">
                     {% if back_url %}
                         <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
                     {% else %}
                         <input type="button" value="閉じる" onclick="window.close();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
                     {% endif %}
                     </div>
-                    <div class="col-2"></div>
+                    <div class="col col-2"></div>
                 </div>
             </form>
         </div>

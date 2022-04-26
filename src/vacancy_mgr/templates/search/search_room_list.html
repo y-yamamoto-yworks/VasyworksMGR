@@ -17,7 +17,7 @@
         <div id="search-conditions-form">
             <form action="" method="post" enctype="multipart/form-data" v-on:submit="submit($event)">
                 {% csrf_token %}
-                <div class="row">
+                <div class="row gy-3">
                     <div class="col col-12">
                         <table>
                             <tbody>
@@ -29,19 +29,31 @@
                                 <tr>
                                     <td class="item-title">エリア</td>
                                     <td colspan="5" class="item">
-                                        <span class="form-inline">{{ form.pref }}&nbsp;{{ form.city }}&nbsp;{{ form.area }}</span>
+                                        <div class="row py-1">
+                                            <div class="col col-auto">{{ form.pref }}</div>
+                                            <div class="col col-auto">{{ form.city }}</div>
+                                            <div class="col col-auto">{{ form.area }}</div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="item-title">駅</td>
                                     <td colspan="5" class="item">
-                                        <span class="form-inline">{{ form.railway }}&nbsp;{{ form.station }}</span>
+                                        <div class="row py-1">
+                                            <div class="col col-auto">{{ form.railway }}</div>
+                                            <div class="col col-auto">{{ form.station }}</div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="item-title">築年（西暦）</td>
                                     <td colspan="5" class="item">
-                                        <span class="form-inline">{{ form.lower_build_year }}年&nbsp;～&nbsp;{{ form.upper_build_year }}年</span>
+                                        <div class="row py-1">
+                                            <div class="col col-auto">{{ form.lower_build_year }}</div>
+                                            <div class="col col-auto col-form-label text-start"><span>年 〜 </span></div>
+                                            <div class="col col-auto">{{ form.upper_build_year }}</div>
+                                            <div class="col col-auto col-form-label text-start"><span>年</span></div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -64,7 +76,12 @@
                                 <tr>
                                     <td class="item-title">賃料</td>
                                     <td colspan="3" class="item">
-                                        <span class="form-inline">{{ form.lower_rent }}円&nbsp;～&nbsp;{{ form.upper_rent }}円</span>
+                                        <div class="row py-1">
+                                            <div class="col col-auto">{{ form.lower_rent }}</div>
+                                            <div class="col col-auto col-form-label text-start"><span>円 〜 </span></div>
+                                            <div class="col col-auto">{{ form.upper_rent }}</div>
+                                            <div class="col col-auto col-form-label text-start"><span>円</span></div>
+                                        </div>
                                     </td>
                                     <td class="item-title">賃貸種別</td>
                                     <td class="item">{{ form.rental_type }}</td>
@@ -84,7 +101,11 @@
                                     <td class="item">{{ form.layout_type }}</td>
                                     <td class="item-title">閲覧レベル</td>
                                     <td class="item">
-                                        <span class="form-inline">{{ form.lower_room_auth_level }}&nbsp;～&nbsp;{{ form.upper_room_auth_level }}</span>
+                                        <div class="row py-1">
+                                            <div class="col col-auto">{{ form.lower_room_auth_level }}</div>
+                                            <div class="col col-auto col-form-label text-start"><span> 〜 </span></div>
+                                            <div class="col col-auto">{{ form.upper_room_auth_level }}</div>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -97,8 +118,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col col-6">
                         <input type="submit" value="検索" class="btn d-block mx-auto d-flex align-items-center btn-primary">
                     </div>

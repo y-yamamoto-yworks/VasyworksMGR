@@ -24,23 +24,27 @@
                         {% endfor %}
                      {% endfor %}
                 {% endif %}
-                <div class="form-group row">
-                    <div class="col-2 col-form-label"><label class="float-right">部署名</label></div>
-                    <div class="col-10">{{ form.department_name }}</div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-2"></div>
-                    <div class="col-4">
-                        <input type="submit" value="追加" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                <div class="row py-1 justify-content-center">
+                    <div class="col col-12">
+                        <div class="row py-1">
+                            <div class="col col-auto col-form-label"><label class="float-right">部署名</label></div>
+                            <div class="col container-fluid">{{ form.department_name }}</div>
+                        </div>
+                        <div class="row py-3">
+                            <div class="col col-2"></div>
+                            <div class="col col-4">
+                                <input type="submit" value="追加" class="btn d-block mx-auto d-flex align-items-center btn-primary">
+                            </div>
+                            <div class="col col-4">
+                            {% if back_url %}
+                                <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
+                            {% else %}
+                                <input type="button" value="戻る" onclick="history.back();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
+                            {% endif %}
+                            </div>
+                            <div class="col col-2"></div>
+                        </div>
                     </div>
-                    <div class="col-4">
-                    {% if back_url %}
-                        <a href="{{ back_url }}" class="btn btn-secondary">戻る</a>
-                    {% else %}
-                        <input type="button" value="戻る" onclick="history.back();" class="btn d-block mx-auto d-flex align-items-center btn-secondary">
-                    {% endif %}
-                    </div>
-                    <div class="col-2"></div>
                 </div>
              </form>
         </div>

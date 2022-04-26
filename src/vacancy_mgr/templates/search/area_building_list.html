@@ -17,19 +17,19 @@
         <div id="search-conditions-form">
             <form action="" method="post" enctype="multipart/form-data" v-on:submit="submit($event)">
                 {% csrf_token %}
-                <div class="form-group row">
-                    <div class="col col-2 col-form-label"><label class="float-right">エリア</label></div>
-                    <div class="col col-10 form-inline">
-                        {{ form.pref }}
-                        &nbsp;
-                        {{ form.city }}
-                        &nbsp;
-                        {{ form.area }}
-                        &nbsp;
-                        <input type="submit" value="検索" class="btn d-block d-flex align-items-center btn-primary">
-                        &nbsp;
-                        <input type="submit" value="クリア" v-on:click="clearConditions($event)" class="btn d-block d-flex align-items-center btn-secondary">
+                <div class="row gx-2 gy-3">
+                    <div class="col col-4">{{ form.pref }}</div>
+                    <div class="col col-4">{{ form.city }}</div>
+                    <div class="col col-4">{{ form.area }}</div>
+
+                    <div class="col col-2"></div>
+                    <div class="col col-4">
+                        <input type="submit" value="検索" class="btn d-block d-flex mx-auto align-items-center btn-primary">
                     </div>
+                    <div class="col col-4">
+                        <input type="submit" value="クリア" v-on:click="clearConditions($event)" class="btn d-block d-flex mx-auto align-items-center btn-secondary">
+                    </div>
+                    <div class="col col-2"></div>
                 </div>
             </form>
         </div>
@@ -38,9 +38,9 @@
         {% if buildings %}<div class="total-count">全 {{ buildings|length }} 件</div>{% endif %}
         {% include 'search/includes/building_list.html' %}
         {% else %}
-         <div class="search-message">
+        <div class="search-message">
             <p>市区町村または地域を選択して、検索を実行してください。</p>
-         </div>
+        </div>
         {% endif %}
 
     {% endblock %}

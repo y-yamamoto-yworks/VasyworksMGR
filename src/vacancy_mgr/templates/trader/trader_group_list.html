@@ -15,11 +15,11 @@
 
     {% block contents %}
         <div  id="data-list-header">
-            <div class="row">
-                <div id="link-add-item" class="col col-6 text-left">
+            <div class="row py-2">
+                <div id="link-add-item" class="col col-6 text-start">
                     <a href="{% url 'trader_create_trader_group' %}">業者グループ追加</a>
                 </div>
-                <div id="link-change-list" class="col col-6 text-right">
+                <div id="link-change-list" class="col col-6 text-end">
                 {% if all_trader_groups %}
                     <a href="{% url 'trader_trader_group_list' %}">業者グループ一覧</a>
                 {% else %}
@@ -30,20 +30,18 @@
         </div>
         <div id="data-list">
         {% if trader_groups %}
-            <div class="row">
-                <div class="col col-10 text-center">賃貸管理業者グループ名</div>
-                <div class="col col-1 text-center">停止</div>
-                <div class="col col-1 text-center">削除</div>
-            </div>
+            <div class="row pb-5">
+                <div class="col col-10 py-2 text-center">賃貸管理業者グループ名</div>
+                <div class="col col-1 py-2 text-center">停止</div>
+                <div class="col col-1 py-2 text-center">削除</div>
             {% for item in trader_groups %}
-            <div class="row">
-                <div class="col col-10"><a href="{% url 'trader_trader_group' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.trader_group_name }}</a></div>
-                <div class="col col-1 text-center">{% if item.is_stopped %}×{% else %}－{% endif %}</div>
-                <div class="col col-1 text-center">{% if item.is_deleted %}×{% else %}－{% endif %}</div>
-            </div>
+                <div class="col col-10 py-2"><a href="{% url 'trader_trader_group' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.trader_group_name }}</a></div>
+                <div class="col col-1 py-2 text-center">{% if item.is_stopped %}×{% else %}－{% endif %}</div>
+                <div class="col col-1 py-2 text-center">{% if item.is_deleted %}×{% else %}－{% endif %}</div>
             {% endfor %}
+            </div>
         {% else %}
-            <div class="row">
+            <div class="row py-2">
                 <div class="col col-12 text-center">該当する賃貸管理業者グループはありません。</div>
             </div>
         {% endif %}

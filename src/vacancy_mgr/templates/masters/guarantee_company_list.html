@@ -15,28 +15,26 @@
 
     {% block contents %}
         <div  id="data-list-header">
-            <div class="row">
-                <div id="link-add-item" class="col col-12 text-left">
+            <div class="row py-2">
+                <div id="link-add-item" class="col col-12 text-start">
                     <a href="{% url 'masters_create_guarantee_company' %}">保証会社追加</a>
                 </div>
             </div>
         </div>
         <div id="data-list">
         {% if guarantee_companies %}
-            <div class="row">
-                <div class="col col-8 text-center">保証会社名</div>
-                <div class="col col-3 text-center">優先順</div>
-                <div class="col col-1 text-center">停止</div>
-            </div>
+            <div class="row pb-5">
+                <div class="col col-8 py-2 text-center">保証会社名</div>
+                <div class="col col-3 py-2 text-center">優先順</div>
+                <div class="col col-1 py-2 text-center">停止</div>
             {% for item in guarantee_companies %}
-            <div class="row">
-                <div class="col col-8"><a href="{% url 'masters_guarantee_company' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.name }}</a></div>
-                <div class="col col-3 text-center">{{ item.priority }}</div>
-                <div class="col col-1 text-center">{% if item.is_stopped %}×{% else %}－{% endif %}</div>
-            </div>
+                <div class="col col-8 py-2"><a href="{% url 'masters_guarantee_company' item.idb64 %}" target="_blank" rel="noopener noreferrer">{{ item.name }}</a></div>
+                <div class="col col-3 py-2 text-center">{{ item.priority }}</div>
+                <div class="col col-1 py-2 text-center">{% if item.is_stopped %}×{% else %}－{% endif %}</div>
             {% endfor %}
+            </div>
         {% else %}
-            <div class="row">
+            <div class="row py-2">
                 <div class="col col-12 text-center">該当する保証会社はありません。</div>
             </div>
         {% endif %}
