@@ -64,4 +64,6 @@
 
     {% block footer %}{% endblock %}
 
-    {% block page_bottom %}{% endblock %}
+    {% block page_bottom %}
+        <script type="text/javascript" src="{% static 'vacancy_mgr/js/prevent_double_submit.js' %}"></script>
+    {% endblock %}
