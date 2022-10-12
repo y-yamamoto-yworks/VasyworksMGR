@@ -22,6 +22,8 @@ class UserForm(auth_forms.UserChangeForm):
             field.widget.attrs['ref'] = key
             if isinstance(field.widget, forms.CheckboxInput):
                 field.widget.attrs['class'] = 'form-check-input'
+            elif isinstance(field.widget, forms.Select):
+                field.widget.attrs['class'] = 'form-select'
             else:
                 if field != self.fields['password']:
                     field.widget.attrs['class'] = 'form-control'
