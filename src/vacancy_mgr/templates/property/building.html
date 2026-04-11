@@ -4,6 +4,7 @@
 
     {% block head_title %}建物情報 {{ building.building_name }}{% endblock %}
     {% block head %}
+        <meta name="referrer" content="no-referrer-when-downgrade">
         <link rel="stylesheet" href="{% static 'lib/lightbox2/css/lightbox.min.css' %}">
         <link rel="stylesheet" href="{% static 'property/css/style.css' %}">
         <link rel="stylesheet" href="{% static 'property/css/style_ids.css' %}">

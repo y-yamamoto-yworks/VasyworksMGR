@@ -2,7 +2,7 @@
 System Name: Vasyworks
 Project Name: vacancy_mgr
 Encoding: UTF-8
-Copyright (C) 2020 Yasuhiro Yamamoto
+Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
 """
 import os
 import datetime
@@ -12,7 +12,7 @@ from django.db import transaction
 from django.db.models import Q
 from django.utils import timezone
 from django.utils.http import urlsafe_base64_decode
-from django.utils.encoding import force_text, escape_uri_path
+from django.utils.encoding import force_str, escape_uri_path
 from django.utils.translation import gettext_lazy as _
 from django.template.response import TemplateResponse
 from django.http import HttpResponseRedirect, Http404
@@ -57,7 +57,7 @@ class EditManagementInfoView(UpdateView):
 
         trader_group_id = 0
         try:
-            idb64 = force_text(urlsafe_base64_decode(kwargs.get('idb64')))
+            idb64 = force_str(urlsafe_base64_decode(kwargs.get('idb64')))
             if idb64.isdecimal():
                 management_info_id = xint(idb64)
         except ValueError:

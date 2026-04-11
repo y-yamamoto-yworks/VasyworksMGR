@@ -4,6 +4,7 @@
 
     {% block head_title %}緯度経度 {{ data.building_name }} {% endblock %}
     {% block head %}
+        <meta name="referrer" content="no-referrer-when-downgrade">
         <link rel="stylesheet" href="{% static 'property/css/style.css' %}">
         <link rel="stylesheet" href="{% static 'property/css/style_ids.css' %}">
     {% endblock %}
