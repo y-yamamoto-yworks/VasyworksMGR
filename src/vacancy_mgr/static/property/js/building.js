@@ -2,7 +2,7 @@
 System Name: Vasyworks
 Project Name: vacancy_mgr
 Encoding: UTF-8
-Copyright (C) 2020 Yasuhiro Yamamoto
+Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
  */
 var { LMap, LTileLayer, LMarker } = Vue2Leaflet;
 
@@ -19,8 +19,8 @@ function createBuildingVue(
             activeTabPage: activePage,      // TABページ切り替え用
             zoom: 17,
             center: L.latLng(lat, lng),
-            url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-            attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+            url:'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
+            attribution:'&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
             marker: L.latLng(lat, lng),
         },
         mounted: function(event) {
