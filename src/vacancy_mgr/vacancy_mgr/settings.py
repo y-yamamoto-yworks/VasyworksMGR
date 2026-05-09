@@ -97,8 +97,8 @@ DATABASES = {
 # CSRF settings
 CSRF_TRUSTED_ORIGINS = [
     # 公開用
-    # 'https://vasyworks-mgr.yworks.net',
-    # 'http://vasyworks-mgr.yworks.net',
+    # 'https://vasyworks-mgr.hogehoge.net',
+    # 'http://vasyworks-mgr.hogehoge.net',
 
     # 開発用
     'http://localhost:8000',
@@ -110,8 +110,8 @@ CSRF_TRUSTED_ORIGINS = [
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     # 本番用
-    # 'https://vasyworks-mgr.yworks.net',
-    # 'http://vasyworks-mgr.yworks.net',
+    # 'https://vasyworks-mgr.hogehoge.net',
+    # 'http://vasyworks-mgr.hogehoge.net',
 
     # 開発用
     'http://localhost:8000',
