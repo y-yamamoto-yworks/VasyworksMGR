@@ -10,6 +10,9 @@ Vasyworks:無料で使えるオープンソースの賃貸空室情報システ�
 https://vasyworks.yworks.net
 --
 
+動作の確認ができるDockerのテスト環境もご用意しています。
+https://github.com/y-yamamoto-yworks/Vasyworks-Docker
+
 2.VasyworksMGR（空室情報データ管理プロジェクト）について
 VasyworksMGRはVasyworksの空室情報データ管理するためのプロジェクトです。VasyworksDBで構築されたデータベースを利用します。Vasyworksの空室情報の登録・変更・削除等にはVasyworksMGRを利用します。また、VasyworksLISTの閲覧ユーザの管理もVasyworksMGRで行います。
 
