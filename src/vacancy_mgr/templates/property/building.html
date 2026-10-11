@@ -207,14 +207,9 @@
                                 </div>
                                 <div class="row py-1 justify-content-center">
                                     <div class="col col-auto">
-                                        <div id="id_map">
                                         {% if building.lat > 0 and building.lng > 0 %}
-                                            <l-map :zoom="zoom" :center="center">
-                                                <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-                                                <l-marker :lat-lng="marker"></l-marker>
-                                            </l-map>
+                                        <div id="id_map"></div>
                                         {% endif %}
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -841,7 +836,6 @@
         </script>
         <link rel="stylesheet" href="{% static 'lib/leaflet/leaflet.css' %}" />
         <script src="{% static 'lib/leaflet/leaflet.js' %}"></script>
-        <script src="{% static 'lib/vue2-leaflet/vue2-leaflet.min.js' %}"></script>
         <script type="text/javascript" src="{% static 'property/js/building.js' %}"></script>
         <script type="text/javascript">
             var app = createBuildingVue(

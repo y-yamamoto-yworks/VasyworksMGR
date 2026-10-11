@@ -4,7 +4,6 @@ Project Name: vacancy_mgr
 Encoding: UTF-8
 Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
  */
-var { LMap, LTileLayer, LMarker } = Vue2Leaflet;
 
 function createBuildingVue(
     activePage,
@@ -14,14 +13,14 @@ function createBuildingVue(
     return new Vue({
         el: "#data-detail",
         delimiters: ["[[", "]]"],
-        components: { LMap, LTileLayer, LMarker },
         data: {
             activeTabPage: activePage,      // TABページ切り替え用
             zoom: 17,
             center: L.latLng(lat, lng),
             url:'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
             attribution:'&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
-            marker: L.latLng(lat, lng),
+            marker: L.marker([lat, lng]),
+            map: null,
         },
         mounted: function(event) {
             this.changeActivePage();
@@ -39,6 +38,29 @@ function createBuildingVue(
                     items[i].className = items[i].className.replace("active", "").trim();
                 }
                 item.className = item.className + " active";
+
+                // 地図タブの場合は地図を初期化
+                if (this.activeTabPage === 'map_page') {
+                    this.$nextTick(function() {
+                        this.initMap(lat, lng);
+                    });
+                }
+            },
+            initMap: function(lat, lng) {
+                if (lat > 0 && lng > 0) {
+                    var mapEl = document.getElementById('id_map');
+                    if (!mapEl) return;
+
+                    if(this.map) {
+                        this.map.remove();
+                        this.map = null;
+                    }
+                    this.map = L.map('id_map').setView([lat, lng], this.zoom);
+                    L.tileLayer(this.url, {
+                        attribution: this.attribution
+                    }).addTo(this.map);
+                    this.marker.addTo(this.map);
+                }
             }
         },
     });
