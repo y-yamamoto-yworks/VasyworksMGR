@@ -138,14 +138,25 @@ div.copy-room-targets label {
 }
 
 /* モーダル */
-.modal-header h2 {
+.app-modal-dialog {
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.app-modal-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.app-modal-header h2 {
     font-size: larger;
 }
 
-.modal-select-hint {
+.app-modal-select-hint {
     padding: 5px 0;
 }
-.modal-select {
+.app-modal-select {
     padding: 5px 0;
     width: 100%;
 }

@@ -100,50 +100,50 @@
                 </div>
             </form>
 
-            <modal name="change-api-key" :draggable="true" :resizable="true" :width="400" :height="300">
-                <div class="modal-header">
+            <dialog ref="changeApiKeyModal" id="change-api-key-modal" class="app-modal-dialog" style="width: 400px; max-height: 80vh; overflow-y: auto;">    <div class="app-modal-header">
+                <div class="app-modal-header">
                     <h2>APIキーの変更</h2>
                 </div>
-                <div class="modal-body">
+                <div class="app-modal-body">
                     <p>APIキーを変更します。</p>
                     <p>※ 変更の確定には会社情報の保存が必要です。</p>
                     <p>※ 変更後は利用中のAPI呼び出しのAPIキーの変更が必要となります。</p>
                 </div>
                 <div>
                     <div class="row">
-                        <div class="col col-2"></div>
-                        <div class="col col-4">
+                        <div class="col col-1"></div>
+                        <div class="col col-5">
                             <button v-on:click="okCloseChangeApiKeyModal" class="btn d-block mx-auto d-flex align-items-center btn-danger">OK</button>
                         </div>
-                        <div class="col col-4">
+                        <div class="col col-5">
                             <button v-on:click="cancelCloseChangeApiKeyModal" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
                         </div>
-                        <div class="col col-2"></div>
+                        <div class="col col-1"></div>
                     </div>
                 </div>
-            </modal>
+            </dialog>
 
-            <modal name="change-internal-api-key" :draggable="true" :resizable="true" :width="400" :height="300">
-                <div class="modal-header">
+            <dialog ref="changeInternalApiKeyModal" id="change-internal-api-key-modal" class="app-modal-dialog" style="width: 400px; max-height: 80vh; overflow-y: auto;">    <div class="app-modal-header">
+                <div class="app-modal-header">
                     <h2>内部APIキーの変更</h2>
                 </div>
-                <div class="modal-body">
+                <div class="app-modal-body">
                     <p>登録システム用の内部APIキーを変更します。</p>
                     <p>※ 変更の確定には会社情報の保存が必要です。</p>
                 </div>
                 <div>
                     <div class="row">
-                        <div class="col col-2"></div>
-                        <div class="col col-4">
+                        <div class="col col-1"></div>
+                        <div class="col col-5">
                             <button v-on:click="okCloseChangeInternalApiKeyModal" class="btn d-block mx-auto d-flex align-items-center btn-danger">OK</button>
                         </div>
-                        <div class="col col-4">
+                        <div class="col col-5">
                             <button v-on:click="cancelCloseChangeInternalApiKeyModal" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
                         </div>
-                        <div class="col col-2"></div>
+                        <div class="col col-1"></div>
                     </div>
                 </div>
-            </modal>
+            </dialog>
         </div>
     {% endblock %}
 
@@ -157,6 +157,7 @@
     {% endblock %}
 
     {% block page_bottom %}
+        <script src="{% static 'vacancy_mgr/js/dialog.js' %}"></script>
         <script type="text/javascript" src="{% static 'company/js/company.js' %}"></script>
         <script type="text/javascript">
             var app = createCompanyVue(

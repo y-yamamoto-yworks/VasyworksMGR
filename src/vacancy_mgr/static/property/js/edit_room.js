@@ -4,7 +4,6 @@ Project Name: vacancy_mgr
 Encoding: UTF-8
 Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
  */
-Vue.use(window["vue-js-modal"].default);
 
 function createEditRoomVue(
     key,    // キー
@@ -16,6 +15,7 @@ function createEditRoomVue(
     return new Vue({
         el: "#data-form",
         delimiters: ["[[", "]]"],
+        mixins: [dialogMixin],
         data: {
             key: key,       // APIデータ取得用
             condoOwner: condoOwnerId,
@@ -40,7 +40,7 @@ function createEditRoomVue(
                 // オーナー選択モーダル画面を開く
                 this.reloadCondoOwners();
                 this.selectedCondoOwner = this.condoOwner;
-                this.$modal.show("select-condo-owner");
+                this.showModal("selectCondoOwnerModal");
             },
             okCloseCondoOwnerModal: function(event) {
                 // オーナー選択画面のOKの処理
@@ -49,12 +49,12 @@ function createEditRoomVue(
                     (owner) => owner.id === this.selectedCondoOwner
                 ).owner_name;
                 this.selectOwnerHint = "";
-                this.$modal.hide("select-condo-owner");
+                this.hideModal("selectCondoOwnerModal");
             },
             cancelCloseCondoOwnerModal: function(event) {
                 // オーナー選択画面のキャンセルの処理
                 this.selectCondoOwnerHint = "";
-                this.$modal.hide("select-condo-owner");
+                this.hideModal("selectCondoOwnerModal");
             },
             narrowDownCondoOwners: function(event) {
                 // オーナー選択用リスト絞り込みの処理
@@ -64,7 +64,7 @@ function createEditRoomVue(
                 // 賃貸管理業者選択モーダル画面を開く
                 this.reloadCondoTraders();
                 this.selectedCondoTrader = this.condoTrader;
-                this.$modal.show("select-condo-trader");
+                this.showModal("selectCondoTraderModal");
             },
             okCloseCondoTraderModal: function(event) {
                 // 賃貸管理業者選択画面のOKの処理
@@ -73,12 +73,12 @@ function createEditRoomVue(
                     (trader) => trader.id === this.selectedCondoTrader
                 ).trader_name;
                 this.selectCondoTraderHint = "";
-                this.$modal.hide("select-condo-trader");
+                this.hideModal("selectCondoTraderModal");
             },
             cancelCloseCondoTraderModal: function(event) {
                 // 賃貸管理業者選択画面のキャンセルの処理
                 this.selectCondoTraderHint = "";
-                this.$modal.hide("select-condo-trader");
+                this.hideModal("selectCondoTraderModal");
             },
             narrowDownCondoTraders: function(event) {
                 // 賃貸管理業者選択用リスト絞り込みの処理
@@ -87,34 +87,34 @@ function createEditRoomVue(
             openInputGuaranteeCompanyModal: function(event) {
                 // 保証会社入力モーダル画面を開く
                 this.reloadInputGuaranteeCompanies();
-                this.$modal.show("input-guarantee-company");
+                this.showModal("inputGuaranteeCompanyModal");
             },
             okCloseInputGuaranteeCompanyModal: function(event) {
                 // 保証会社入力画面のOKの処理
                 this.$refs.guarantee_company.value = this.inputGuaranteeCompany;
                 this.inputGuaranteeCompany = "";
-                this.$modal.hide("input-guarantee-company");
+                this.hideModal("inputGuaranteeCompanyModal");
             },
             cancelCloseInputGuaranteeCompanyModal: function(event) {
                 // 保証会社入力画面のキャンセルの処理
                 this.inputGuaranteeCompany = "";
-                this.$modal.hide("input-guarantee-company");
+                this.hideModal("inputGuaranteeCompanyModal");
             },
             openInputInsuranceCompanyModal: function(event) {
                 // 火災保険会社入力モーダル画面を開く
                 this.reloadInputInsuranceCompanies();
-                this.$modal.show("input-insurance-company");
+                this.showModal("inputInsuranceCompanyModal");
             },
             okCloseInputInsuranceCompanyModal: function(event) {
                 // 火災保険会社入力画面のOKの処理
                 this.$refs.insurance_company.value = this.inputInsuranceCompany;
                 this.inputInsuranceCompany = "";
-                this.$modal.hide("input-insurance-company");
+                this.hideModal("inputInsuranceCompanyModal");
             },
             cancelCloseInputInsuranceCompanyModal: function(event) {
                 // 火災保険会社入力画面のキャンセルの処理
                 this.inputInsuranceCompany = "";
-                this.$modal.hide("input-insurance-company");
+                this.hideModal("inputInsuranceCompanyModal");
             },
             reloadCondoOwners : function() {
                 // オーナー選択用リストを書き換える。

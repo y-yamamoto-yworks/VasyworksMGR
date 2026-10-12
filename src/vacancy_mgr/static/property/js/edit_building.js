@@ -4,7 +4,6 @@ Project Name: vacancy_mgr
 Encoding: UTF-8
 Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
  */
-Vue.use(window["vue-js-modal"].default);
 
 function createEditBuildingVue(
     key,    // キー
@@ -37,6 +36,7 @@ function createEditBuildingVue(
     return new Vue({
         el: "#data-form",
         delimiters: ["[[", "]]"],
+        mixins: [dialogMixin],
         data: {
             key: key,       // APIデータ取得用
             pref: prefId,
@@ -181,7 +181,7 @@ function createEditBuildingVue(
                 // 管理部署選択モーダル画面を開く
                 this.reloadDepartments();
                 this.selectedDepartment = this.department;
-                this.$modal.show("select-department");
+                this.showModal("selectDepartmentModal");
             },
             okCloseDepartmentModal: function(event) {
                 // 管理部署選択画面のOKの処理
@@ -189,17 +189,17 @@ function createEditBuildingVue(
                 this.departmentName = this.selectDepartments.find(
                     (department) => department.id === this.selectedDepartment
                 ).department_name;
-                this.$modal.hide("select-department");
+                this.hideModal("selectDepartmentModal");
             },
             cancelCloseDepartmentModal: function(event) {
                 // 管理部署選択画面のキャンセルの処理
-                this.$modal.hide("select-department");
+                this.hideModal("selectDepartmentModal");
             },
             openAgencyDepartmentModal: function(event) {
                 // 仲介部署選択モーダル画面を開く
                 this.reloadAgencyDepartments();
                 this.selectedAgencyDepartment = this.agencyDepartment;
-                this.$modal.show("select-agency-department");
+                this.showModal("selectAgencyDepartmentModal");
             },
             okCloseAgencyDepartmentModal: function(event) {
                 // 仲介部署選択画面のOKの処理
@@ -207,18 +207,18 @@ function createEditBuildingVue(
                 this.agencyDepartmentName = this.selectAgencyDepartments.find(
                     (department) => department.id === this.selectedAgencyDepartment
                 ).department_name;
-                this.$modal.hide("select-agency-department");
+                this.hideModal("selectAgencyDepartmentModal");
             },
             cancelCloseAgencyDepartmentModal: function(event) {
                 // 仲介部署選択画面のキャンセルの処理
                 this.select_agency_department_hint = "";
-                this.$modal.hide("select-agency-department");
+                this.hideModal("selectAgencyDepartmentModal");
             },
             openStaff1Modal: function(event) {
                 // スタッフ1選択モーダル画面を開く
                 this.reloadStaffs1();
                 this.selectedStaff1 = this.staff1;
-                this.$modal.show("select-staff1");
+                this.showModal("selectStaff1Modal");
             },
             okCloseStaff1Modal: function(event) {
                 // スタッフ1選択画面のOKの処理
@@ -227,12 +227,12 @@ function createEditBuildingVue(
                     (staff) => staff.id === this.selectedStaff1
                 ).staff_name;
                 this.selectStaffHint1 = "";
-                this.$modal.hide("select-staff1");
+                this.hideModal("selectStaff1Modal");
             },
             cancelCloseStaff1Modal: function(event) {
                 // スタッフ1選択画面のキャンセルの処理
                 this.selectStaffHint1 = "";
-                this.$modal.hide("select-staff1");
+                this.hideModal("selectStaff1Modal");
             },
             narrowDownStaffs1: function(event) {
                 // スタッフ1選択用リスト絞り込みの処理
@@ -242,7 +242,7 @@ function createEditBuildingVue(
                 // スタッフ2選択モーダル画面を開く
                 this.reloadStaffs2();
                 this.selectedStaff2 = this.staff2;
-                this.$modal.show("select-staff2");
+                this.showModal("selectStaff2Modal");
             },
             okCloseStaff2Modal: function(event) {
                 // スタッフ2選択画面のOKの処理
@@ -251,12 +251,12 @@ function createEditBuildingVue(
                     (staff) => staff.id === this.selectedStaff2
                 ).staff_name;
                 this.selectStaffHint2 = "";
-                this.$modal.hide("select-staff2");
+                this.hideModal("selectStaff2Modal");
             },
             cancelCloseStaff2Modal: function(event) {
                 // スタッフ2選択画面のキャンセルの処理
                 this.selectStaffHint2 = "";
-                this.$modal.hide("select-staff2");
+                this.hideModal("selectStaff2Modal");
             },
             narrowDownStaffs2: function(event) {
                 // スタッフ2選択用リスト絞り込みの処理
@@ -266,7 +266,7 @@ function createEditBuildingVue(
                 // オーナー選択モーダル画面を開く
                 this.reloadOwners();
                 this.selectedOwner = this.owner;
-                this.$modal.show("select-owner");
+                this.showModal("selectOwnerModal");
             },
             okCloseOwnerModal: function(event) {
                 // オーナー選択画面のOKの処理
@@ -275,12 +275,12 @@ function createEditBuildingVue(
                     (owner) => owner.id === this.selectedOwner
                 ).owner_name;
                 this.selectOwnerHint = "";
-                this.$modal.hide("select-owner");
+                this.hideModal("selectOwnerModal");
             },
             cancelCloseOwnerModal: function(event) {
                 // オーナー選択画面のキャンセルの処理
                 this.selectOwnerHint = "";
-                this.$modal.hide("select-owner");
+                this.hideModal("selectOwnerModal");
             },
             narrowDownOwners: function(event) {
                 // オーナー選択用リスト絞り込みの処理
@@ -290,7 +290,7 @@ function createEditBuildingVue(
                 // 賃貸管理業者選択モーダル画面を開く
                 this.reloadTraders();
                 this.selectedTrader = this.trader;
-                this.$modal.show("select-trader");
+                this.showModal("selectTraderModal");
             },
             okCloseTraderModal: function(event) {
                 // 賃貸管理業者選択画面のOKの処理
@@ -299,12 +299,12 @@ function createEditBuildingVue(
                     (trader) => trader.id === this.selectedTrader
                 ).trader_name;
                 this.selectTraderHint = "";
-                this.$modal.hide("select-trader");
+                this.hideModal("selectTraderModal");
             },
             cancelCloseTraderModal: function(event) {
                 // 賃貸管理業者選択画面のキャンセルの処理
                 this.selectTraderHint = "";
-                this.$modal.hide("select-trader");
+                this.hideModal("selectTraderModal");
             },
             narrowDownTraders: function(event) {
                 // 賃貸管理業者選択用リスト絞り込みの処理
@@ -313,274 +313,274 @@ function createEditBuildingVue(
             openInputWaterModal: function(event) {
                 // 水道費定型入力モーダル画面を開く
                 this.reloadInputWaters();
-                this.$modal.show("input-water");
+                this.showModal("inputWaterModal");
             },
             okCloseInputWaterModal: function(event) {
                 // 水道費定型入力画面のOKの処理
                 this.$refs.vacancy_water_comment.value = this.inputWater;
                 this.inputWater = "";
-                this.$modal.hide("input-water");
+                this.hideModal("inputWaterModal");
             },
             cancelCloseInputWaterModal: function(event) {
                 // 水道費定型入力画面のキャンセルの処理
                 this.inputWater = "";
-                this.$modal.hide("input-water");
+                this.hideModal("inputWaterModal");
             },
             openInputElectricModal: function(event) {
                 // 電気定型入力モーダル画面を開く
                 this.reloadInputElectrics();
-                this.$modal.show("input-electric");
+                this.showModal("inputElectricModal");
             },
             okCloseInputElectricModal: function(event) {
                 // 電気定型入力画面のOKの処理
                 this.$refs.vacancy_electric_comment.value = this.inputElectric;
                 this.inputElectric = "";
-                this.$modal.hide("input-electric");
+                this.hideModal("inputElectricModal");
             },
             cancelCloseInputElectricModal: function(event) {
                 // 電気定型入力画面のキャンセルの処理
                 this.inputElectric = "";
-                this.$modal.hide("input-electric");
+                this.hideModal("inputElectricModal");
             },
             openInputGasModal: function(event) {
                 // ガス定型入力モーダル画面を開く
                 this.reloadInputGases();
-                this.$modal.show("input-gas");
+                this.showModal("inputGasModal");
             },
             okCloseInputGasModal: function(event) {
                 // ガス定型入力画面のOKの処理
                 this.$refs.vacancy_gas_comment.value = this.inputGas;
                 this.inputGas = "";
-                this.$modal.hide("input-gas");
+                this.hideModal("inputGasModal");
             },
             cancelCloseInputGasModal: function(event) {
                 // ガス定型入力画面のキャンセルの処理
                 this.inputGas = "";
-                this.$modal.hide("input-gas");
+                this.hideModal("inputGasModal");
             },
             openInputInternetModal: function(event) {
                 // インターネット定型入力モーダル画面を開く
                 this.reloadInputInternets();
-                this.$modal.show("input-internet");
+                this.showModal("inputInternetModal");
             },
             okCloseInputInternetModal: function(event) {
                 // インターネット定型入力画面のOKの処理
                 this.$refs.vacancy_internet_comment.value = this.inputInternet;
                 this.inputInternet = "";
-                this.$modal.hide("input-internet");
+                this.hideModal("inputInternetModal");
             },
             cancelCloseInputInternetModal: function(event) {
                 // インターネット定型入力画面のキャンセルの処理
                 this.inputInternet = "";
-                this.$modal.hide("input-internet");
+                this.hideModal("inputInternetModal");
             },
             openInputCancelNoticeModal: function(event) {
                 // 解約通知定型入力モーダル画面を開く
                 this.reloadInputCancelNotices();
-                this.$modal.show("input-cancel-notice");
+                this.showModal("inputCancelNoticeModal");
             },
             okCloseInputCancelNoticeModal: function(event) {
                 // 解約通知定型入力画面のOKの処理
                 this.$refs.vacancy_cancel_notice_comment.value = this.inputCancelNotice;
                 this.inputCancelNotice = "";
-                this.$modal.hide("input-cancel-notice");
+                this.hideModal("inputCancelNoticeModal");
             },
             cancelCloseInputCancelNoticeModal: function(event) {
                 // 解約通知定型入力画面のキャンセルの処理
                 this.inputCancelNotice = "";
-                this.$modal.hide("input-cancel-notice");
+                this.hideModal("inputCancelNoticeModal");
             },
             openInputShortCancelModal: function(event) {
                 // 短期解約定型入力モーダル画面を開く
                 this.reloadInputShortCancels();
-                this.$modal.show("input-short-cancel");
+                this.showModal("inputShortCancelModal");
             },
             okCloseInputShortCancelModal: function(event) {
                 // 短期解約定型入力画面のOKの処理
                 this.$refs.vacancy_short_cancel_comment.value = this.inputShortCancel;
                 this.inputShortCancel = "";
-                this.$modal.hide("input-short-cancel");
+                this.hideModal("inputShortCancelModal");
             },
             cancelCloseInputShortCancelModal: function(event) {
                 // 短期解約定型入力画面のキャンセルの処理
                 this.inputShortCancel = "";
-                this.$modal.hide("input-short-cancel");
+                this.hideModal("inputShortCancelModal");
             },
             openInputPaymentModal: function(event) {
                 // 賃料支払い定型入力モーダル画面を開く
                 this.reloadInputPayments();
-                this.$modal.show("input-payment");
+                this.showModal("inputPaymentModal");
             },
             okCloseInputPaymentModal: function(event) {
                 // 賃料支払い定型入力画面のOKの処理
                 this.$refs.vacancy_payment_comment.value = this.inputPayment;
                 this.inputPayment = "";
-                this.$modal.hide("input-payment");
+                this.hideModal("inputPaymentModal");
             },
             cancelCloseInputPaymentModal: function(event) {
                 // 賃料支払い定型入力画面のキャンセルの処理
                 this.inputPayment = "";
-                this.$modal.hide("input-payment");
+                this.hideModal("inputPaymentModal");
             },
             openInputGuaranteeModal: function(event) {
                 // 保証会社定型入力モーダル画面を開く
                 this.reloadInputGuarantees();
-                this.$modal.show("input-guarantee");
+                this.showModal("inputGuaranteeModal");
             },
             okCloseInputGuaranteeModal: function(event) {
                 // 保証会社定型入力画面のOKの処理
                 this.$refs.vacancy_guarantee_comment.value = this.inputGuarantee;
                 this.inputGuarantee = "";
-                this.$modal.hide("input-guarantee");
+                this.hideModal("inputGuaranteeModal");
             },
             cancelCloseInputGuaranteeModal: function(event) {
                 // 保証会社定型入力画面のキャンセルの処理
                 this.inputGuarantee = "";
-                this.$modal.hide("input-guarantee");
+                this.hideModal("inputGuaranteeModal");
             },
             openInputInsuranceModal: function(event) {
                 // 火災保険定型入力モーダル画面を開く
                 this.reloadInputInsurances();
-                this.$modal.show("input-insurance");
+                this.showModal("inputInsuranceModal");
             },
             okCloseInputInsuranceModal: function(event) {
                 // 火災保険定型入力画面のOKの処理
                 this.$refs.vacancy_insurance_comment.value = this.inputInsurance;
                 this.inputInsurance = "";
-                this.$modal.hide("input-insurance");
+                this.hideModal("inputInsuranceModal");
             },
             cancelCloseInputInsuranceModal: function(event) {
                 // 火災保険定型入力画面のキャンセルの処理
                 this.inputInsurance = "";
-                this.$modal.hide("input-insurance");
+                this.hideModal("inputInsuranceModal");
             },
             openInputGuarantorLimitModal: function(event) {
                 // 保証人極度額定型入力モーダル画面を開く
                 this.reloadInputGuarantorLimits();
-                this.$modal.show("input-guarantor-limit");
+                this.showModal("inputGuarantorLimitModal");
             },
             okCloseInputGuarantorLimitModal: function(event) {
                 // 保証人極度額定型入力画面のOKの処理
                 this.$refs.vacancy_guarantor_limit_comment.value = this.inputGuarantorLimit;
                 this.inputGuarantorLimit = "";
-                this.$modal.hide("input-guarantor-limit");
+                this.hideModal("inputGuarantorLimitModal");
             },
             cancelCloseInputGuarantorLimitModal: function(event) {
                 // 保証人極度額定型入力画面のキャンセルの処理
                 this.inputGuarantorLimit = "";
-                this.$modal.hide("input-guarantor-limit");
+                this.hideModal("inputGuarantorLimitModal");
             },
             openInputDocumentPriceModal: function(event) {
                 // 入居時書類代定型入力モーダル画面を開く
                 this.reloadInputDocumentPrices();
-                this.$modal.show("input-document-price");
+                this.showModal("inputDocumentPriceModal");
             },
             okCloseInputDocumentPriceModal: function(event) {
                 // 入居時書類代定型入力画面のOKの処理
                 this.$refs.vacancy_document_price_comment.value = this.inputDocumentPrice;
                 this.inputDocumentPrice = "";
-                this.$modal.hide("input-document-price");
+                this.hideModal("inputDocumentPriceModal");
             },
             cancelCloseInputDocumentPriceModal: function(event) {
                 // 入居時書類代定型入力画面のキャンセルの処理
                 this.inputDocumentPrice = "";
-                this.$modal.hide("input-document-price");
+                this.hideModal("inputDocumentPriceModal");
             },
             openInputRenewalChargeModal: function(event) {
                 // 更新事務手数料定型入力モーダル画面を開く
                 this.reloadInputRenewalCharges();
-                this.$modal.show("input-renewal-charge");
+                this.showModal("inputRenewalChargeModal");
             },
             okCloseInputRenewalChargeModal: function(event) {
                 // 更新事務手数料定型入力画面のOKの処理
                 this.$refs.vacancy_renewal_charge_comment.value = this.inputRenewalCharge;
                 this.inputRenewalCharge = "";
-                this.$modal.hide("input-renewal-charge");
+                this.hideModal("inputRenewalChargeModal");
             },
             cancelCloseInputRenewalChargeModal: function(event) {
                 // 更新事務手数料定型入力画面のキャンセルの処理
                 this.inputRenewalCharge = "";
-                this.$modal.hide("input-renewal-charge");
+                this.hideModal("inputRenewalChargeModal");
             },
             openInputGarageModal: function(event) {
                 // 駐車場定型入力モーダル画面を開く
                 this.reloadInputGarages();
-                this.$modal.show("input-garage");
+                this.showModal("inputGarageModal");
             },
             okCloseInputGarageModal: function(event) {
                 // 駐車場定型入力画面のOKの処理
                 this.$refs.vacancy_garage_comment.value = this.inputGarage;
                 this.inputGarage = "";
-                this.$modal.hide("input-garage");
+                this.hideModal("inputGarageModal");
             },
             cancelCloseInputGarageModal: function(event) {
                 // 駐車場定型入力画面のキャンセルの処理
                 this.inputGarage = "";
-                this.$modal.hide("input-garage");
+                this.hideModal("inputGarageModal");
             },
             openInputBikeParkingModal: function(event) {
                 // 駐輪場定型入力モーダル画面を開く
                 this.reloadInputBikeParkings();
-                this.$modal.show("input-bike-parking");
+                this.showModal("inputBikeParkingModal");
             },
             okCloseInputBikeParkingModal: function(event) {
                 // 駐輪場定型入力画面のOKの処理
                 this.$refs.vacancy_bike_parking_comment.value = this.inputBikeParking;
                 this.inputBikeParking = "";
-                this.$modal.hide("input-bike-parking");
+                this.hideModal("inputBikeParkingModal");
             },
             cancelCloseInputBikeParkingModal: function(event) {
                 // 駐輪場定型入力画面のキャンセルの処理
                 this.inputBikeParking = "";
-                this.$modal.hide("input-bike-parking");
+                this.hideModal("inputBikeParkingModal");
             },
             openInputCleaningModal: function(event) {
                 // 退去時清掃定型入力モーダル画面を開く
                 this.reloadInputCleanings();
-                this.$modal.show("input-cleaning");
+                this.showModal("inputCleaningModal");
             },
             okCloseInputCleaningModal: function(event) {
                 // 退去時清掃定型入力画面のOKの処理
                 this.$refs.vacancy_cleaning_comment.value = this.inputCleaning;
                 this.inputCleaning = "";
-                this.$modal.hide("input-cleaning");
+                this.hideModal("inputCleaningModal");
             },
             cancelCloseInputCleaningModal: function(event) {
                 // 退去時清掃定型入力画面のキャンセルの処理
                 this.inputCleaning = "";
-                this.$modal.hide("input-cleaning");
+                this.hideModal("inputCleaningModal");
             },
             openInputChangeLockModal: function(event) {
                 // 鍵交換定型入力モーダル画面を開く
                 this.reloadInputChangeLocks();
-                this.$modal.show("input-change-lock");
+                this.showModal("inputChangeLockModal");
             },
             okCloseInputChangeLockModal: function(event) {
                 // 鍵交換定型入力画面のOKの処理
                 this.$refs.vacancy_change_lock_comment.value = this.inputChangeLock;
                 this.inputChangeLock = "";
-                this.$modal.hide("input-change-lock");
+                this.hideModal("inputChangeLockModal");
             },
             cancelCloseInputChangeLockModal: function(event) {
                 // 鍵交換定型入力画面のキャンセルの処理
                 this.inputChangeLock = "";
-                this.$modal.hide("input-change-lock");
+                this.hideModal("inputChangeLockModal");
             },
             openInputPortalModal: function(event) {
                 // ポータル掲載定型入力モーダル画面を開く
                 this.reloadInputPortals();
-                this.$modal.show("input-portal");
+                this.showModal("inputPortalModal");
             },
             okCloseInputPortalModal: function(event) {
                 // ポータル掲載定型入力画面のOKの処理
                 this.$refs.vacancy_portal_note.value = this.inputPortal;
                 this.inputPortal = "";
-                this.$modal.hide("input-portal");
+                this.hideModal("inputPortalModal");
             },
             cancelCloseInputPortalModal: function(event) {
                 // ポータル掲載定型入力画面のキャンセルの処理
                 this.inputPortal = "";
-                this.$modal.hide("input-portal");
+                this.hideModal("inputPortalModal");
             },
             reloadSelectOptions: function(elm, items, value) {
                 // サーバサイドで自動生成される選択リスト向け

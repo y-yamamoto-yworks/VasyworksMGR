@@ -4,7 +4,6 @@ Project Name: vacancy_mgr
 Encoding: UTF-8
 Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
  */
-Vue.use(window["vue-js-modal"].default);
 
 function createCompanyVue(
     key,    // キー
@@ -14,6 +13,7 @@ function createCompanyVue(
     return new Vue({
         el: "#data-form",
         delimiters: ["[[", "]]"],
+        mixins: [dialogMixin],
         data: {
             key: key,       // APIデータ取得用
             apiKey: apiKey,
@@ -22,7 +22,7 @@ function createCompanyVue(
         methods: {
             openChangeApiKeyModal: function(event) {
                 // APIキー変更確認モーダル画面を開く
-                this.$modal.show("change-api-key");
+                this.showModal("changeApiKeyModal");
             },
             okCloseChangeApiKeyModal: function(event) {
                 // APIキー変更確認画面のOKの処理
@@ -35,15 +35,15 @@ function createCompanyVue(
                         alert("新規キーの取得に失敗しました。");
                     });
 
-                this.$modal.hide("change-api-key");
+                this.hideModal("changeApiKeyModal");
             },
             cancelCloseChangeApiKeyModal: function(event) {
                 // APIキー変更確認画面のキャンセルの処理
-                this.$modal.hide("change-api-key");
+                this.hideModal("changeApiKeyModal");
             },
             openChangeInternalApiKeyModal: function(event) {
                 // 内部APIキー変更確認モーダル画面を開く
-                this.$modal.show("change-internal-api-key");
+                this.showModal("changeInternalApiKeyModal");
             },
             okCloseChangeInternalApiKeyModal: function(event) {
                 // 内部APIキー変更確認画面のOKの処理
@@ -56,11 +56,11 @@ function createCompanyVue(
                         alert("新規キーの取得に失敗しました。");
                     });
 
-                this.$modal.hide("change-internal-api-key");
+                this.hideModal("changeInternalApiKeyModal");
             },
             cancelCloseChangeInternalApiKeyModal: function(event) {
                 // 内部APIキー変更確認画面のキャンセルの処理
-                this.$modal.hide("change-internal-api-key");
+                this.hideModal("changeInternalApiKeyModal");
             },
         },
     });

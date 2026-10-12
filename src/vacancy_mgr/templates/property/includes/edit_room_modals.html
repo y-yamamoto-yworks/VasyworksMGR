@@ -1,7 +1,7 @@
 {% load static %}
 {% load humanize %}
 
-<modal name="select-condo-owner" :draggable="true" :resizable="true" :width="400" :height="300">
+<dialog ref="selectCondoOwnerModal" id="select-condo-owner-modal" class="app-modal-dialog" style="width: 400px; max-height: 80vh; overflow-y: auto;">    <div class="app-modal-header">
     <div class="modal-header">
         <h2>分譲オーナー選択</h2>
     </div>
@@ -13,7 +13,6 @@
             <div class="col col-auto">
                 <button v-on:click="narrowDownCondoOwners($event)" class="btn btn-info">部分一致</button>
             </div>
-            <div class="col col-1"></div>
         </div>
         <div class="row py-1">
             <div class="col col-12">
@@ -26,19 +25,19 @@
 
     <div>
         <div class="row py-3">
-            <div class="col col-2"></div>
-            <div class="col col-4">
+            <div class="col col-1"></div>
+            <div class="col col-5">
                 <button v-on:click="okCloseCondoOwnerModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
             </div>
-            <div class="col col-4">
+            <div class="col col-5">
                 <button v-on:click="cancelCloseCondoOwnerModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
             </div>
-            <div class="col col-2"></div>
+            <div class="col col-1"></div>
         </div>
     </div>
-</modal>
+</dialog>
 
-<modal name="select-condo-trader" :draggable="true" :resizable="true" :width="400" :height="300">
+<dialog ref="selectCondoTraderModal" id="select-condo-trader-modal" class="app-modal-dialog" style="width: 400px; max-height: 80vh; overflow-y: auto;">    <div class="app-modal-header">
     <div class="modal-header">
         <h2>分譲賃貸管理業者選択</h2>
     </div>
@@ -50,7 +49,6 @@
             <div class="col col-auto">
                 <button v-on:click="narrowDownCondoTraders($event)" class="btn btn-info">部分一致</button>
             </div>
-            <div class="col col-1"></div>
         </div>
         <div class="row py-1">
             <div class="col col-12">
@@ -62,19 +60,19 @@
     </div>
     <div>
         <div class="row py-3">
-            <div class="col col-2"></div>
-            <div class="col col-4">
+            <div class="col col-1"></div>
+            <div class="col col-5">
                 <button v-on:click="okCloseCondoTraderModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
             </div>
-            <div class="col col-4">
+            <div class="col col-5">
                 <button v-on:click="cancelCloseCondoTraderModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
             </div>
-            <div class="col col-2"></div>
+            <div class="col col-1"></div>
         </div>
     </div>
-</modal>
+</dialog>
 
-<modal name="input-guarantee-company" :draggable="true" :resizable="true" :width="400" :height="250">
+<dialog ref="inputGuaranteeCompanyModal" id="input-guarantee-company-modal" class="app-modal-dialog" style="width: 400px; max-height: 80vh; overflow-y: auto;">    <div class="app-modal-header">
     <div class="modal-header">
         <h2>保証会社入力</h2>
     </div>
@@ -90,19 +88,19 @@
 
     <div>
         <div class="row py-3">
-            <div class="col col-2"></div>
-            <div class="col col-4">
+            <div class="col col-1"></div>
+            <div class="col col-5">
                 <button v-on:click="okCloseInputGuaranteeCompanyModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
             </div>
-            <div class="col col-4">
+            <div class="col col-5">
                 <button v-on:click="cancelCloseInputGuaranteeCompanyModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
             </div>
-            <div class="col col-2"></div>
+            <div class="col col-1"></div>
         </div>
     </div>
-</modal>
+</dialog>
 
-<modal name="input-insurance-company" :draggable="true" :resizable="true" :width="400" :height="250">
+<dialog ref="inputInsuranceCompanyModal" id="input-insurance-company-modal" class="app-modal-dialog" style="width: 400px; max-height: 80vh; overflow-y: auto;">    <div class="app-modal-header">
     <div class="modal-header">
         <h2>火災保険会社入力</h2>
     </div>
@@ -118,14 +116,14 @@
 
     <div>
         <div class="row py-3">
-            <div class="col col-2"></div>
-            <div class="col col-4">
+            <div class="col col-1"></div>
+            <div class="col col-5">
                 <button v-on:click="okCloseInputInsuranceCompanyModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
             </div>
-            <div class="col col-4">
+            <div class="col col-5">
                 <button v-on:click="cancelCloseInputInsuranceCompanyModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
             </div>
-            <div class="col col-2"></div>
+            <div class="col col-1"></div>
         </div>
     </div>
-</modal>
+</dialog>

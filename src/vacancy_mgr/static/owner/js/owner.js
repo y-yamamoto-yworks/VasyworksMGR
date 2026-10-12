@@ -4,7 +4,6 @@ Project Name: vacancy_mgr
 Encoding: UTF-8
 Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
  */
-Vue.use(window["vue-js-modal"].default);
 
 function createOwnerVue(
     key,    // キー
@@ -14,6 +13,7 @@ function createOwnerVue(
     return new Vue({
         el: "#data-form",
         delimiters: ["[[", "]]"],
+        mixins: [dialogMixin],
         data: {
             key: key,       // APIデータ取得用
             staff: staffId,
@@ -27,7 +27,7 @@ function createOwnerVue(
                 // スタッフ選択モーダル画面を開く
                 this.reloadStaffs();
                 this.selectedStaff = this.staff;
-                this.$modal.show("select-staff");
+                this.showModal("selectStaffModal");
             },
             okCloseStaffModal: function(event) {
                 // スタッフ選択画面のOKの処理
@@ -36,12 +36,12 @@ function createOwnerVue(
                     (staff) => staff.id === this.selectedStaff
                 ).staff_name;
                 this.selectStaffHint = "";
-                this.$modal.hide("select-staff");
+                this.hideModal("selectStaffModal");
             },
             cancelCloseStaffModal: function(event) {
                 // スタッフ選択画面のキャンセルの処理
                 this.selectStaffHint = "";
-                this.$modal.hide("select-staff");
+                this.hideModal("selectStaffModal");
             },
             narrowDownStaffs: function(event) {
                 // スタッフ選択用リスト絞り込みの処理

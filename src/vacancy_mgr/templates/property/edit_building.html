@@ -1,4 +1,4 @@
-{% extends 'vacancy_mgr/base.html' %}
+this.showModal("selectOwnerModal");{% extends 'vacancy_mgr/base.html' %}
 {% load static %}
 {% load humanize %}
 
@@ -648,6 +648,7 @@
     {% block footer %}{% endblock %}
 
     {% block page_bottom %}
+        <script src="{% static 'vacancy_mgr/js/dialog.js' %}"></script>
         <script type="text/javascript" src="{% static 'property/js/edit_building.js' %}"></script>
         <script type="text/javascript">
             var app = createEditBuildingVue(

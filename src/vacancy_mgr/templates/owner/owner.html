@@ -118,23 +118,22 @@
                 </div>
             </form>
 
-            <modal name="select-staff" :draggable="true" :resizable="true" :width="400" :height="300">
-                <div class="modal-header">
+            <dialog ref="selectStaffModal" id="select-staff-modal" class="app-modal-dialog" style="width: 400px; max-height: 80vh; overflow-y: auto;">    <div class="app-modal-header">
+                <div class="app-modal-header">
                     <h2>スタッフ選択</h2>
                 </div>
-                <div class="modal-body">
+                <div class="app-modal-body">
                     <div class="row modal-select-hint">
                         <div class="col col-8">
                             <input type="text" class="form-control" v-model="selectStaffHint">
                         </div>
-                        <div class="col col-3">
+                        <div class="col col-4">
                             <button v-on:click="narrowDownStaffs($event)" class="btn btn-info">部分一致</button>
                         </div>
-                        <div class="col col-1"></div>
                     </div>
                     <div class="row py-1">
                         <div class="col col-12">
-                            <select class="modal-select form-control" v-model="selectedStaff">
+                            <select class="app-modal-select form-control" v-model="selectedStaff">
                                 <option v-for="staff in selectStaffs" v-bind:value="staff.id">[[ staff.staff_name ]]</option>
                             </select>
                         </div>
@@ -143,17 +142,17 @@
 
                 <div>
                     <div class="row py-1">
-                        <div class="col col-2"></div>
-                        <div class="col col-4">
+                        <div class="col col-1"></div>
+                        <div class="col col-5">
                             <button v-on:click="okCloseStaffModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-primary">OK</button>
                         </div>
-                        <div class="col col-4">
+                        <div class="col col-5">
                             <button v-on:click="cancelCloseStaffModal($event)" class="btn d-block mx-auto d-flex align-items-center btn-secondary">キャンセル</button>
                         </div>
-                        <div class="col col-2"></div>
+                        <div class="col col-1"></div>
                     </div>
                 </div>
-            </modal>
+            </dialog>
 
         </div>
     {% endblock %}
@@ -161,6 +160,7 @@
     {% block footer %}{% endblock %}
 
     {% block page_bottom %}
+        <script src="{% static 'vacancy_mgr/js/dialog.js' %}"></script>
         <script type="text/javascript" src="{% static 'owner/js/owner.js' %}"></script>
         <script type="text/javascript">
             var app = createOwnerVue(
