@@ -58,7 +58,7 @@ class StaffListView(FormView):
         self.staffs = Staff.objects.order_by(
             'priority',
             'department__priority',
-            'department__id'
+            'department__id',
             'id').all()
         return super().dispatch(request, *args, **kwargs)
 
