@@ -33,87 +33,88 @@ function createEditBuildingVue(
     traderId,  // 賃貸管理業者ID
     traderName,    // 賃貸管理業者名
 ) {
-    return new Vue({
-        el: "#data-form",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
         mixins: [dialogMixin],
-        data: {
-            key: key,       // APIデータ取得用
-            pref: prefId,
-            city: cityId,
-            townAddress: townAddress,
-            townName: townName,
-            area: areaId,
-            elementarySchool: elementarySchoolId,
-            juniorHighSchool: juniorHighSchoolId,
-            railway1: railwayId1,
-            station1: stationId1,
-            railway2: railwayId2,
-            station2: stationId2,
-            railway3: railwayId3,
-            station3: stationId3,
-            department: departmentId,
-            departmentName: departmentName,
-            selectDepartments: [],      // 管理部署選択用
-            selectedDepartment: 0,      // 管理部署選択用
-            agencyDepartment: agencyDepartmentId,
-            agencyDepartmentName: agencyDepartmentName,
-            selectAgencyDepartments: [],      // 仲介部署選択用
-            selectedAgencyDepartment: 0,      // 仲介部署選択用
-            staff1: staffId1,
-            staffName1: staffName1,
-            selectStaffs1: [],      // スタッフ1選択用
-            selectStaffHint1: "",      // スタッフ1選択用
-            selectedStaff1: 0,      // スタッフ1選択用
-            staff2: staffId2,
-            staffName2: staffName2,
-            selectStaffs2: [],      // スタッフ2選択用
-            selectStaffHint2: "",      // スタッフ2選択用
-            selectedStaff2: 0,      // スタッフ2選択用
-            owner: ownerId,
-            ownerName: ownerName,
-            selectOwners: [],      // オーナー選択用
-            selectOwnerHint: "",      // オーナー選択用
-            selectedOwner: 0,      // オーナー選択用
-            trader: traderId,
-            traderName: traderName,
-            selectTraders: [],     // 賃貸管理業者選択用
-            selectTraderHint: "",     // 賃貸管理業者選択用
-            selectedTrader: 0,     // 賃貸管理業者選択用
-            inputWater: "",        // 水道費定型入力用
-            inputWaters: [],       // 水道費定型入力用
-            inputElectric: "",        // 電気定型入力用
-            inputElectrics: [],       // 電気定型入力用
-            inputGas: "",        // ガス定型入力用
-            inputGases: [],       // ガス定型入力用
-            inputInternet: "",        // インターネット定型入力用
-            inputInternets: [],       // インターネット定型入力用
-            inputCancelNotice: "",        // 解約通知定型入力用
-            inputCancelNotices: [],       // 解約通知定型入力用
-            inputShortCancel: "",        // 短期解約定型入力用
-            inputShortCancels: [],       // 短期解約定型入力用
-            inputPayment: "",        // 賃料支払い定型入力用
-            inputPayments: [],       // 賃料支払い定型入力用
-            inputGuarantee: "",        // 保証会社定型入力用
-            inputGuarantees: [],       // 保証会社定型入力用
-            inputInsurance: "",        // 火災保険定型入力用
-            inputInsurances: [],       // 火災保険定型入力用
-            inputGuarantorLimit: "",        // 保証人極度額定型入力用
-            inputGuarantorLimits: [],       // 保証人極度額定型入力用
-            inputDocumentPrice: "",        // 入居時書類代定型入力用
-            inputDocumentPrices: [],       // 入居時書類代定型入力用
-            inputRenewalCharge: "",        // 更新事務手数料定型入力用
-            inputRenewalCharges: [],       // 更新事務手数料定型入力用
-            inputGarage: "",        // 駐車場定型入力用
-            inputGarages: [],       // 駐車場定型入力用
-            inputBikeParking: "",        // 駐輪場定型入力用
-            inputBikeParkings: [],       // 駐輪場定型入力用
-            inputCleaning: "",        // 退去時清掃定型入力用
-            inputCleanings: [],       // 退去時清掃定型入力用
-            inputChangeLock: "",        // 鍵交換定型入力用
-            inputChangeLocks: [],       // 鍵交換定型入力用
-            inputPortal: "",        // ポータル掲載定型入力用
-            inputPortals: [],       // ポータル掲載定型入力用
+        data() {
+            return {
+                key: key,       // APIデータ取得用
+                pref: prefId,
+                city: cityId,
+                townAddress: townAddress,
+                townName: townName,
+                area: areaId,
+                elementarySchool: elementarySchoolId,
+                juniorHighSchool: juniorHighSchoolId,
+                railway1: railwayId1,
+                station1: stationId1,
+                railway2: railwayId2,
+                station2: stationId2,
+                railway3: railwayId3,
+                station3: stationId3,
+                department: departmentId,
+                departmentName: departmentName,
+                selectDepartments: [],      // 管理部署選択用
+                selectedDepartment: 0,      // 管理部署選択用
+                agencyDepartment: agencyDepartmentId,
+                agencyDepartmentName: agencyDepartmentName,
+                selectAgencyDepartments: [],      // 仲介部署選択用
+                selectedAgencyDepartment: 0,      // 仲介部署選択用
+                staff1: staffId1,
+                staffName1: staffName1,
+                selectStaffs1: [],      // スタッフ1選択用
+                selectStaffHint1: "",      // スタッフ1選択用
+                selectedStaff1: 0,      // スタッフ1選択用
+                staff2: staffId2,
+                staffName2: staffName2,
+                selectStaffs2: [],      // スタッフ2選択用
+                selectStaffHint2: "",      // スタッフ2選択用
+                selectedStaff2: 0,      // スタッフ2選択用
+                owner: ownerId,
+                ownerName: ownerName,
+                selectOwners: [],      // オーナー選択用
+                selectOwnerHint: "",      // オーナー選択用
+                selectedOwner: 0,      // オーナー選択用
+                trader: traderId,
+                traderName: traderName,
+                selectTraders: [],     // 賃貸管理業者選択用
+                selectTraderHint: "",     // 賃貸管理業者選択用
+                selectedTrader: 0,     // 賃貸管理業者選択用
+                inputWater: "",        // 水道費定型入力用
+                inputWaters: [],       // 水道費定型入力用
+                inputElectric: "",        // 電気定型入力用
+                inputElectrics: [],       // 電気定型入力用
+                inputGas: "",        // ガス定型入力用
+                inputGases: [],       // ガス定型入力用
+                inputInternet: "",        // インターネット定型入力用
+                inputInternets: [],       // インターネット定型入力用
+                inputCancelNotice: "",        // 解約通知定型入力用
+                inputCancelNotices: [],       // 解約通知定型入力用
+                inputShortCancel: "",        // 短期解約定型入力用
+                inputShortCancels: [],       // 短期解約定型入力用
+                inputPayment: "",        // 賃料支払い定型入力用
+                inputPayments: [],       // 賃料支払い定型入力用
+                inputGuarantee: "",        // 保証会社定型入力用
+                inputGuarantees: [],       // 保証会社定型入力用
+                inputInsurance: "",        // 火災保険定型入力用
+                inputInsurances: [],       // 火災保険定型入力用
+                inputGuarantorLimit: "",        // 保証人極度額定型入力用
+                inputGuarantorLimits: [],       // 保証人極度額定型入力用
+                inputDocumentPrice: "",        // 入居時書類代定型入力用
+                inputDocumentPrices: [],       // 入居時書類代定型入力用
+                inputRenewalCharge: "",        // 更新事務手数料定型入力用
+                inputRenewalCharges: [],       // 更新事務手数料定型入力用
+                inputGarage: "",        // 駐車場定型入力用
+                inputGarages: [],       // 駐車場定型入力用
+                inputBikeParking: "",        // 駐輪場定型入力用
+                inputBikeParkings: [],       // 駐輪場定型入力用
+                inputCleaning: "",        // 退去時清掃定型入力用
+                inputCleanings: [],       // 退去時清掃定型入力用
+                inputChangeLock: "",        // 鍵交換定型入力用
+                inputChangeLocks: [],       // 鍵交換定型入力用
+                inputPortal: "",        // ポータル掲載定型入力用
+                inputPortals: [],       // ポータル掲載定型入力用
+            };
         },
         mounted: function(event) {
             this.reloadCities();
@@ -1023,5 +1024,5 @@ function createEditBuildingVue(
                     });
             },
         },
-    });
+    }).mount("#data-form");
 }

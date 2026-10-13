@@ -12,26 +12,27 @@ function createEditRoomVue(
     condoTraderId,  // 分譲賃貸管理業者ID
     condoTraderName,    // 分譲賃貸管理業者名
 ) {
-    return new Vue({
-        el: "#data-form",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
         mixins: [dialogMixin],
-        data: {
-            key: key,       // APIデータ取得用
-            condoOwner: condoOwnerId,
-            condoOwnerName: condoOwnerName,
-            selectCondoOwners: [],      // 分譲オーナー選択用
-            selectCondoOwnerHint: "",      // 分譲オーナー選択用
-            selectedCondoOwner: 0,      // 分譲オーナー選択用
-            condoTrader: condoTraderId,
-            condoTraderName: condoTraderName,
-            selectCondoTraders: [],     // 分譲賃貸管理業者選択用
-            selectCondoTraderHint: "",     // 分譲賃貸管理業者選択用
-            selectedCondoTrader: 0,     // 分譲賃貸管理業者選択用
-            inputGuaranteeCompany: "",        // 保証会社入力用
-            inputGuaranteeCompanies: [],       // 保証会社入力用
-            inputInsuranceCompany: "",        // 火災保険会社入力用
-            inputInsuranceCompanies: [],       // 火災保険会社入力用
+        data() {
+            return {
+                key: key,       // APIデータ取得用
+                condoOwner: condoOwnerId,
+                condoOwnerName: condoOwnerName,
+                selectCondoOwners: [],      // 分譲オーナー選択用
+                selectCondoOwnerHint: "",      // 分譲オーナー選択用
+                selectedCondoOwner: 0,      // 分譲オーナー選択用
+                condoTrader: condoTraderId,
+                condoTraderName: condoTraderName,
+                selectCondoTraders: [],     // 分譲賃貸管理業者選択用
+                selectCondoTraderHint: "",     // 分譲賃貸管理業者選択用
+                selectedCondoTrader: 0,     // 分譲賃貸管理業者選択用
+                inputGuaranteeCompany: "",        // 保証会社入力用
+                inputGuaranteeCompanies: [],       // 保証会社入力用
+                inputInsuranceCompany: "",        // 火災保険会社入力用
+                inputInsuranceCompanies: [],       // 火災保険会社入力用
+            };
         },
         mounted: function(event) {
         },
@@ -181,6 +182,6 @@ function createEditRoomVue(
                     });
             },
         },
-    });
+    }).mount("#data-form");
 }
 

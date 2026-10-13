@@ -10,14 +10,15 @@ function createCompanyVue(
     apiKey,     // APIキー（設定用）
     internalApiKey,     // 内部APIキー（設定用）
 ) {
-    return new Vue({
-        el: "#data-form",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
         mixins: [dialogMixin],
-        data: {
-            key: key,       // APIデータ取得用
-            apiKey: apiKey,
-            internalApiKey: internalApiKey,
+        data() {
+            return {
+                key: key,       // APIデータ取得用
+                apiKey: apiKey,
+                internalApiKey: internalApiKey,
+            };
         },
         methods: {
             openChangeApiKeyModal: function(event) {
@@ -63,5 +64,5 @@ function createCompanyVue(
                 this.hideModal("changeInternalApiKeyModal");
             },
         },
-    });
+    }).mount("#data-form");
 }

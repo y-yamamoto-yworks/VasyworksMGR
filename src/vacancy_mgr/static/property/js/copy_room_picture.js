@@ -7,14 +7,15 @@ Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
 function copyRoomPictureVue(
     key,    // キー
 ) {
-    return new Vue({
-        el: "#copy-form",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
-        data: {
-            key: key,       // APIデータ取得用
-            selectedRoom: 0,        // 選択されている部屋
-            pictures: [],           // 選択されている部屋の画像リスト
-            checkedPictures:[],      // チェックされている画像アイテムリスト
+        data() {
+            return {
+                key: key,       // APIデータ取得用
+                selectedRoom: 0,        // 選択されている部屋
+                pictures: [],           // 選択されている部屋の画像リスト
+                checkedPictures: [],      // チェックされている画像アイテムリスト
+            };
         },
         mounted: function(event) {
         },
@@ -51,6 +52,6 @@ function copyRoomPictureVue(
                 this.checkedPictures = [];
             },
         },
-    });
+    }).mount("#copy-form");
 }
 

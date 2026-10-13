@@ -6,10 +6,10 @@ Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
  */
 function copyRoomDataVue(
 ) {
-    return new Vue({
-        el: "#copy-form",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
-        data: {
+        data() {
+            return {};
         },
         mounted: function(event) {
         },
@@ -37,6 +37,6 @@ function copyRoomDataVue(
                 this.$refs.renewal_cost.checked = false;
             },
         },
-    });
+    }).mount("#copy-form");
 }
 

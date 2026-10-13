@@ -9,21 +9,22 @@ function createBuildingLatLngVue(
     lat,
     lng,
 ) {
-    return new Vue({
-        el: "#data-form",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
-        data: {
-            zoom: 17,
-            center: L.latLng(lat, lng),
-            url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
-            attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
-            icon: L.icon({
+        data() {
+            return {
+                zoom: 17,
+                center: L.latLng(lat, lng),
+                url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
+                icon: L.icon({
                     iconUrl: "/static/property/images/center.png",
                     iconSize: [39, 39],
                     iconAnchor: [20, 20],
-            }),
-            marker: null,
-            map: null,
+                }),
+                marker: null,
+                map: null,
+            };
         },
         mounted: function(event) {
             if (lat > 0 && lng > 0) {
@@ -49,5 +50,5 @@ function createBuildingLatLngVue(
                 this.marker.setLatLng(center);
             },
         },
-    });
+    }).mount("#data-form");
 }

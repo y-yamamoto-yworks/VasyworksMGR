@@ -10,17 +10,18 @@ function createOwnerVue(
     staffId,   // スタッフID
     staffName,     // スタッフ名
 ) {
-    return new Vue({
-        el: "#data-form",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
         mixins: [dialogMixin],
-        data: {
-            key: key,       // APIデータ取得用
-            staff: staffId,
-            staffName: staffName,
-            selectStaffs: [],      // スタッフ選択用
-            selectStaffHint: "",      // スタッフ選択用
-            selectedStaff: 0,      // スタッフ選択用
+        data() {
+            return {
+                key: key,       // APIデータ取得用
+                staff: staffId,
+                staffName: staffName,
+                selectStaffs: [],      // スタッフ選択用
+                selectStaffHint: "",      // スタッフ選択用
+                selectedStaff: 0,      // スタッフ選択用
+            };
         },
         methods: {
             openStaffModal: function(event) {
@@ -66,6 +67,6 @@ function createOwnerVue(
                     });
             },
         },
-    });
+    }).mount("#data-form");
 }
 

@@ -9,13 +9,14 @@ function createBuildingLandmarkVue(
     key,    // キー
     landmarkType,   // ランドマーク種別
 ) {
-    return new Vue({
-        el: "#create-form",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
-        data: {
-            key: key,       // APIデータ取得用
-            landmarkType: landmarkType,
-            landmark: 0,
+        data() {
+            return {
+                key: key,       // APIデータ取得用
+                landmarkType: landmarkType,
+                landmark: 0,
+            };
         },
         mounted: function(event) {
             this.reloadLandmarks();
@@ -61,5 +62,5 @@ function createBuildingLandmarkVue(
             },
 
         },
-    });
+    }).mount("#create-form");
 }

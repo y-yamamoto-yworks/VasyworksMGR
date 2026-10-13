@@ -10,17 +10,18 @@ function createBuildingVue(
     lat,
     lng,
 ) {
-    return new Vue({
-        el: "#data-detail",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
-        data: {
-            activeTabPage: activePage,      // TABページ切り替え用
-            zoom: 17,
-            center: L.latLng(lat, lng),
-            url:'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
-            attribution:'&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
-            marker: L.marker([lat, lng]),
-            map: null,
+        data() {
+            return {
+                activeTabPage: activePage,      // TABページ切り替え用
+                zoom: 17,
+                center: L.latLng(lat, lng),
+                url: 'https://{s}.tile.osm.org/{z}/{x}/{y}.png',
+                attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors',
+                marker: L.marker([lat, lng]),
+                map: null,
+            };
         },
         mounted: function(event) {
             this.changeActivePage();
@@ -63,6 +64,6 @@ function createBuildingVue(
                 }
             }
         },
-    });
+    }).mount("#data-detail");
 }
 

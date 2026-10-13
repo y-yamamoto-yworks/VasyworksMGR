@@ -4,14 +4,16 @@ Project Name: vacancy_mgr
 Encoding: UTF-8
 Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
  */
+
 function createRoomVue(
     activePage,
 ) {
-    return new Vue({
-        el: "#data-detail",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
-        data: {
-            activeTabPage: activePage,      // TABページ切り替え用
+        data() {
+            return {
+                activeTabPage: activePage,      // TABページ切り替え用
+            };
         },
         mounted: function(event) {
             this.changeActivePage();
@@ -31,6 +33,6 @@ function createRoomVue(
                 item.className = item.className + " active";
             }
         },
-    });
+    }).mount("#data-detail");
 }
 

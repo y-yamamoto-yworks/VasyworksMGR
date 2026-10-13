@@ -7,11 +7,12 @@ Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
 function createSearchNameVue(
     traderName,
 ) {
-    return new Vue({
-        el: "#search-conditions-form",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
-        data: {
-            trader_name: traderName,
+        data() {
+            return {
+                trader_name: traderName,
+            };
         },
         mounted: function(event) {
         },
@@ -20,5 +21,5 @@ function createSearchNameVue(
                 this.trader_name = "";
             },
         },
-    });
+    }).mount("#search-conditions-form");
 }

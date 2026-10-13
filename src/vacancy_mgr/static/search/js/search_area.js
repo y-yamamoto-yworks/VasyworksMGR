@@ -8,15 +8,16 @@ function createSearchAreaVue(
     key,    // キー
     prefId,       // 都道府県ID
 ) {
-    return new Vue({
-        el: "#search-conditions-form",
+    return Vue.createApp({
         delimiters: ["[[", "]]"],
-        data: {
-            key: key,       // APIデータ取得用
-            pref: prefId,
-            defaultPref: prefId,
-            city: "0",
-            area: "0",
+        data() {
+            return {
+                key: key,       // APIデータ取得用
+                pref: prefId,
+                defaultPref: prefId,
+                city: "0",
+                area: "0",
+            };
         },
         mounted: function(event) {
             this.loadConditions();
@@ -110,5 +111,5 @@ function createSearchAreaVue(
                 localStorage.setItem('search_area_conditions', conditions);
             },
         },
-    });
+    }).mount("#search-conditions-form");
 }
