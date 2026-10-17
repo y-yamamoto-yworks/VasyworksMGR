@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
 """
 from django import forms
+from django.core.validators import FileExtensionValidator
 from django.utils.translation import gettext_lazy as _
 from enums.models import MovieType
 
@@ -28,7 +29,14 @@ class UploadBuildingMovieForm(forms.Form):
         self.fields['movie'] = forms.FileField(
             label=_('動画ファイル'),
             required=True,
-            widget=forms.FileInput(attrs={'accept': 'video/*'}),
+            widget=forms.FileInput(attrs={
+                'accept': '.mp4,.mov'
+            }),
+            validators=[
+                FileExtensionValidator(
+                    allowed_extensions=['mp4', 'mov'],
+                )
+            ],
         )
 
         for key in self.fields.keys():

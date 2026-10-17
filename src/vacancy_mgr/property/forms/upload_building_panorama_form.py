@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
 """
 from django import forms
+from django.core.validators import FileExtensionValidator
 from django.utils.translation import gettext_lazy as _
 from enums.models import PanoramaType
 
@@ -28,7 +29,14 @@ class UploadBuildingPanoramaForm(forms.Form):
         self.fields['panorama'] = forms.ImageField(
             label=_('パノラマファイル'),
             required=True,
-            widget=forms.FileInput(attrs={'accept': 'image/jpeg, image/png'}),
+            widget=forms.FileInput(attrs={
+                'accept': '.jpg,.jpeg,.png'
+            }),
+            validators=[
+                FileExtensionValidator(
+                    allowed_extensions=['jpg', 'jpeg', 'png'],
+                )
+            ],
         )
 
         for key in self.fields.keys():

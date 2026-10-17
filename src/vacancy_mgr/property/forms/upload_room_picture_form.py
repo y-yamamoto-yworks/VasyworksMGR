@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
 """
 from django import forms
+from django.core.validators import FileExtensionValidator
 from django.utils.translation import gettext_lazy as _
 from enums.models import PictureType
 
@@ -28,7 +29,14 @@ class UploadRoomPictureForm(forms.Form):
         self.fields['image'] = forms.ImageField(
             label=_('画像ファイル'),
             required=True,
-            widget=forms.FileInput(attrs={'accept': 'image/jpeg, image/png'}),
+            widget=forms.FileInput(attrs={
+                'accept': '.jpg,.jpeg,.png,.gif'
+            }),
+            validators=[
+                FileExtensionValidator(
+                    allowed_extensions=['jpg', 'jpeg', 'png', 'gif'],
+                )
+            ],
         )
 
         for key in self.fields.keys():

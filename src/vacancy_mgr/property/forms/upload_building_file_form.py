@@ -5,6 +5,7 @@ Encoding: UTF-8
 Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
 """
 from django import forms
+from django.core.validators import FileExtensionValidator
 from django.utils.translation import gettext_lazy as _
 
 
@@ -24,6 +25,14 @@ class UploadBuildingFileForm(forms.Form):
         self.fields['file'] = forms.FileField(
             label=_('ファイル'),
             required=True,
+            widget=forms.FileInput(attrs={
+                'accept': '.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.jpg,.jpeg,.png,.zip'
+            }),
+            validators=[
+                FileExtensionValidator(
+                    allowed_extensions=['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'csv', 'jpg', 'jpeg', 'png', 'zip'],
+                )
+            ],
         )
 
         for key in self.fields.keys():
