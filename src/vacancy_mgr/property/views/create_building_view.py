@@ -13,7 +13,7 @@ from django.conf import settings
 from django.db import transaction
 from django.db.models import Q
 from django.utils import timezone
-from django.utils.http import urlsafe_base64_decode
+from django.utils.http import urlsafe_base64_decode, url_has_allowed_host_and_scheme
 from django.utils.encoding import force_str, escape_uri_path
 from django.utils.translation import gettext_lazy as _
 from django.template.response import TemplateResponse
@@ -61,7 +61,11 @@ class CreateBuildingView(FormView):
     def get_success_url(self):
         url = super().get_success_url()
         if self.building:
-            if self.back_url:
+            if self.back_url and url_has_allowed_host_and_scheme(
+                    url=self.back_url,
+                    allowed_hosts={self.request.get_host()},
+                    require_https=self.request.is_secure(),
+            ):
                 url = self.back_url
             else:
                 url = reverse_lazy('search_buildings_all')
