@@ -33,6 +33,10 @@ function createEditBuildingVue(
     traderId,  // 賃貸管理業者ID
     traderName,    // 賃貸管理業者名
 ) {
+    if (key) {
+        axios.defaults.headers.common['X-Api-Key'] = key;
+    }
+
     return Vue.createApp({
         delimiters: ["[[", "]]"],
         mixins: [dialogMixin],
@@ -132,7 +136,7 @@ function createEditBuildingVue(
                 if(postalCode !== "")
                 {
                     let that = this;
-                    axios.get("/api/postal_code/" + this.key + "/" + postalCode)
+                    axios.get("/api/postal_code/" + postalCode)
                         .then(function(res) {
                             let item = res.data;
                             that.pref = item.pref.id;
@@ -607,7 +611,7 @@ function createEditBuildingVue(
                 // 市区町村のリストを書き換える。
                 if(this.pref !== 0 && this.pref !== "") {
                     let that = this;
-                    axios.get("/api/cities/" + this.key + "/" + this.pref)
+                    axios.get("/api/cities/" + this.pref)
                         .then(function(res) {
                             let items = res.data;
                             that.reloadSelectOptions(that.$refs.city, items, that.city)
@@ -621,7 +625,7 @@ function createEditBuildingVue(
                 // エリアのリストを書き換える。
                 if(this.city !== 0 && this.city !== "") {
                     let that = this;
-                    axios.get("/api/areas/" + this.key + "/" + this.city)
+                    axios.get("/api/areas/" + this.city)
                         .then(function(res) {
                             let items = res.data;
                             that.reloadSelectOptions(that.$refs.area, items, that.area)
@@ -635,7 +639,7 @@ function createEditBuildingVue(
                 // 小学校区のリストを書き換える。
                 if(this.city !== 0 && this.city !== "") {
                     let that = this;
-                    axios.get("/api/elementary_schools/" + this.key + "/" + this.city)
+                    axios.get("/api/elementary_schools/" + this.city)
                         .then(function(res) {
                             let items = res.data;
                             that.reloadSelectOptions(that.$refs.elementary_school, items, that.elementarySchool)
@@ -649,7 +653,7 @@ function createEditBuildingVue(
                 // 中学校区のリストを書き換える。
                 if(this.city !== 0 && this.city !== "") {
                     let that = this;
-                    axios.get("/api/junior_high_schools/" + this.key + "/" + this.city)
+                    axios.get("/api/junior_high_schools/" + this.city)
                         .then(function(res) {
                             let items = res.data;
                             that.reloadSelectOptions(that.$refs.junior_high_school, items, that.juniorHighSchool)
@@ -661,9 +665,9 @@ function createEditBuildingVue(
             },
             reloadStations: function(elm, railway, station) {
                 // 駅リスト書き換え用の内部メソッド
-                if(railway !== 0) {
+                if(railway !== 0 && railway !== "") {
                     let that = this;
-                    axios.get("/api/stations/" + this.key + "/" + railway)
+                    axios.get("/api/stations/" + railway)
                         .then(function(res) {
                             let items = res.data;
                             that.reloadSelectOptions(elm, items, station)
@@ -689,7 +693,7 @@ function createEditBuildingVue(
                 // 管理部署選択用リストを書き換える。
                 let that = this;
 
-                let url = "/api/departments/" + this.key;
+                let url = "/api/departments/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -703,7 +707,7 @@ function createEditBuildingVue(
                 // 仲介部署選択用リストを書き換える。
                 let that = this;
 
-                let url = "/api/departments/" + this.key;
+                let url = "/api/departments/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -717,10 +721,10 @@ function createEditBuildingVue(
                 // スタッフ1選択用リストを書き換える。
                 let that = this;
 
-                let url = "/api/staffs/" + this.key;
+                let url = "/api/staffs/";
                 if (this.selectStaffHint1) {
                     let hint = this.selectStaffHint1.trim();
-                    if (hint !== "") url += "/" + encodeURI(hint);
+                    if (hint !== "") url += encodeURI(hint);
                 }
 
                 axios.get(url)
@@ -735,10 +739,10 @@ function createEditBuildingVue(
                 // スタッフ2選択用リストを書き換える。
                 let that = this;
 
-                let url = "/api/staffs/" + this.key;
+                let url = "/api/staffs/";
                 if (this.selectStaffHint2) {
                     let hint = this.selectStaffHint2.trim();
-                    if (hint !== "") url += "/" + encodeURI(hint);
+                    if (hint !== "") url += encodeURI(hint);
                 }
 
                 axios.get(url)
@@ -753,10 +757,10 @@ function createEditBuildingVue(
                 // オーナー選択用リストを書き換える。
                 let that = this;
 
-                let url = "/api/owners/" + this.key;
+                let url = "/api/owners/";
                 if (this.selectOwnerHint) {
                     let hint = this.selectOwnerHint.trim();
-                    if (hint !== "") url += "/" + encodeURI(hint);
+                    if (hint !== "") url += encodeURI(hint);
                 }
 
                 axios.get(url)
@@ -771,10 +775,10 @@ function createEditBuildingVue(
                 // 賃貸管理業者選択用リストを書き換える。
                 let that = this;
 
-                let url = "/api/traders/" + this.key;
+                let url = "/api/traders/";
                 if (this.selectTraderHint) {
                     let hint = this.selectTraderHint.trim();
-                    if (hint !== "") url += "/" + encodeURI(hint);
+                    if (hint !== "") url += encodeURI(hint);
                 }
 
                 axios.get(url)
@@ -789,7 +793,7 @@ function createEditBuildingVue(
                 // 水道費定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_waters/" + this.key;
+                let url = "/api/vacancy_input_waters/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -803,7 +807,7 @@ function createEditBuildingVue(
                 // 電気定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_electrics/" + this.key;
+                let url = "/api/vacancy_input_electrics/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -817,7 +821,7 @@ function createEditBuildingVue(
                 // ガス定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_gases/" + this.key;
+                let url = "/api/vacancy_input_gases/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -831,7 +835,7 @@ function createEditBuildingVue(
                 // インターネット定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_internets/" + this.key;
+                let url = "/api/vacancy_input_internets/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -845,7 +849,7 @@ function createEditBuildingVue(
                 // 解約通知定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_cancel_notices/" + this.key;
+                let url = "/api/vacancy_input_cancel_notices/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -859,7 +863,7 @@ function createEditBuildingVue(
                 // 短期解約定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_short_cancels/" + this.key;
+                let url = "/api/vacancy_input_short_cancels/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -873,7 +877,7 @@ function createEditBuildingVue(
                 // 賃料支払い定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_payments/" + this.key;
+                let url = "/api/vacancy_input_payments/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -887,7 +891,7 @@ function createEditBuildingVue(
                 // 保証会社定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_guarantees/" + this.key;
+                let url = "/api/vacancy_input_guarantees/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -901,7 +905,7 @@ function createEditBuildingVue(
                 // 火災保険定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_insurances/" + this.key;
+                let url = "/api/vacancy_input_insurances/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -915,7 +919,7 @@ function createEditBuildingVue(
                 // 保証人極度額定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_guarantor_limits/" + this.key;
+                let url = "/api/vacancy_input_guarantor_limits/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -929,7 +933,7 @@ function createEditBuildingVue(
                 // 入居時書類代定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_document_prices/" + this.key;
+                let url = "/api/vacancy_input_document_prices/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -943,7 +947,7 @@ function createEditBuildingVue(
                 // 更新事務手数料定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_renewal_charges/" + this.key;
+                let url = "/api/vacancy_input_renewal_charges/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -957,7 +961,7 @@ function createEditBuildingVue(
                 // 駐車場定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_garages/" + this.key;
+                let url = "/api/vacancy_input_garages/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -971,7 +975,7 @@ function createEditBuildingVue(
                 // 駐輪場定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_bike_parkings/" + this.key;
+                let url = "/api/vacancy_input_bike_parkings/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -985,7 +989,7 @@ function createEditBuildingVue(
                 // 退去時清掃定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_cleanings/" + this.key;
+                let url = "/api/vacancy_input_cleanings/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -999,7 +1003,7 @@ function createEditBuildingVue(
                 // 鍵交換定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_change_locks/" + this.key;
+                let url = "/api/vacancy_input_change_locks/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -1013,7 +1017,7 @@ function createEditBuildingVue(
                 // ポータル掲載定型入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/vacancy_input_portals/" + this.key;
+                let url = "/api/vacancy_input_portals/";
 
                 axios.get(url)
                     .then(function(res) {

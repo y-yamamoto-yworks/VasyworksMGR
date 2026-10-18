@@ -26,8 +26,7 @@ class PostalCodeViewSet(viewsets.ModelViewSet):
     """
     @method_decorator(login_required)
     def retrieve(self, request, *args, **kwargs):
-        key = kwargs.get('key')
-        if not ApiHelper.check_key(key):
+        if not ApiHelper.check_key(request):
             raise PermissionDenied("Permission denied")
 
         postal_code = kwargs['postal_code']

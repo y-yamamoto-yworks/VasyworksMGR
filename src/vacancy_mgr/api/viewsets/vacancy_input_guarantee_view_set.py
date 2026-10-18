@@ -26,8 +26,7 @@ class VacancyInputGuaranteeViewSet(viewsets.ModelViewSet):
     """
     @method_decorator(login_required)
     def list(self, request, *args, **kwargs):
-        key = kwargs.get('key')
-        if not ApiHelper.check_key(key):
+        if not ApiHelper.check_key(request):
             raise PermissionDenied("Permission denied")
 
         self.queryset = VacancyInputGuarantee.objects.filter(is_stopped=False).order_by('priority').all()

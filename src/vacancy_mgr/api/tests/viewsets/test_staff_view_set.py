@@ -19,27 +19,36 @@ class StaffViewSetTest(TestCase):
         warnings.simplefilter('ignore')
         self.client = Client()
 
+        response = self.client.post(
+            reverse('login'),
+            {'username': 't-kanri', 'password': 'guest1234'},
+            follow=True
+        )
+        self.assertEqual(response.status_code, 200)
+
     def test_get_staff_view_set(self):
         url = reverse(
             'api_staffs',
-            args=[
-                ApiHelper.get_key(),
-            ],
         )
-        response = self.client.get(url)
+        response = self.client.get(url, HTTP_X_API_KEY=ApiHelper.get_key())
         self.assertEqual(response.status_code, 200)
         staff = response.data[0]
         self.assertEqual(staff['full_name'], '管理 太郎')
+
+        response_invalid = self.client.get(url, HTTP_X_API_KEY='AABBCCDDEEFF')
+        self.assertEqual(response_invalid.status_code, 403)
 
     def test_get_staff_with_hint_view_set(self):
         url = reverse(
             'api_staffs_with_hint',
             args=[
-                ApiHelper.get_key(),
                 '管理',
             ],
         )
-        response = self.client.get(url)
+        response = self.client.get(url, HTTP_X_API_KEY=ApiHelper.get_key())
         self.assertEqual(response.status_code, 200)
         staff = response.data[0]
         self.assertEqual(staff['full_name'], '管理 太郎')
+
+        response_invalid = self.client.get(url, HTTP_X_API_KEY='AABBCCDDEEFF')
+        self.assertEqual(response_invalid.status_code, 403)

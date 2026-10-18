@@ -26,8 +26,7 @@ class InsuranceCompanyViewSet(viewsets.ModelViewSet):
     """
     @method_decorator(login_required)
     def list(self, request, *args, **kwargs):
-        key = kwargs.get('key')
-        if not ApiHelper.check_key(key):
+        if not ApiHelper.check_key(request):
             raise PermissionDenied("Permission denied")
 
         self.queryset = InsuranceCompany.objects.filter(is_stopped=False).order_by('priority', 'id').all()

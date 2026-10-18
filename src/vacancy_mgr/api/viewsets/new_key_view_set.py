@@ -26,8 +26,7 @@ class NewKeyViewSet(viewsets.ViewSet):
     """
     @method_decorator(login_required)
     def retrieve(self, request, *args, **kwargs):
-        key = kwargs.get('key')
-        if not ApiHelper.check_key(key):
+        if not ApiHelper.check_key(request):
             raise PermissionDenied("Permission denied")
 
         return Response(uuid.uuid4().hex)

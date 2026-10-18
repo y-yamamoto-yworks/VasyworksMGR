@@ -10,6 +10,10 @@ function createCompanyVue(
     apiKey,     // APIキー（設定用）
     internalApiKey,     // 内部APIキー（設定用）
 ) {
+    if (key) {
+        axios.defaults.headers.common['X-Api-Key'] = key;
+    }
+
     return Vue.createApp({
         delimiters: ["[[", "]]"],
         mixins: [dialogMixin],
@@ -28,7 +32,7 @@ function createCompanyVue(
             okCloseChangeApiKeyModal: function(event) {
                 // APIキー変更確認画面のOKの処理
                 let that = this;
-                axios.get("/api/new_key/" + this.key + "/")
+                axios.get("/api/new_key/")
                     .then(function(res) {
                         that.apiKey = res.data;
                     })
@@ -49,7 +53,7 @@ function createCompanyVue(
             okCloseChangeInternalApiKeyModal: function(event) {
                 // 内部APIキー変更確認画面のOKの処理
                 let that = this;
-                axios.get("/api/new_key/" + this.key + "/")
+                axios.get("/api/new_key/")
                     .then(function(res) {
                         that.internalApiKey = res.data;
                     })

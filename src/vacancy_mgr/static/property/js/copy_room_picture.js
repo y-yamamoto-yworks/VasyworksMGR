@@ -7,6 +7,10 @@ Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
 function copyRoomPictureVue(
     key,    // キー
 ) {
+    if (key) {
+        axios.defaults.headers.common['X-Api-Key'] = key;
+    }
+
     return Vue.createApp({
         delimiters: ["[[", "]]"],
         data() {
@@ -28,7 +32,7 @@ function copyRoomPictureVue(
                 // 部屋画像の表示
                 if(this.selectedRoom !== "") {
                     let that = this;
-                    let url = "/api/room_pictures/" + this.key + "/" + this.selectedRoom;
+                    let url = "/api/room_pictures/" + this.selectedRoom;
                     axios.get(url)
                         .then(function(res) {
                             that.pictures = res.data;

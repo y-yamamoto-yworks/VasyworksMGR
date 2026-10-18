@@ -12,6 +12,10 @@ function createEditRoomVue(
     condoTraderId,  // 分譲賃貸管理業者ID
     condoTraderName,    // 分譲賃貸管理業者名
 ) {
+    if (key) {
+        axios.defaults.headers.common['X-Api-Key'] = key;
+    }
+
     return Vue.createApp({
         delimiters: ["[[", "]]"],
         mixins: [dialogMixin],
@@ -121,10 +125,10 @@ function createEditRoomVue(
                 // オーナー選択用リストを書き換える。
                 let that = this;
 
-                let url = "/api/owners/" + this.key;
+                let url = "/api/owners/";
                 if (this.selectCondoOwnerHint) {
                     let hint = this.selectCondoOwnerHint.trim();
-                    if (hint !== "") url += "/" + encodeURI(hint);
+                    if (hint !== "") url +=  encodeURI(hint);
                 }
 
                 axios.get(url)
@@ -139,10 +143,10 @@ function createEditRoomVue(
                 // 賃貸管理業者選択用リストを書き換える。
                 let that = this;
 
-                let url = "/api/traders/" + this.key;
+                let url = "/api/traders/";
                 if (this.selectCondoTraderHint) {
                     let hint = this.selectCondoTraderHint.trim();
-                    if (hint !== "") url += "/" + encodeURI(hint);
+                    if (hint !== "") url += encodeURI(hint);
                 }
 
                 axios.get(url)
@@ -157,7 +161,7 @@ function createEditRoomVue(
                 // 保証会社入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/guarantee_companies/" + this.key;
+                let url = "/api/guarantee_companies/";
 
                 axios.get(url)
                     .then(function(res) {
@@ -171,7 +175,7 @@ function createEditRoomVue(
                 // 火災保険会社入力用リストを書き換える。
                 let that = this;
 
-                let url = "/api/insurance_companies/" + this.key;
+                let url = "/api/insurance_companies/";
 
                 axios.get(url)
                     .then(function(res) {

@@ -10,6 +10,10 @@ function createOwnerVue(
     staffId,   // スタッフID
     staffName,     // スタッフ名
 ) {
+    if (key) {
+        axios.defaults.headers.common['X-Api-Key'] = key;
+    }
+
     return Vue.createApp({
         delimiters: ["[[", "]]"],
         mixins: [dialogMixin],
@@ -52,10 +56,10 @@ function createOwnerVue(
                 // スタッフ選択用リストを書き換える。
                 let that = this;
 
-                let url = "/api/staffs/" + this.key;
+                let url = "/api/staffs/";
                 if (this.selectStaffHint) {
                     let hint = this.selectStaffHint.trim();
-                    if (hint !== "") url += "/" + encodeURI(hint);
+                    if (hint !== "") url += encodeURI(hint);
                 }
 
                 axios.get(url)

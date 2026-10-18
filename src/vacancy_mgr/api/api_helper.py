@@ -4,6 +4,7 @@ Project Name: vacancy_mgr
 Encoding: UTF-8
 Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
 """
+import hmac
 from django.conf import settings
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes, force_str
@@ -24,17 +25,22 @@ class ApiHelper:
         return ApiHelper.get_aes_encrypt(company.internal_api_key, company.api_key)
 
     @staticmethod
-    def check_key(key: str):
+    def check_key(request):
         """APIキー確認"""
         ans = False
+
+        key = request.META.get('HTTP_X_API_KEY')
+        if not key:
+            return False
+
         company = Company.objects.get(pk=settings.COMPANY_ID)
 
         try:
-            key = ApiHelper.get_aes_decrypt(key, company.api_key)
+            target_key = ApiHelper.get_aes_decrypt(key, company.api_key)
         except:
-            key = None
+            target_key = None
 
-        if company.internal_api_key == key:
+        if target_key and hmac.compare_digest(company.internal_api_key, target_key):
             ans = True
 
         return ans

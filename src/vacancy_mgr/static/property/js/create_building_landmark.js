@@ -9,6 +9,10 @@ function createBuildingLandmarkVue(
     key,    // キー
     landmarkType,   // ランドマーク種別
 ) {
+    if (key) {
+        axios.defaults.headers.common['X-Api-Key'] = key;
+    }
+
     return Vue.createApp({
         delimiters: ["[[", "]]"],
         data() {
@@ -50,7 +54,7 @@ function createBuildingLandmarkVue(
                 // ランドマークのリストを書き換える。
                 if(this.landmarkType !== 0) {
                     let that = this;
-                    axios.get("/api/landmarks/" + this.key + "/" + this.landmarkType)
+                    axios.get("/api/landmarks/" + this.landmarkType)
                         .then(function(res) {
                             let items = res.data;
                             that.reloadSelectOptions(that.$refs.landmark, items, that.landmark)

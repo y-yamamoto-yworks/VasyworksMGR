@@ -8,6 +8,10 @@ function createSearchRoomVue(
     key,    // キー
     prefId,       // 都道府県ID
 ) {
+    if (key) {
+        axios.defaults.headers.common['X-Api-Key'] = key;
+    }
+
     return Vue.createApp({
         delimiters: ["[[", "]]"],
         data() {
@@ -97,7 +101,7 @@ function createSearchRoomVue(
                 // 市区町村のリストを書き換える。
                 if(typeof this.pref != "undefined" && this.pref !== 0 && this.pref !== "") {
                     let that = this;
-                    axios.get("/api/cities/" + this.key + "/" + this.pref)
+                    axios.get("/api/cities/" + this.pref)
                         .then(function(res) {
                             let items = res.data;
                             that.reloadSelectOptions(that.$refs.city, items, that.city)
@@ -111,7 +115,7 @@ function createSearchRoomVue(
                 // エリアのリストを書き換える。
                 if(typeof this.city != "undefined" && this.city !== 0 && this.city !== "") {
                     let that = this;
-                    axios.get("/api/areas/" + this.key + "/" + this.city)
+                    axios.get("/api/areas/" + this.city)
                         .then(function(res) {
                             let items = res.data;
                             that.reloadSelectOptions(that.$refs.area, items, that.area)
@@ -125,7 +129,7 @@ function createSearchRoomVue(
                 // 駅のリストを書き換える。
                 if(typeof this.railway != "undefined" && this.railway !== 0 && this.railway !== "") {
                     let that = this;
-                    axios.get("/api/stations/" + this.key + "/" + this.railway)
+                    axios.get("/api/stations/" + this.railway)
                         .then(function(res) {
                             let items = res.data;
                             that.reloadSelectOptions(that.$refs.station, items, that.station)
