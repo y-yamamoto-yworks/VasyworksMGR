@@ -26,7 +26,7 @@ class AreaViewSetTest(TestCase):
         )
         self.assertEqual(response.status_code, 200)
 
-def test_get_area_view_set(self):
+    def test_get_area_view_set(self):
         url = reverse(
             'api_areas',
             args=[

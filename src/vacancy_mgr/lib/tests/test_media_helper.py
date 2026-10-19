@@ -35,8 +35,8 @@ class MediaHelperTest(TestCase):
         os.remove(upload_path)
 
     def test_get_uuid_filename(self):
-        self.assertRegex(MediaHelper.get_uuid_filename('sample.jpg'), '\.jpg$')
-        self.assertRegex(MediaHelper.get_uuid_filename('sample.pdf'), '\.pdf$')
+        self.assertRegex(MediaHelper.get_uuid_filename('sample.jpg'), r'\.jpg$')
+        self.assertRegex(MediaHelper.get_uuid_filename('sample.pdf'), r'\.pdf$')
 
     def test_get_document_root(self):
         self.assertEqual(
