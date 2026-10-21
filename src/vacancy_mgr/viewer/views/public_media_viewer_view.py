@@ -7,6 +7,7 @@ Copyright (C) 2020 - 2026 Yasuhiro Yamamoto
 import os
 import mimetypes
 from django.conf import settings
+from django.core.exceptions import SuspiciousFileOperation
 from django.http import HttpResponse, Http404
 from django.views.generic import View
 from django.utils.decorators import method_decorator
@@ -15,9 +16,24 @@ from users.models import User
 
 
 class PublicMediaViewerView(View):
-    """
-    公開メディアビューア
-    """
+    """公開メディアビューア"""
+    @staticmethod
+    def get_safe_viewer_path(base_dir, file_url):
+        if not file_url:
+            raise Http404
+
+        real_base = os.path.abspath(base_dir)
+        clean_rel_path = str(file_url).lstrip('/\\').replace('/', os.sep)
+        target_path = os.path.abspath(os.path.join(real_base, clean_rel_path))
+
+        if os.path.commonpath([real_base, target_path]) != real_base:
+            raise Http404
+
+        if not os.path.isfile(target_path):
+            raise Http404
+
+        return target_path
+
     @method_decorator(login_required)
     def get(self, request, *args, **kwargs):
         user = self.request.user
@@ -26,8 +42,9 @@ class PublicMediaViewerView(View):
 
         file_url = kwargs.get('file_url')
         if file_url:
-            file_path = os.path.join(settings.MEDIA_ROOT, 'public', file_url.replace('/', os.sep))
-            file_name = self.get_file_name(file_url)
+            base_dir = os.path.join(settings.MEDIA_ROOT, 'public')
+            file_path = self.get_safe_viewer_path(base_dir, file_url)
+            file_name = self.get_file_name(file_path)
 
             file = None
             try:
@@ -64,7 +81,7 @@ class PublicMediaViewerView(View):
     def get_file_name(cls, url: str):
         ans = ''
         if url:
-            ans = url.rsplit('/', 1)[1]
+            ans = os.path.basename(url)
 
         return ans
 

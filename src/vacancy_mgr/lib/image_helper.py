@@ -8,17 +8,28 @@ import os
 import re
 import shutil
 import qrcode
+from django.conf import settings
+from django.core.exceptions import SuspiciousFileOperation
 from PIL import Image, ImageDraw, ImageFont
 
 
 class ImageHelper:
     """ 画像ヘルパークラス"""
     @staticmethod
+    def _get_safe_path(base_dir, *paths):
+        real_base = os.path.abspath(base_dir)
+        target_path = os.path.abspath(os.path.join(real_base, *paths))
+
+        if os.path.commonpath([real_base, target_path]) != real_base:
+            raise SuspiciousFileOperation("Invalid file path (Path Traversal detected).")
+
+        return target_path
+
+    @staticmethod
     def save_image(image: Image, file_path, max_size=1280):
         """画像の保存"""
-        secure_file_path = re.sub(r'\.+' + repr(os.sep), '', file_path)
-        file_basename = os.path.basename(secure_file_path)
-        file_dir = secure_file_path.replace(file_basename, '')
+        secure_file_path = ImageHelper._get_safe_path(settings.MEDIA_ROOT, file_path)
+        file_dir = os.path.dirname(secure_file_path)
         if not os.path.isdir(file_dir):
             os.makedirs(file_dir)
 
@@ -40,8 +51,8 @@ class ImageHelper:
         """画像ファイルのコピー"""
         ans = False
 
-        secure_src = re.sub(r'\.+' + repr(os.sep), '', src)
-        secure_dest = re.sub(r'\.+' + repr(os.sep), '', dest)
+        secure_src = ImageHelper._get_safe_path(settings.MEDIA_ROOT, src)
+        secure_dest = ImageHelper._get_safe_path(settings.MEDIA_ROOT, dest)
         if os.path.exists(secure_src) and not os.path.exists(secure_dest):
             try:
                 shutil.copy2(secure_src, secure_dest)
@@ -54,14 +65,14 @@ class ImageHelper:
     @staticmethod
     def delete_image(file_path):
         """画像の削除"""
-        secure_file_path = re.sub(r'\.+' + repr(os.sep), '', file_path)
+        secure_file_path = ImageHelper._get_safe_path(settings.MEDIA_ROOT, file_path)
         if os.path.exists(secure_file_path):
             os.remove(secure_file_path)
 
     @staticmethod
     def make_qrcode(data, file_path, force=False):
         """QRコード画像の作成"""
-        secure_file_path = re.sub(r'\.+' + repr(os.sep), '', file_path)
+        secure_file_path = ImageHelper._get_safe_path(settings.MEDIA_ROOT, file_path)
         if os.path.exists(secure_file_path):
             if force:
                 os.remove(secure_file_path)

@@ -11,6 +11,7 @@ import urllib.parse
 import shutil
 import qrcode
 from django.conf import settings
+from django.core.exceptions import SuspiciousFileOperation
 from PIL import Image, ImageDraw, ImageFont
 from lib.convert import *
 from lib.functions import *
@@ -21,9 +22,21 @@ from property.models import Building, Room
 class MediaHelper:
     """ メディアヘルパークラス"""
     @staticmethod
+    def _get_safe_path(base_dir, *paths):
+        real_base = os.path.abspath(base_dir)
+        target_path = os.path.abspath(os.path.join(real_base, *paths))
+
+        if os.path.commonpath([real_base, target_path]) != real_base:
+            raise SuspiciousFileOperation("Invalid file path (Path Traversal detected).")
+
+        return target_path
+
+    @staticmethod
     def upload_binary_file(source_file, destination_file_path):
         """バイナリファイルのアップロード"""
-        secure_destination_file_path = re.sub(r'\.+' + repr(os.sep), '', destination_file_path)
+        secure_destination_file_path = MediaHelper._get_safe_path(
+            settings.MEDIA_ROOT, destination_file_path
+        )
         file_dir = os.path.dirname(secure_destination_file_path)
         if not os.path.isdir(file_dir):
             os.makedirs(file_dir)
@@ -34,14 +47,14 @@ class MediaHelper:
 
     @staticmethod
     def get_uuid_filename(filename):
+        safe_filename = os.path.basename(str(filename))
         ext = ''
-        if '.' in filename:
-            ext = filename.split('.')[-1]
+        if '.' in safe_filename:
+            ext = safe_filename.split('.')[-1]
             ext = ext.lower()
         ans = "%s.%s" % (uuid.uuid4(), ext)
         ans = ans.replace('-', '')
-        ans = re.sub(r'\.+' + repr(os.sep), '', ans)
-        return ans
+        return os.path.basename(ans)
 
     """
     書類ファイル
@@ -49,16 +62,18 @@ class MediaHelper:
     @staticmethod
     def get_document_root():
         """書類ファイルのルートディレクトリ"""
-        return os.path.join(settings.MEDIA_ROOT, 'public', 'documents')
+        return MediaHelper._get_safe_path(settings.MEDIA_ROOT, 'public', 'documents')
 
     @staticmethod
     def get_upload_document_path(file_name: str):
         """書類ファイルのアップロードパス"""
         if file_name:
-            file_name = re.sub(r'\.+' + repr(os.sep), '', file_name)
-            return os.path.join(MediaHelper.get_document_root(),
-                                'files',
-                                file_name)
+            safe_name = os.path.basename(str(file_name))
+            return MediaHelper._get_safe_path(
+                MediaHelper.get_document_root(),
+                'files',
+                safe_name
+            )
         else:
             raise ValueError
 
@@ -68,29 +83,36 @@ class MediaHelper:
     @staticmethod
     def get_property_media_root():
         """物件のメディアファイルのルートディレクトリ"""
-        return os.path.join(settings.MEDIA_ROOT, 'public', 'buildings')
+        return MediaHelper._get_safe_path(settings.MEDIA_ROOT, 'public', 'buildings')
 
     @staticmethod
     def get_upload_picture_path(instance: Building, file_name: str):
         """画像のアップロードパス"""
         if instance and file_name:
-            file_name = re.sub(r'\.+' + repr(os.sep), '', file_name)
-            return os.path.join(MediaHelper.get_property_media_root(),
-                                instance.file_oid,
-                                'pictures',
-                                file_name)
+            safe_oid = os.path.basename(str(instance.file_oid))
+            safe_name = os.path.basename(str(file_name))
+            return MediaHelper._get_safe_path(
+                MediaHelper.get_property_media_root(),
+                safe_oid,
+                'pictures',
+                safe_name
+            )
         else:
             raise ValueError
 
     @staticmethod
     def get_picture_thumbnail_path(file_path: str):
         """サムネイル画像用のパス"""
-        ans = os.path.join(file_path.replace('pictures', 'thumbnails'))
-        ans = re.sub(r'\.+' + repr(os.sep), '', ans)
+        secure_file_path = MediaHelper._get_safe_path(
+            settings.MEDIA_ROOT, file_path
+        )
+        ans = MediaHelper._get_safe_path(
+            settings.MEDIA_ROOT, secure_file_path.replace('pictures', 'thumbnails')
+        )
 
         thumbnail_dir = os.path.dirname(ans)
         if not os.path.isdir(thumbnail_dir):
-            os.mkdir(thumbnail_dir)
+            os.makedirs(thumbnail_dir)
 
         return ans
 
@@ -98,11 +120,14 @@ class MediaHelper:
     def get_upload_panorama_path(instance: Building, file_name: str):
         """パノラマのアップロードパス"""
         if instance and file_name:
-            file_name = re.sub(r'\.+' + repr(os.sep), '', file_name)
-            return os.path.join(MediaHelper.get_property_media_root(),
-                                instance.file_oid,
-                                'panoramas',
-                                file_name)
+            safe_oid = os.path.basename(str(instance.file_oid))
+            safe_name = os.path.basename(str(file_name))
+            return MediaHelper._get_safe_path(
+                MediaHelper.get_property_media_root(),
+                safe_oid,
+                'panoramas',
+                safe_name
+            )
         else:
             raise ValueError
 
@@ -110,11 +135,14 @@ class MediaHelper:
     def get_upload_movie_path(instance: Building, file_name: str):
         """動画のアップロードパス"""
         if instance and file_name:
-            file_name = re.sub(r'\.+' + repr(os.sep), '', file_name)
-            return os.path.join(MediaHelper.get_property_media_root(),
-                                instance.file_oid,
-                                'movies',
-                                file_name)
+            safe_oid = os.path.basename(str(instance.file_oid))
+            safe_name = os.path.basename(str(file_name))
+            return MediaHelper._get_safe_path(
+                MediaHelper.get_property_media_root(),
+                safe_oid,
+                'movies',
+                safe_name
+            )
         else:
             raise ValueError
 
@@ -122,10 +150,13 @@ class MediaHelper:
     def get_upload_file_path(instance: Building, file_name: str):
         """物件資料ファイルのアップロードパス"""
         if instance and file_name:
-            file_name = re.sub(r'\.+' + repr(os.sep), '', file_name)
-            return os.path.join(MediaHelper.get_property_media_root(),
-                                instance.file_oid,
-                                'files',
-                                file_name)
+            safe_oid = os.path.basename(str(instance.file_oid))
+            safe_name = os.path.basename(str(file_name))
+            return MediaHelper._get_safe_path(
+                MediaHelper.get_property_media_root(),
+                safe_oid,
+                'files',
+                safe_name
+            )
         else:
             raise ValueError
