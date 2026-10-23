@@ -66,5 +66,6 @@ class UploadDocumentFileViewTest(TestCase):
         messages = list(response.context['messages'])
         self.assertEqual(str(messages[0]), '追加しました。')
         document_file = DocumentFile.objects.filter(file_title=file_title).first()
-        file_path = os.path.join(settings.MEDIA_ROOT, 'public', 'documents', 'files', document_file.file_name)
+        safe_file_name = os.path.basename(document_file.file_name)
+        file_path = os.path.join(settings.MEDIA_ROOT, 'public', 'documents', 'files', safe_file_name)
         os.remove(file_path)
