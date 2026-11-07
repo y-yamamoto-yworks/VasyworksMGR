@@ -24,6 +24,8 @@ class UserForm(auth_forms.UserChangeForm):
                 field.widget.attrs['class'] = 'form-check-input'
             elif isinstance(field.widget, forms.Select):
                 field.widget.attrs['class'] = 'form-select'
+                if field == self.fields['staff']:
+                    field.label_from_instance = lambda obj: obj.staff_name
             else:
                 if field != self.fields['password']:
                     field.widget.attrs['class'] = 'form-control'
